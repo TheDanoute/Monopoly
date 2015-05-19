@@ -22,6 +22,10 @@ public class Joueur {
         //positionCourante=Carreau.Depart;
     }
 
+    public Carreau getPositionCourante() {
+        return positionCourante;
+    }
+
         
         
         
@@ -38,7 +42,7 @@ public class Joueur {
 	}
 
 	public void removeCash(int aC) {
-		
+		this.cash-=aC;
 	}
 
 	public String getNomJoueur() {

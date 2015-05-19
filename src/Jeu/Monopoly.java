@@ -111,8 +111,9 @@ public class Monopoly {
 		throw new UnsupportedOperationException();
 	}
 
-	public int getPrix() {
-		throw new UnsupportedOperationException();
+	public int getPrix(Joueur aJ) {
+         //   aJ.getPositionCourante().
+            
 	}
 
 	public void lancerDesAvancer() {
@@ -128,7 +129,7 @@ public class Monopoly {
 	}
 
 	public int getPosition(Joueur aJ) {
-		throw new UnsupportedOperationException();
+                return aJ.getPositionCourante().getNum();
 	}
 
     /**
