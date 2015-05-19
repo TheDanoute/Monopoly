@@ -1,31 +1,35 @@
 package Jeu;
 
-import Jeu.Monopoly;
-
 public abstract class Carreau {
 	private int numero;
-	private String nomCarreau;
+	private String nom;
 	private Monopoly monopoly;
 
 	public Carreau(int n,String nom,Monopoly m){
-            numero=n;
-            nomCarreau=nom;
-            monopoly=m;
+            this.setNum(n);
+            this.setNom(nom);
+            this.setMonop(m);
         }
         
         public int getNum() {
-		throw new UnsupportedOperationException();
+		return numero;
 	}
 
 	private void setNum(int aN) {
-		throw new UnsupportedOperationException();
+		numero=aN;
 	}
 
 	public String getNom() {
-		throw new UnsupportedOperationException();
+		return nom;
 	}
 
 	private void setNom(String aN) {
-		throw new UnsupportedOperationException();
+		nom=aN;
 	}
+        private void setMonop(Monopoly m){
+            monopoly=m;
+        }
+        public Monopoly getMonopoly(){
+            return monopoly;
+        }
 }

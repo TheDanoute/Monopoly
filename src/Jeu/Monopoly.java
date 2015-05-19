@@ -112,8 +112,7 @@ public class Monopoly {
 	}
 
 	public int getPrix(Joueur aJ) {
-         //   aJ.getPositionCourante().
-            
+         //   aJ.getPositionCourante().            
 	}
 
 	public void lancerDesAvancer() {

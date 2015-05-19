@@ -3,13 +3,19 @@ package Jeu;
 import Jeu.Joueur;
 
 public abstract class CarreauPropriete extends Carreau {
-	private int loyerBase;
-	private int prixAchat;
+        private int loyer;
 	private int prix;
 	private Joueur proprietaire;
 
-	public Joueur getProprietaire() {
-		return this.proprietaire;
+	public CarreauPropriete(int num,String nom,Monopoly m,int l,int p) {
+            super(num,nom,m);
+            this.setPrix(p);
+            this.setLoyer(l);
+            this.setProprietaire(null);
+        }
+        
+        public Joueur getProprietaire() {
+		return proprietaire;
 	}
 
 	public void setProprietaire(Joueur aJ) {
@@ -19,18 +25,17 @@ public abstract class CarreauPropriete extends Carreau {
 	public int getPrix() {
 		return this.prix;
 	}
-
+        
+        private void setLoyer(int l){
+            loyer=l;
+        }
 	public void setPrix(int aPrix) {
 		this.prix = aPrix;
 	}
 
 	public int payerLoyer(Joueur aJ) {
-		throw new UnsupportedOperationException();
+		//Passage de l'argent
 	}
 
-	protected abstract int getNbPropriete();
-
-	public Groupe getGroupe() {
-		throw new UnsupportedOperationException();
-	}
+	public abstract int getNbPropriete();
 }
