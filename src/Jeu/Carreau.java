@@ -7,7 +7,13 @@ public abstract class Carreau {
 	private String nomCarreau;
 	private Monopoly monopoly;
 
-	public int getNum() {
+	public Carreau(int n,String nom,Monopoly m){
+            numero=n;
+            nomCarreau=nom;
+            monopoly=m;
+        }
+        
+        public int getNum() {
 		throw new UnsupportedOperationException();
 	}
 
