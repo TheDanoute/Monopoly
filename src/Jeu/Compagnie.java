@@ -1,19 +1,27 @@
 package Jeu;
 
 import Jeu.Joueur;
+import java.util.Random;
 
 public class Compagnie extends CarreauPropriete {
-	private Joueur loyer;
+	
+    //private int loyer;
+        
+        public Compagnie(int num,String nom,Monopoly m,int p) {
+            super(num,nom,m,p);
+        }
 
-	public Groupe getGroupe() {
-		throw new UnsupportedOperationException();
+	public int getLoyer() {
+            Random gene = new Random();
+                if (this.getNbPropriete()>1) {
+                    return gene.nextInt(6)+1*10;
+                } else {
+                    return gene.nextInt(6)+1*4;
+                }
 	}
-
-	public void calculLoyer() {
-		throw new UnsupportedOperationException();
-	}
-
-	protected int getNbPropriete() {
-		throw new UnsupportedOperationException();
+           
+        @Override
+	public int getNbPropriete() {
+		return super.getProprietaire().getNombreCompagnies();
 	}
 }

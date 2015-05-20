@@ -66,6 +66,10 @@ public class Joueur {
 	public int getNombreGare() {
 		return gares.size();
 	}
+        
+        public int getNombreCompagnies() {
+            return compagnies.size();
+        }
 
 	/**
 	 * @return ArrayList<Joueur>

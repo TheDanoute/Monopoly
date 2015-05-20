@@ -26,22 +26,41 @@ public class Monopoly {
 			ArrayList<String[]> data = readDataFile(dataFilename, ",");
 			
 			//TODO: create cases instead of displaying
-			for(int i=0; i<data.size(); ++i){
+			Groupe groupe = new Groupe();
+                        String couleur = null;
+                        for(int i=0; i<data.size(); ++i){
 				String caseType = data.get(i)[0];
 				if(caseType.compareTo("P") == 0){
 					System.out.println("Propriété :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
-				}
+                                        if (!couleur.equals(data.get(i)[3])) {
+                                             couleur = data.get(i)[3];
+                                             groupe = new Groupe(Integer.valueOf(data.get(i)[11]),couleur);
+                                        }
+                                        ArrayList<Integer> prix = new ArrayList<>();
+                                        for (int j=5;j<11;j++) {
+                                            prix.add(Integer.valueOf(data.get(i)[j]));
+                                        }
+                                        ProprieteAConstruire pAC = new ProprieteAConstruire(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this,Integer.valueOf(data.get(i)[4]),prix,groupe);
+                                        this.addCarreau(pAC);
+                                }
+                                
 				else if(caseType.compareTo("G") == 0){
 					System.out.println("Gare :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
-				}
+                                        Gare gare = new Gare (Integer.valueOf(data.get(i)[1]),data.get(i)[2],this,Integer.valueOf(data.get(i)[3]));
+                                        this.addCarreau(gare);
+                                }
 				else if(caseType.compareTo("C") == 0){
 					System.out.println("Compagnie :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
+                                        Compagnie comp = new Compagnie(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this,Integer.valueOf(data.get(i)[3]));
+                                        this.addCarreau(comp);
 				}
 				else if(caseType.compareTo("CT") == 0){
 					System.out.println("Case Tirage :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
 				}
 				else if(caseType.compareTo("CA") == 0){
 					System.out.println("Case Argent :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
+                                        CarreauArgent ca = new CarreauArgent(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this,Integer.valueOf(data.get(i)[3]));
+                                        this.addCarreau(ca);
 				}
 				else if(caseType.compareTo("CM") == 0){
 					System.out.println("Case Mouvement :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
@@ -58,6 +77,10 @@ public class Monopoly {
 			System.err.println("[buildGamePlateau()] : Error while reading file!");
 		}
 	}
+        
+        private void addCarreau(Carreau c) {
+            carreaux.put(c.getNum(), c);
+        }
 	
 	private ArrayList<String[]> readDataFile(String filename, String token) throws FileNotFoundException, IOException
 	{
@@ -112,7 +135,7 @@ public class Monopoly {
 	}
 
 	public int getPrix(Joueur aJ) {
-         //   aJ.getPositionCourante().            
+                throw new UnsupportedOperationException();       
 	}
 
 	public void lancerDesAvancer() {

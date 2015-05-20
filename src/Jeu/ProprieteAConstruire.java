@@ -41,6 +41,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
         
         private void setGroupe(Groupe g){
             groupe=g;
+            groupe.ajouterPropriete(this);
         }
         
         @Override

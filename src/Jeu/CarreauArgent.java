@@ -1,13 +1,18 @@
 package Jeu;
 
 public class CarreauArgent extends CarreauAction {
-	private int montant;
+	private int prix;
 
-	public int getMontant() {
-		return this.montant;
+	public CarreauArgent(int n,String nom,Monopoly m,int p){
+            super(n,nom,m);
+            this.setPrix(p);
+        }
+        
+        public int getPrix() {
+		return this.prix;
 	}
 
-	private void setMontant(int aM) {
-		this.montant = aM;
+	private void setPrix(int p) {
+		this.prix = p;
 	}
 }
