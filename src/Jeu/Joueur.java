@@ -6,19 +6,21 @@ import java.util.ArrayList;
 
 public class Joueur {
 	private String nomJoueur;
-	private int cash = 1500;
+	private int cash;
 	private Monopoly monopoly;
-	private ArrayList<Compagnie> compagnies = new ArrayList<Compagnie>();
-	private ArrayList<Gare> gares = new ArrayList<Gare>();
+	private ArrayList<Compagnie> compagnies;
+	private ArrayList<Gare> gares;
 	private Carreau positionCourante;
 	private ArrayList<ProprieteAConstruire> proprietesAConstruire = new ArrayList<ProprieteAConstruire>();
 
     public Joueur(String nomJoueur, Monopoly monopoly) {
         this.nomJoueur = nomJoueur;
         this.monopoly = monopoly;
+        this.setCash(1500);
         compagnies = new ArrayList<>();
         gares = new ArrayList<>();
         proprietesAConstruire = new ArrayList<>();
+        
         //positionCourante=Carreau.Depart;
     }
 
@@ -62,7 +64,7 @@ public class Joueur {
 	}
 
 	public int getNombreGare() {
-		throw new UnsupportedOperationException();
+		return gares.size();
 	}
 
 	/**

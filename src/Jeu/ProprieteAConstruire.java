@@ -4,20 +4,47 @@ package Jeu;
 import java.util.ArrayList;
 
 public class ProprieteAConstruire extends CarreauPropriete {
-	private int nbMaisons = 0;
-	private int nbHotels = 0;
-	private ArrayList<Integer> loyerMaison;
-	private Groupe groupePropriete;
+	private int immobilier;
+	private ArrayList<Integer> loyers;
+	private Groupe groupe;
 
-	public int getImmobilier() {
-		throw new UnsupportedOperationException();
+	public ProprieteAConstruire(int num,String nom,Monopoly m,int p,ArrayList<Integer> l,Groupe g){
+            super(num,nom,m,p);
+            this.setImmobilier(0);
+            this.setLoyers(l);
+            this.setGroupe(g);
+        }
+        
+        public int getLoyer(){
+            return loyers.get(immobilier);
+        }
+        
+        public ArrayList<Integer> getListLoyers() {
+            return loyers;
+        }
+        
+        private void setLoyers(ArrayList<Integer> l){
+            loyers=l;
+        }
+        
+        public int getImmobilier() {
+		return immobilier;
 	}
 
-	public void setImmobilier(Object aInt_3) {
-		throw new UnsupportedOperationException();
+	private void setImmobilier(int i) {
+		immobilier=i;
 	}
-
-	protected int getNbPropriete() {
+        
+        public Groupe getGroupe(){
+            return groupe;
+        }
+        
+        private void setGroupe(Groupe g){
+            groupe=g;
+        }
+        
+        @Override
+	public int getNbPropriete() {
 		throw new UnsupportedOperationException();
 	}
 }

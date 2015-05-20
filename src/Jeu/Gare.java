@@ -1,16 +1,23 @@
 package Jeu;
 
 public class Gare extends CarreauPropriete {
-
-	public void calculLoyerGare() {
-		throw new UnsupportedOperationException();
+        
+        private int loyer;
+        
+        public Gare (int num,String nom,Monopoly m,int p) {
+            super(num,nom,m,p);
+            this.setLoyer(25);
+        }
+        
+	public int getLoyer() {
+		return loyer*2^(this.getNbPropriete()-1);
 	}
+        private void setLoyer(int l){
+            loyer=l;
+        }
 
-	public int calculLoyerNbg(int aNbg) {
-		throw new UnsupportedOperationException();
-	}
-
-	protected int getNbPropriete() {
-		throw new UnsupportedOperationException();
+        @Override
+	public int getNbPropriete() {
+		return super.getProprietaire().getNombreGare();
 	}
 }
