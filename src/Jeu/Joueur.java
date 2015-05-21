@@ -28,6 +28,10 @@ public class Joueur {
         return positionCourante;
     }
 
+    public void setPositionCourante(Carreau positionCourante) {
+        this.positionCourante = positionCourante;
+    }
+
         
         
         

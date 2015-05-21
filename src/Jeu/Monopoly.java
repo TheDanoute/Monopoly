@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Monopoly {
@@ -143,16 +144,22 @@ public class Monopoly {
 	}
 
 	public int lancerDe() {
-		throw new UnsupportedOperationException();
+            Random gene = new Random();               
+            return gene.nextInt(6)+1;         
 	}
 
 	public void Avancer(Joueur aJ, int aNumCase) {
-		throw new UnsupportedOperationException();
+            int position = aJ.getPositionCourante().getNum()+aNumCase;
+            aJ.setPositionCourante(getCarreau(position));
 	}
 
 	public int getPosition(Joueur aJ) {
                 return aJ.getPositionCourante().getNum();
 	}
+        
+        public Carreau getCarreau (int c){
+            return this.carreaux.get(c);
+        }
 
     /**
      * @return the nbMaisons
