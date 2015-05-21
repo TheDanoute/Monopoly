@@ -40,7 +40,7 @@ public class Joueur {
 	}
 
 	public void addCash(int aC) {
-		
+		this.cash+=aC;
 	}
 
 	public void removeCash(int aC) {
