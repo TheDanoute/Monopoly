@@ -12,6 +12,9 @@ public class Joueur {
 	private ArrayList<Gare> gares;
 	private Carreau positionCourante;
 	private ArrayList<ProprieteAConstruire> proprietesAConstruire = new ArrayList<ProprieteAConstruire>();
+        private int compDouble;
+        private boolean enPrison;
+        //private HashSet<> cartePrison ;
 
     public Joueur(String nomJoueur, Monopoly monopoly) {
         this.nomJoueur = nomJoueur;
@@ -34,7 +37,16 @@ public class Joueur {
 
         
         
-        
+        public void enPrison() {
+            this.setPositionCourante(monopoly.getCarreau(11));
+            this.setPrison(true);
+        }
+        private void setPrison(boolean p){
+            enPrison=p;
+        }
+        public boolean getPrison(){
+            return enPrison;
+        }
 	public int getCash() {
 		return this.cash;
 	}
