@@ -140,7 +140,30 @@ public class Monopoly {
 	}
 
 	public void lancerDesAvancer(Joueur aJ) {
-		Avancer(aJ, lancerDe());
+            System.out.println("Nom : "+aJ.getNomJoueur());
+            boolean twice = true;
+            int i = 0;
+            while (twice) {
+                int d1 = lancerDe();
+                int d2 = lancerDe();
+                int sD = d1+d2;
+                if (d1!=d2){
+                    twice = false;
+                }else{
+                    i++;
+                }
+                if (i==3){
+                    aJ.enPrison();
+                    System.out.println("Le joueur "+aJ.getNomJoueur()+" est envoyé en prison!");
+                }else{
+                    System.out.println("Somme des dés : "+sD);
+                    System.out.println("Case actuelle : "+aJ.getPositionCourante().getNom());
+                    Avancer(aJ, sD);
+                    System.out.println("Nouvelle case : "+aJ.getPositionCourante().getNom());
+                }
+               
+            }
+            
 	}
 
 	public int lancerDe() {
