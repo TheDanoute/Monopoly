@@ -131,12 +131,15 @@ public class Monopoly {
 		throw new UnsupportedOperationException();
 	}
 
-	public void achatPropriete() {
-		throw new UnsupportedOperationException();
-	}
-
-	public int getPrix(Joueur aJ) {
-                throw new UnsupportedOperationException();       
+	public void achatPropriete(Joueur aJ, CarreauPropriete cP) {
+		if (aJ.getCash()<cP.getPrix()){
+                    System.out.println(aJ.getNomJoueur()+" n'a pas assez d'argent pour acheter la propriété");
+                }else{
+                    System.out.println("Le joueur "+aJ.getNomJoueur()+" a achété la propriété '"+cP.getNom()+"'");
+                    cP.setProprietaire(aJ);
+                    aJ.removeCash(cP.getPrix());
+                    System.out.println(aJ.getNomJoueur()+"a désormais "+aJ.getCash()+" €");
+                }
 	}
 
 	public void lancerDesAvancer(Joueur aJ) {
@@ -160,6 +163,23 @@ public class Monopoly {
                     System.out.println("Carreau actuel : "+aJ.getPositionCourante().getNom());
                     Avancer(aJ, sD);
                     System.out.println("Nouveau carreau : "+aJ.getPositionCourante().getNom());
+                    for (Joueur j : joueurs){
+                        System.out.println("Nom : "+j.getNomJoueur());
+                        System.out.println("Position : "+j.getPositionCourante());
+                        System.out.println("Argent : "+j.getCash());
+                        System.out.println("Propriété(s) :");
+                        for (Compagnie c : j.getCompagnies()){
+                            System.out.println(c.getNom());
+                        }
+                        for (Gare g : j.getGares()){
+                            System.out.println(g.getNom());
+                        }
+                        for (ProprieteAConstruire p : j.getProprietesAConstruire()){
+                            System.out.println(p.getNom());
+                            System.out.println("Groupe : "+p.getGroupe());
+                            System.out.println("Avec "+p.getImmobilier()+" construction(s)");
+                        }
+                    }
                 }
                
             }

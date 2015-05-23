@@ -19,16 +19,19 @@ public abstract class CarreauPropriete extends Carreau {
 	public void setProprietaire(Joueur aJ) {
 		this.proprietaire = aJ;
 	}
-
-	public int getPrix() {
-		return this.prix;
-	}
         
 	public void setPrix(int aPrix) {
 		this.prix = aPrix;
 	}
 
+       public int getPrix() {
+            return prix;
+       }
+
+        
+        
 	public int payerLoyer(Joueur aJ) {
+            return 1;
 		//Passage de l'argent
 	}
 

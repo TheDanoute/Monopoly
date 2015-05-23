@@ -48,4 +48,8 @@ public class ProprieteAConstruire extends CarreauPropriete {
 	public int getNbPropriete() {
 		throw new UnsupportedOperationException();
 	}
+        
+        public CouleurPropriete getCouleur(){
+            return this.groupe.getCouleur();
+        }
 }

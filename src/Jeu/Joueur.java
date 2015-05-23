@@ -31,6 +31,20 @@ public class Joueur {
         return positionCourante;
     }
 
+    public ArrayList<Compagnie> getCompagnies() {
+        return compagnies;
+    }
+
+    public ArrayList<Gare> getGares() {
+        return gares;
+    }
+
+    public ArrayList<ProprieteAConstruire> getProprietesAConstruire() {
+        return proprietesAConstruire;
+    }
+    
+    
+    
     public void setPositionCourante(Carreau positionCourante) {
         this.positionCourante = positionCourante;
     }
