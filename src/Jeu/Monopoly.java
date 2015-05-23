@@ -124,12 +124,15 @@ public class Monopoly {
 	}
 
 	public void action(Joueur aJ) {
+                    // 1er cas : on est sur un carreau propriété (gare/compagnie/propAcontruire
+                    
+                    // 2ème cas : carte à tirer : chance / communautaire
+            
+                    // 3ème cas : Divers : Départ / Prison / Parc / ?
 		throw new UnsupportedOperationException();
 	}
 
-	public void jouerUnCoup(Joueur aJ) {
-		throw new UnsupportedOperationException();
-	}
+	
 
 	public void achatPropriete(Joueur aJ, CarreauPropriete cP) {
 		if (aJ.getCash()<cP.getPrix()){
@@ -141,49 +144,54 @@ public class Monopoly {
                     System.out.println(aJ.getNomJoueur()+"a désormais "+aJ.getCash()+" €");
                 }
 	}
-
-	public void lancerDesAvancer(Joueur aJ) {
-            System.out.println("Nom : "+aJ.getNomJoueur());
+        
+        public void jouerUnCoup(Joueur aJ) {
             boolean twice = true;
             int i = 0;
             while (twice) {
-                int d1 = lancerDe();
-                int d2 = lancerDe();
-                int sD = d1+d2;
-                if (d1!=d2){
-                    twice = false;
-                }else{
-                    i++;
-                }
-                if (i==3){
+                twice = lancerDesAvancer(aJ);
+                i++;
+                if(i==4){
                     aJ.enPrison();
                     System.out.println("Le joueur "+aJ.getNomJoueur()+" est envoyé en prison!");
                 }else{
-                    System.out.println("Somme des dés : "+sD);
-                    System.out.println("Carreau actuel : "+aJ.getPositionCourante().getNom());
-                    Avancer(aJ, sD);
-                    System.out.println("Nouveau carreau : "+aJ.getPositionCourante().getNom());
-                    for (Joueur j : joueurs){
-                        System.out.println("Nom : "+j.getNomJoueur());
-                        System.out.println("Position : "+j.getPositionCourante());
-                        System.out.println("Argent : "+j.getCash());
-                        System.out.println("Propriété(s) :");
-                        for (Compagnie c : j.getCompagnies()){
-                            System.out.println(c.getNom());
-                        }
-                        for (Gare g : j.getGares()){
-                            System.out.println(g.getNom());
-                        }
-                        for (ProprieteAConstruire p : j.getProprietesAConstruire()){
-                            System.out.println(p.getNom());
-                            System.out.println("Groupe : "+p.getGroupe());
-                            System.out.println("Avec "+p.getImmobilier()+" construction(s)");
-                        }
-                    }
+                    this.action(aJ);
                 }
-               
             }
-            
+	}
+              
+	public boolean lancerDesAvancer(Joueur aJ) {
+            System.out.println("Nom : "+aJ.getNomJoueur());
+            int d1 = lancerDe();
+            int d2 = lancerDe();
+            int sD = d1+d2;
+            System.out.println("Somme des dés : "+sD);
+            System.out.println("Carreau actuel : "+aJ.getPositionCourante().getNom());
+            Avancer(aJ, sD);
+            System.out.println("Nouveau carreau : "+aJ.getPositionCourante().getNom());
+            for (Joueur j : joueurs){
+                System.out.println("Nom : "+j.getNomJoueur());
+                System.out.println("Position : "+j.getPositionCourante());
+                System.out.println("Argent : "+j.getCash());
+                System.out.println("Propriété(s) :");
+                for (Compagnie c : j.getCompagnies()){
+                    System.out.println(c.getNom());
+                }
+                for (Gare g : j.getGares()){
+                    System.out.println(g.getNom());
+                }
+                for (ProprieteAConstruire p : j.getProprietesAConstruire()){
+                    System.out.println(p.getNom());
+                    System.out.println("Groupe : "+p.getGroupe());
+                    System.out.println("Avec "+p.getImmobilier()+" construction(s)");
+                }
+            }
+            if (d1==d2){
+                return true;
+            }
+            else{
+                return false;
+            }
 	}
 
 	public int lancerDe() {
