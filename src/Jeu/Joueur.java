@@ -71,12 +71,12 @@ public class Joueur {
 		this.nomJoueur = aN;
 	}
 
-	public int payerLoyer(int aLoyer) {
-		throw new UnsupportedOperationException();
+	public void payerLoyer(int aLoyer) {
+		this.cash-=aLoyer;
 	}
 
 	public void recevoirLoyer(int aLoyer) {
-		throw new UnsupportedOperationException();
+		this.cash+=aLoyer;
 	}
 
 	public int getNombreGare() {
