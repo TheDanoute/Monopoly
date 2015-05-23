@@ -157,9 +157,9 @@ public class Monopoly {
                     System.out.println("Le joueur "+aJ.getNomJoueur()+" est envoyé en prison!");
                 }else{
                     System.out.println("Somme des dés : "+sD);
-                    System.out.println("Case actuelle : "+aJ.getPositionCourante().getNom());
+                    System.out.println("Carreau actuel : "+aJ.getPositionCourante().getNom());
                     Avancer(aJ, sD);
-                    System.out.println("Nouvelle case : "+aJ.getPositionCourante().getNom());
+                    System.out.println("Nouveau carreau : "+aJ.getPositionCourante().getNom());
                 }
                
             }
