@@ -139,8 +139,8 @@ public class Monopoly {
                 throw new UnsupportedOperationException();       
 	}
 
-	public void lancerDesAvancer() {
-		throw new UnsupportedOperationException();
+	public void lancerDesAvancer(Joueur aJ) {
+		Avancer(aJ, lancerDe());
 	}
 
 	public int lancerDe() {
