@@ -35,4 +35,11 @@ public class CarteMouvement extends Carte{
         this.verifDep = verifDep;
     }
     
+    @Override
+    public void action(Joueur j){
+        if (verifDep && j.getPositionCourante().getNum()>carreau){
+            j.addCash(200);
+        }
+        j.setPositionCourante(carreau);
+    }
 }

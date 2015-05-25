@@ -24,7 +24,11 @@ public abstract class Carte {
     }
 
     private void setType(String type) {
-        this.type = CarteType.valueOf(type);
+        if(type.equals("CC")){
+            this.type=CarteType.communautaire;
+        } else {
+            this.type=CarteType.chance;
+        }
     }
 
     public String getDescription() {
@@ -35,6 +39,6 @@ public abstract class Carte {
         this.description = description;
     }
     
-    public abstract void action();
+    public abstract void action(Joueur j);
     
 }

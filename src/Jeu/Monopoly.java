@@ -13,14 +13,16 @@ import java.util.Scanner;
 public class Monopoly {
 	private int nbMaisons = 32;
 	private int nbHotels = 12;
+        private PaquetsCartes cartes;
 	private HashMap<Integer,Carreau> carreaux = new HashMap<>();
 	private ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
 	private Interface interface_2;
 
 	public Monopoly(String dataFilename){
-		buildGamePlateau(dataFilename);
+		this.buildGamePlateau(dataFilename);
+                cartes = new PaquetsCartes("carte_"+dataFilename);
 	}
-	
+
 	private void buildGamePlateau(String dataFilename)
 	{
 		try{
@@ -211,7 +213,10 @@ public class Monopoly {
         public Carreau getCarreau (int c){
             return this.carreaux.get(c);
         }
-
+        
+        public void retourCarte(Carte c){
+            cartes.retourCarte(c);
+        }
     /**
      * @return the nbMaisons
      */

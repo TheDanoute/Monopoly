@@ -9,6 +9,16 @@ package Jeu;
  *
  * @author DanJeux
  */
-public class CartePrison {
+public class CartePrison extends Carte{
+    
+    public CartePrison(String t,String d){
+        super(t,d);
+    }
+    
+    @Override
+    public void action(Joueur j){
+        j.sortPrison();
+        j.utilCartePrison(this);
+    }
     
 }

@@ -3,6 +3,7 @@ package Jeu;
 import Jeu.Monopoly;
 import Jeu.ProprieteAConstruire;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Joueur {
 	private String nomJoueur;
@@ -14,7 +15,7 @@ public class Joueur {
 	private ArrayList<ProprieteAConstruire> proprietesAConstruire = new ArrayList<ProprieteAConstruire>();
         private int compDouble;
         private boolean enPrison;
-        //private HashSet<> cartePrison ;
+        private HashSet<CartePrison> cartePrison ;
 
     public Joueur(String nomJoueur, Monopoly monopoly) {
         this.nomJoueur = nomJoueur;
@@ -43,10 +44,16 @@ public class Joueur {
         return proprietesAConstruire;
     }
     
-    
+    public Monopoly getMonopoly(){
+        return monopoly;
+    }
     
     public void setPositionCourante(Carreau positionCourante) {
         this.positionCourante = positionCourante;
+    }
+    
+    public void setPositionCourante(int p) {
+       this.setPositionCourante(monopoly.getCarreau(p));
     }
 
         
@@ -54,6 +61,15 @@ public class Joueur {
         public void enPrison() {
             this.setPositionCourante(monopoly.getCarreau(11));
             this.setPrison(true);
+        }
+        
+        public void sortPrison() {
+            this.setPrison(false);
+        }
+        
+        public void utilCartePrison(CartePrison c){
+            cartePrison.remove(c);
+            monopoly.retourCarte(c);
         }
         private void setPrison(boolean p){
             enPrison=p;
