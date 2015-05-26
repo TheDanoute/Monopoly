@@ -87,7 +87,10 @@ public class Joueur {
 	}
 
 	public void addCash(int aC) {
+            // Ajoute au joueur le montant aC
             this.cash+=aC;
+            // Dans le cas où le joueur tire une carte avec un malus, aC sera négatif, et si après le retrait, le cash du joueur est négatif, il fait
+            // faillite, il a donc perdu et il est retiré de la partie.
             if (this.getCash()<0){
                 TexteUI.message("Le joueur "+this.getNomJoueur()+" n'a pas assez d'argent pour payer. \n Il a perdu !");
                 this.getMonopoly().getJoueurs().remove(this);
@@ -95,7 +98,9 @@ public class Joueur {
 	}
 
 	public void removeCash(int aC) {
+                // Soustrait au joueur le montant aC
 		this.cash-=aC;
+                // Si le cash du joueur est négatif après le retrait, il fait faillite, il a donc perdu et il est retiré de la partie.
                 if (this.getCash()<0){
                 TexteUI.message("Le joueur "+this.getNomJoueur()+" n'a pas assez d'argent pour payer. \n Il a perdu !");
                 this.getMonopoly().getJoueurs().remove(this);
