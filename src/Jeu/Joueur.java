@@ -17,6 +17,7 @@ public class Joueur {
         private int compDouble;
         private boolean enPrison;
         private HashSet<CartePrison> cartePrison ;
+        private int sommeDesDepart;
 
     public Joueur(String nomJoueur, Monopoly monopoly) {
         this.nomJoueur = nomJoueur;
@@ -25,8 +26,8 @@ public class Joueur {
         compagnies = new ArrayList<>();
         gares = new ArrayList<>();
         proprietesAConstruire = new ArrayList<>();
-        
-        //positionCourante=Carreau.Depart;
+        sommeDesDepart = monopoly.lancerDe();
+        this.setPositionCourante(1);
     }
 
     public Carreau getPositionCourante() {

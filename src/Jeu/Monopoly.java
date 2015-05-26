@@ -110,7 +110,6 @@ public class Monopoly {
                             nJ = false;
                         }
                 }
-                Collections.shuffle(getJoueurs());
 	}
 
 	public void action(Joueur aJ) {
