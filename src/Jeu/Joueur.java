@@ -2,6 +2,7 @@ package Jeu;
 
 import Jeu.Monopoly;
 import Jeu.ProprieteAConstruire;
+import Ui.TexteUI;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -88,7 +89,7 @@ public class Joueur {
 	public void addCash(int aC) {
             this.cash+=aC;
             if (this.getCash()<0){
-                System.out.println("Le joueur "+this.getNomJoueur()+" n'a pas assez d'argent pour payer. \n Il a perdu !");
+                TexteUI.message("Le joueur "+this.getNomJoueur()+" n'a pas assez d'argent pour payer. \n Il a perdu !");
                 this.getMonopoly().getJoueurs().remove(this);
             }
 	}
@@ -96,7 +97,7 @@ public class Joueur {
 	public void removeCash(int aC) {
 		this.cash-=aC;
                 if (this.getCash()<0){
-                System.out.println("Le joueur "+this.getNomJoueur()+" n'a pas assez d'argent pour payer. \n Il a perdu !");
+                TexteUI.message("Le joueur "+this.getNomJoueur()+" n'a pas assez d'argent pour payer. \n Il a perdu !");
                 this.getMonopoly().getJoueurs().remove(this);
             }
 	}
