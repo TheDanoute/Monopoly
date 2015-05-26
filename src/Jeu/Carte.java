@@ -24,6 +24,7 @@ public abstract class Carte {
     }
 
     private void setType(String type) {
+        // Si la chaine de caractères de la carte correspond à CC, la carte sera de type communautaire, sinon elle sera de type chance.
         if(type.equals("CC")){
             this.type=CarteType.communautaire;
         } else {

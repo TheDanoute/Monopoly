@@ -28,8 +28,6 @@ public class Monopoly {
 	{
 		try{
 			ArrayList<String[]> data = readDataFile(dataFilename, ",");
-			
-			//TODO: create cases instead of displaying
 			Groupe groupe = new Groupe();
                         String couleur = null;
                         for(int i=0; i<data.size(); ++i){
@@ -148,6 +146,7 @@ public class Monopoly {
                 twice = lancerDesAvancer(aJ);
                 i++;
                 if(i==4){
+                    // Si le joueur fait 3 doubles d'affilé, il va en prison.
                     aJ.enPrison();
                     TexteUI.message("Le joueur "+aJ.getNomJoueur()+" est envoyé en prison!");
                 }else{
@@ -161,10 +160,12 @@ public class Monopoly {
             int d1 = lancerDe();
             int d2 = lancerDe();
             int sD = d1+d2;
+            // Donne des informations sur la somme des dés, la position actuelle du joueur et la position qu'il occupe après avoir avancé.
             TexteUI.message("Somme des dés : "+sD);
             TexteUI.message("Carreau actuel : "+aJ.getPositionCourante().getNom());
             Avancer(aJ, sD);
             TexteUI.message("Nouveau carreau : "+aJ.getPositionCourante().getNom());
+            // Donne les noms, positions, argent, propriétés de tous les joueurs de la partie.
             for (Joueur j : joueurs){
                 TexteUI.message("Nom : "+j.getNomJoueur());
                 TexteUI.message("Position : "+j.getPositionCourante());
@@ -183,6 +184,7 @@ public class Monopoly {
                 }
             }
             if (d1==d2){
+                // Si le joueur effectue un double, retourne vrai, faux sinon.
                 return true;
             }
             else{
