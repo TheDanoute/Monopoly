@@ -28,6 +28,7 @@ public class PaquetsCartes {
         cartesCommunautaires = new ArrayList<>();
         cartesCommunautairesPoubelle = new ArrayList<>();
         this.initPaquetsCartes(dataFilename);
+        // Mélange des listes de cartes
         Collections.shuffle(cartesChances);
         Collections.shuffle(cartesCommunautaires);
     }
@@ -104,11 +105,15 @@ public class PaquetsCartes {
 	}
     
     public Carte piochezCarteChance() {
+        // Si la liste cartesChances est vide, cette dernière recupère la liste cartesChancesPoubelle puis elle est mélangée. 
+        // La liste poubelle est ensuite vidée. 
         if(cartesChances.isEmpty()) {
             cartesChances = cartesChancesPoubelle;
             Collections.shuffle(cartesChances);
             cartesChancesPoubelle.clear();
         }
+        // Création d'un Random pour générer un entier compris entre 1 et la taille de la liste cartesChances, on récupère ensuite la carte correspondant
+        // au rang
         Random gene = new Random();
         int rang = gene.nextInt(cartesChances.size());
         Carte c = cartesChances.get(rang);
@@ -117,11 +122,15 @@ public class PaquetsCartes {
     }
     
     public Carte piochezCarteCommunautaire() {
+        // Si la liste cartesCommunautaires est vide, cette dernière recupère la liste cartesCommunautairesPoubelle puis elle est mélangée. 
+        // La liste poubelle est ensuite vidée.
         if(cartesCommunautaires.isEmpty()) {
             cartesCommunautaires = cartesCommunautairesPoubelle;
             Collections.shuffle(cartesCommunautaires);
             cartesCommunautairesPoubelle.clear();
         }
+        // Création d'un Random pour générer un entier compris entre 1 et la taille de la liste cartesCommunautaires, on récupère ensuite la carte
+        // correspondant au rang 
         Random gene = new Random();
         int rang = gene.nextInt(cartesCommunautaires.size());
         Carte c = cartesCommunautaires.get(rang);
@@ -130,6 +139,8 @@ public class PaquetsCartes {
     }
     
     public void retourCarte(Carte c){
+        // Permet de mettre une carte dans la liste poubelle, si c'est une carte chance, dans la liste carteChancesPoubelle; si c'est une carte communautaire,
+        // dans la liste carteCommunautairesPoubelle
         if (c.getType()==CarteType.chance) {
             cartesChancesPoubelle.add(c);
         } else {
