@@ -9,6 +9,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
 	private int immobilier;
 	private ArrayList<Integer> loyers;
 	private Groupe groupe;
+        private int prixMaison;
 
 	public ProprieteAConstruire(int num,String nom,Monopoly m,int p,ArrayList<Integer> l,Groupe g){
             super(num,nom,m,p);
@@ -54,6 +55,16 @@ public class ProprieteAConstruire extends CarreauPropriete {
         public CouleurPropriete getCouleur(){
             return this.groupe.getCouleur();
         }
+
+        public int getPrixMaison() {
+            return prixMaison;
+        }
+
+        public void setPrixMaison(int prixMaison) {
+            this.prixMaison = prixMaison;
+        }
+
+
         
          @Override
         public void action (Joueur aJ){
