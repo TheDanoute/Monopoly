@@ -35,7 +35,6 @@ public class PaquetsCartes {
     private void initPaquetsCartes(String dataFilename) {
         try{
             ArrayList<String[]> data = readDataFile(dataFilename, ",");
-	    //TODO: create cases instead of displaying
 
             for(int i=0; i<data.size(); ++i){
                 String caseType = data.get(i)[1];
