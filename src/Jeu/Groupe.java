@@ -51,4 +51,10 @@ public class Groupe {
         private void addPropriete(ProprieteAConstruire p) {
             proprietes.add(p);
         }
+
+        public ArrayList<ProprieteAConstruire> getProprietes() {
+            return proprietes;
+        }
+        
+        
 }

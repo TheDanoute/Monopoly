@@ -1,6 +1,7 @@
 package Jeu;
 
 import Jeu.Joueur;
+import java.util.Scanner;
 
 public abstract class CarreauPropriete extends Carreau {
 	private int prix;
@@ -36,4 +37,7 @@ public abstract class CarreauPropriete extends Carreau {
 	}
 
 	public abstract int getNbPropriete();
+        
+        
+        
 }

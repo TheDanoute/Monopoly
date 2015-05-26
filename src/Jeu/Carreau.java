@@ -32,4 +32,6 @@ public abstract class Carreau {
         public Monopoly getMonopoly(){
             return monopoly;
         }
+        
+        public abstract void action(Joueur aJ);
 }

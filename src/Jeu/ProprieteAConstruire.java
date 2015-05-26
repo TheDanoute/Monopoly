@@ -2,6 +2,7 @@ package Jeu;
 
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ProprieteAConstruire extends CarreauPropriete {
 	private int immobilier;
@@ -51,5 +52,47 @@ public class ProprieteAConstruire extends CarreauPropriete {
         
         public CouleurPropriete getCouleur(){
             return this.groupe.getCouleur();
+        }
+        
+        @Override
+        public void action (Joueur aJ){
+            Scanner sa = new Scanner(System.in);
+            if (aJ==this.getProprietaire()){
+                System.out.println("Cette propriété vous appartient");
+                boolean groupe = true;
+                for (CarreauPropriete c : g.getProprietes()){
+                    if (c.getProprietaire()!=aJ){
+                        groupe = false;
+                    }
+                }
+                if (groupe){
+                    System.out.println("Voulez-vous acheter une maison / un hôtel ? (oui/non)");
+                    String rep = sa.nextLine();
+                    if (rep=="oui"){
+                        // achat d'une maison
+                    }
+                }
+            }else if (this.getProprietaire()==null){
+                System.out.println("Vous êtes sur "+this.getNom());
+                System.out.println("Cette propriété est disponible à l'achat");
+                if (aJ.getCash()>=this.getPrix()){
+                    System.out.println("Cette propriété coûte "+this.getPrix()+"€, voulez-vous l'acheter ? (oui/non)");
+                    String rep = sa.nextLine();
+                    if (rep == "oui"){
+                        this.setProprietaire(aJ);
+                        aJ.removeCash(this.getPrix());
+                        System.out.println(aJ.getNomJoueur()+" est désormais le propriétaire de "+this.getNom());
+                    }
+                }else{
+                    System.out.println("Vous n'avez pas assez d'argent pour acheter cette propriété");
+                }
+            }else{
+                System.out.println(this.getProprietaire().getNomJoueur()+" est le propriétaire de ce carreau");
+                System.out.println("Vous devez payer "+this.getLoyer()+"€");
+                if (aJ.getCash()>=this.getLoyer()){
+                    aJ.removeCash(this.getLoyer());
+                    
+                }
+            }
         }
 }

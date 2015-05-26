@@ -126,12 +126,7 @@ public class Monopoly {
 	}
 
 	public void action(Joueur aJ) {
-                    // 1er cas : on est sur un carreau propriété (gare/compagnie/propAcontruire
-                    
-                    // 2ème cas : carte à tirer : chance / communautaire
-            
-                    // 3ème cas : Divers : Départ / Prison / Parc / ?
-		throw new UnsupportedOperationException();
+                aJ.getPositionCourante().action(aJ);
 	}
 
 	
