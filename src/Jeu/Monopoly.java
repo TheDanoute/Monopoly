@@ -44,7 +44,7 @@ public class Monopoly {
                                         for (int j=5;j<11;j++) {
                                             prix.add(Integer.valueOf(data.get(i)[j]));
                                         }
-                                        ProprieteAConstruire pAC = new ProprieteAConstruire(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this,Integer.valueOf(data.get(i)[4]),prix,groupe);
+                                        ProprieteAConstruire pAC = new ProprieteAConstruire(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this,Integer.valueOf(data.get(i)[4]),prix,groupe,Integer.valueOf(data.get(i)[11]));
                                         this.addCarreau(pAC);
                                 }
                                 
@@ -90,7 +90,7 @@ public class Monopoly {
 	{
 		ArrayList<String[]> data = new ArrayList<String[]>();
 		
-		BufferedReader reader  = new BufferedReader(new FileReader("../../Data/"+filename));
+		BufferedReader reader  = new BufferedReader(new FileReader("src/Data/"+filename));
 		String line = null;
 		while((line = reader.readLine()) != null){
 			data.add(line.split(token));

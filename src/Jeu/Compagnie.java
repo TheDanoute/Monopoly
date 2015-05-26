@@ -1,6 +1,5 @@
 package Jeu;
 
-import Jeu.Joueur;
 import Ui.TexteUI;
 import java.util.Random;
 

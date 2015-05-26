@@ -11,11 +11,12 @@ public class ProprieteAConstruire extends CarreauPropriete {
 	private Groupe groupe;
         private int prixMaison;
 
-	public ProprieteAConstruire(int num,String nom,Monopoly m,int p,ArrayList<Integer> l,Groupe g){
+	public ProprieteAConstruire(int num,String nom,Monopoly m,int p,ArrayList<Integer> l,Groupe g,int pM){
             super(num,nom,m,p);
             this.setImmobilier(0);
             this.setLoyers(l);
             this.setGroupe(g);
+            this.setPrixMaison(pM);
         }
         
         public int getLoyer(){
