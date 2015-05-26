@@ -94,7 +94,7 @@ public class PaquetsCartes {
 	{
 		ArrayList<String[]> data = new ArrayList<>();
 		
-		BufferedReader reader  = new BufferedReader(new FileReader(filename));
+		BufferedReader reader  = new BufferedReader(new FileReader("~/src/Data/"+filename));
 		String line = null;
 		while((line = reader.readLine()) != null){
 			data.add(line.split(token));

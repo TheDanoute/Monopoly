@@ -27,5 +27,15 @@ public class CarreauTirage extends CarreauAction {
         this.paquet = paquet;
     }
     
-    
+    @Override
+    public void action(Joueur j){
+        Carte c;
+        if (type==CarteType.chance){
+            c = paquet.piochezCarteChance();
+        } else {
+            c = paquet.piochezCarteCommunautaire();
+        }
+        c.action(j);
+        paquet.retourCarte(c);
+    }
 }
