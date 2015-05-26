@@ -20,4 +20,9 @@ public class Gare extends CarreauPropriete {
 	public int getNbPropriete() {
 		return super.getProprietaire().getNombreGare();
 	}
+
+        @Override
+        public void action(Joueur aJ) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
 }
