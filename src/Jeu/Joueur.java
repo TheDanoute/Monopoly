@@ -114,10 +114,6 @@ public class Joueur {
 		this.cash-=aLoyer;
 	}
 
-	public void recevoirLoyer(int aLoyer) {
-		this.cash+=aLoyer;
-	}
-
 	public int getNombreGare() {
 		return gares.size();
 	}
