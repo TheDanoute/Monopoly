@@ -196,8 +196,7 @@ public class Monopoly {
 	}
 
 	public void Avancer(Joueur aJ, int aNumCase) {
-            int position = aJ.getPositionCourante().getNum()+aNumCase;
-            aJ.setPositionCourante(getCarreau(position));
+            aJ.setPositionCourante(getCarreau(aJ.getPositionCourante().getNum()+aNumCase));
 	}
 
 	public int getPosition(Joueur aJ) {
