@@ -5,6 +5,8 @@
  */
 package Jeu;
 
+import Ui.TexteUI;
+
 /**
  *
  * @author DanJeux
@@ -39,10 +41,14 @@ public class CarteSpecial extends Carte{
                 nbm+=p.getImmobilier();
             }
         }
+        TexteUI.message("Prix pour les maisons : " + pm + "*" + nbm + "=" + pm*nbm);
+        TexteUI.message("Prix pour les hotels : " + ph + "*" + nbh + "=" + ph*nbh);
+        TexteUI.message("Total : " + nbm*pm+nbh*ph + "€");
         return nbm*pm+nbh*ph;
     }
     @Override
     public void action(Joueur j){
+        TexteUI.message(super.getDescription());
         switch(specialNumber) {
             case 0:
                  for (Joueur jou : j.getMonopoly().getJoueurs()){
@@ -51,25 +57,32 @@ public class CarteSpecial extends Carte{
                         j.addCash(10);
                      }
                  }
+                 TexteUI.message("Vous avez " + j.getCash() + "€");
             break;
             case 1:
-                boolean choix = false;
-                if (choix) {
+                String s = "";
+                while (s.equals("chance")||s.equals("payer")){
+                s = TexteUI.question("(chance/payer)");
+                if (s.equals("payer")) {
                     j.removeCash(10);
-                } else {
+                } else if (s.equals("chance")) {
                     Carte c = j.getMonopoly().getCartes().piochezCarteChance();
                     c.action(j);
                     j.getMonopoly().getCartes().retourCarte(c);
                 }
+                }
             break;
             case 2:
                 j.removeCash(this.getPrixHotelMaison(j));
+                TexteUI.message("Vous avez " + j.getCash() + "€");
             break;
             case 3:
                 j.removeCash(this.getPrixHotelMaison(j));
+                TexteUI.message("Vous avez " + j.getCash() + "€");
             break;
             case 4:
                 j.setPositionCourante(j.getPositionCourante().getNum()-3);
+                TexteUI.message("Vous êtes donc a la case n°" + j.getPositionCourante().getNum() + ":" + j.getPositionCourante().getNom());
             break;
         }
     }
