@@ -35,7 +35,7 @@ public class Monopoly {
                         for(int i=0; i<data.size(); ++i){
 				String caseType = data.get(i)[0];
 				if(caseType.compareTo("P") == 0){
-					System.out.println("Propriété :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
+					TexteUI.message("Propriété :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                                         if (!couleur.equals(data.get(i)[3])) {
                                              couleur = data.get(i)[3];
                                              groupe = new Groupe(Integer.valueOf(data.get(i)[11]),couleur);
