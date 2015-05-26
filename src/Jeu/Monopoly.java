@@ -21,7 +21,7 @@ public class Monopoly {
 
 	public Monopoly(String dataFilename){
 		this.buildGamePlateau(dataFilename);
-                cartes = new PaquetsCartes("carte_"+dataFilename);
+                cartes = new PaquetsCartes("cartes_"+dataFilename);
 	}
 
 	private void buildGamePlateau(String dataFilename)
@@ -29,15 +29,15 @@ public class Monopoly {
 		try{
 			ArrayList<String[]> data = readDataFile(dataFilename, ",");
 			Groupe groupe = new Groupe();
-                        String couleur = null;
+                        String couleur = "";
                         for(int i=0; i<data.size(); ++i){
 				String caseType = data.get(i)[0];
 				if(caseType.compareTo("P") == 0){
-					TexteUI.message("Propriété :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                                         if (!couleur.equals(data.get(i)[3])) {
                                              couleur = data.get(i)[3];
                                              groupe = new Groupe(Integer.valueOf(data.get(i)[11]),couleur);
                                         }
+                                        TexteUI.message("Propriété :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1] + "\tCouleur : " + couleur);
                                         ArrayList<Integer> prix = new ArrayList<>();
                                         for (int j=5;j<11;j++) {
                                             prix.add(Integer.valueOf(data.get(i)[j]));

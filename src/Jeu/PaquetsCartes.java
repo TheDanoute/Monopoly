@@ -77,9 +77,9 @@ public class PaquetsCartes {
                 
 	    }
         } catch(FileNotFoundException e){
-            System.err.println("[buildGamePlateau()] : File is not found!");
+            System.err.println("[initPaquetsCartes()] : File is not found!");
 	} catch(IOException e){
-            System.err.println("[buildGamePlateau()] : Error while reading file!");
+            System.err.println("[initPaquetsCartes()] : Error while reading file!");
 	}
     }
     
@@ -94,7 +94,7 @@ public class PaquetsCartes {
 	{
 		ArrayList<String[]> data = new ArrayList<>();
 		
-		BufferedReader reader  = new BufferedReader(new FileReader("~/src/Data/"+filename));
+		BufferedReader reader  = new BufferedReader(new FileReader("src/Data/"+filename));
 		String line = null;
 		while((line = reader.readLine()) != null){
 			data.add(line.split(token));
