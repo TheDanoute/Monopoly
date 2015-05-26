@@ -41,6 +41,7 @@ public class CarteSpecial extends Carte{
         }
         return nbm*pm+nbh*ph;
     }
+    @Override
     public void action(Joueur j){
         switch(specialNumber) {
             case 0:
@@ -52,7 +53,14 @@ public class CarteSpecial extends Carte{
                  }
             break;
             case 1:
-                //A faire
+                boolean choix = false;
+                if (choix) {
+                    j.removeCash(10);
+                } else {
+                    Carte c = j.getMonopoly().getCartes().piochezCarteChance();
+                    c.action(j);
+                    j.getMonopoly().getCartes().retourCarte(c);
+                }
             break;
             case 2:
                 j.removeCash(this.getPrixHotelMaison(j));

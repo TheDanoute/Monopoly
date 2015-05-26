@@ -89,7 +89,7 @@ public class Monopoly {
 	{
 		ArrayList<String[]> data = new ArrayList<String[]>();
 		
-		BufferedReader reader  = new BufferedReader(new FileReader(filename));
+		BufferedReader reader  = new BufferedReader(new FileReader("../../Data/"+filename));
 		String line = null;
 		while((line = reader.readLine()) != null){
 			data.add(line.split(token));
@@ -286,4 +286,9 @@ public class Monopoly {
     public void setInterface_2(Interface interface_2) {
         this.interface_2 = interface_2;
     }
+
+    public PaquetsCartes getCartes() {
+        return cartes;
+    }
+    
 }
