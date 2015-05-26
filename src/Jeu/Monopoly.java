@@ -20,8 +20,7 @@ public class Monopoly {
 	private Interface interface_2;
 
 	public Monopoly(String dataFilename){
-		this.buildGamePlateau(dataFilename);
-                cartes = new PaquetsCartes("cartes_"+dataFilename);
+            this.jouerUnePartie(dataFilename);
 	}
 
 	private void buildGamePlateau(String dataFilename)
@@ -105,19 +104,11 @@ public class Monopoly {
                 while (nJ) {
                     String nomJ = TexteUI.question("Nom du joueur : ");
                     Joueur j = new Joueur(nomJ, this);
-                    getJoueurs().add(j);
+                    joueurs.add(j);
                     String c = TexteUI.question("Voules-vous ajouter un nouveau joueur? (oui/non)");
-                    boolean r = true;
-                    while (r){
-                        r=false;
-                        if (c.equals("non")){
+                        if (!c.equals("oui")){
                             nJ = false;
-                        }else if (c.equals("oui")){
-                            r=true;
-                        }else {
-                            TexteUI.message("Réponse incorrecte");
                         }
-                    }
                 }
                 Collections.shuffle(getJoueurs());
 	}
@@ -126,9 +117,18 @@ public class Monopoly {
                 aJ.getPositionCourante().action(aJ);
 	}
 
-	
+        public void jouerUnePartie(String dataFilename) {
+            this.buildGamePlateau(dataFilename);
+            cartes = new PaquetsCartes("cartes_"+dataFilename);
+            this.initialiserPartie();
+            while (joueurs.size()>1) {
+                for (Joueur j : joueurs) {
+                    this.jouerUnCoup(j);
+                }
+            }
+        }
 
-	public void achatPropriete(Joueur aJ, CarreauPropriete cP) {
+	/*public void achatPropriete(Joueur aJ, CarreauPropriete cP) {
 		if (aJ.getCash()<cP.getPrix()){
                     TexteUI.message(aJ.getNomJoueur()+" n'a pas assez d'argent pour acheter la propriété");
                 }else{
@@ -137,7 +137,7 @@ public class Monopoly {
                     aJ.removeCash(cP.getPrix());
                     TexteUI.message(aJ.getNomJoueur()+"a désormais "+aJ.getCash()+" €");
                 }
-	}
+	}*/
         
         public void jouerUnCoup(Joueur aJ) {
             boolean twice = true;
@@ -145,7 +145,7 @@ public class Monopoly {
             while (twice) {
                 twice = lancerDesAvancer(aJ);
                 i++;
-                if(i==4){
+                if(i==3){
                     // Si le joueur fait 3 doubles d'affilé, il va en prison.
                     aJ.enPrison();
                     TexteUI.message("Le joueur "+aJ.getNomJoueur()+" est envoyé en prison!");
