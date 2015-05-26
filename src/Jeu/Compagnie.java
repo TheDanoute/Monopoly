@@ -24,4 +24,9 @@ public class Compagnie extends CarreauPropriete {
 	public int getNbPropriete() {
 		return super.getProprietaire().getNombreCompagnies();
 	}
+        
+        @Override
+        public void action(Joueur j){
+            j.removeCash(this.getLoyer());
+        }
 }
