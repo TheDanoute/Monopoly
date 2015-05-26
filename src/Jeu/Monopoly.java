@@ -1,5 +1,6 @@
 package Jeu;
 
+import Ui.TexteUI;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -104,21 +105,19 @@ public class Monopoly {
         public void initialiserPartie() {
 		boolean nJ = true;
                 while (nJ) {
-                    Scanner sa = new Scanner(System.in);
-                    System.out.println("Nom du joueur : ");
-                    String nomJ = sa.nextLine();
+                    String nomJ = TexteUI.question("Nom du joueur : ");
                     Joueur j = new Joueur(nomJ, this);
                     getJoueurs().add(j);
-                    System.out.println("Voules-vous ajouter un nouveau joueur? (oui/non)");
-                    String c = sa.nextLine();
+                    String c = TexteUI.question("Voules-vous ajouter un nouveau joueur? (oui/non)");
                     boolean r = true;
                     while (r){
                         r=false;
-                        if (c=="non"){
+                        if (c.equals("non")){
                             nJ = false;
-                        }else if (c!="oui"){
-                            System.out.println("Réponse incorrecte");
+                        }else if (c.equals("oui")){
                             r=true;
+                        }else {
+                            TexteUI.message("Réponse incorrecte");
                         }
                     }
                 }
@@ -133,12 +132,12 @@ public class Monopoly {
 
 	public void achatPropriete(Joueur aJ, CarreauPropriete cP) {
 		if (aJ.getCash()<cP.getPrix()){
-                    System.out.println(aJ.getNomJoueur()+" n'a pas assez d'argent pour acheter la propriété");
+                    TexteUI.message(aJ.getNomJoueur()+" n'a pas assez d'argent pour acheter la propriété");
                 }else{
-                    System.out.println("Le joueur "+aJ.getNomJoueur()+" a achété la propriété '"+cP.getNom()+"'");
+                    TexteUI.message("Le joueur "+aJ.getNomJoueur()+" a achété la propriété '"+cP.getNom()+"'");
                     cP.setProprietaire(aJ);
                     aJ.removeCash(cP.getPrix());
-                    System.out.println(aJ.getNomJoueur()+"a désormais "+aJ.getCash()+" €");
+                    TexteUI.message(aJ.getNomJoueur()+"a désormais "+aJ.getCash()+" €");
                 }
 	}
         
@@ -150,7 +149,7 @@ public class Monopoly {
                 i++;
                 if(i==4){
                     aJ.enPrison();
-                    System.out.println("Le joueur "+aJ.getNomJoueur()+" est envoyé en prison!");
+                    TexteUI.message("Le joueur "+aJ.getNomJoueur()+" est envoyé en prison!");
                 }else{
                     this.action(aJ);
                 }
@@ -158,29 +157,29 @@ public class Monopoly {
 	}
               
 	public boolean lancerDesAvancer(Joueur aJ) {
-            System.out.println("Nom : "+aJ.getNomJoueur());
+            TexteUI.message("Nom : "+aJ.getNomJoueur());
             int d1 = lancerDe();
             int d2 = lancerDe();
             int sD = d1+d2;
-            System.out.println("Somme des dés : "+sD);
-            System.out.println("Carreau actuel : "+aJ.getPositionCourante().getNom());
+            TexteUI.message("Somme des dés : "+sD);
+            TexteUI.message("Carreau actuel : "+aJ.getPositionCourante().getNom());
             Avancer(aJ, sD);
-            System.out.println("Nouveau carreau : "+aJ.getPositionCourante().getNom());
+            TexteUI.message("Nouveau carreau : "+aJ.getPositionCourante().getNom());
             for (Joueur j : joueurs){
-                System.out.println("Nom : "+j.getNomJoueur());
-                System.out.println("Position : "+j.getPositionCourante());
-                System.out.println("Argent : "+j.getCash());
-                System.out.println("Propriété(s) :");
+                TexteUI.message("Nom : "+j.getNomJoueur());
+                TexteUI.message("Position : "+j.getPositionCourante());
+                TexteUI.message("Argent : "+j.getCash());
+                TexteUI.message("Propriété(s) :");
                 for (Compagnie c : j.getCompagnies()){
-                    System.out.println(c.getNom());
+                    TexteUI.message(c.getNom());
                 }
                 for (Gare g : j.getGares()){
-                    System.out.println(g.getNom());
+                    TexteUI.message(g.getNom());
                 }
                 for (ProprieteAConstruire p : j.getProprietesAConstruire()){
-                    System.out.println(p.getNom());
-                    System.out.println("Groupe : "+p.getGroupe());
-                    System.out.println("Avec "+p.getImmobilier()+" construction(s)");
+                    TexteUI.message(p.getNom());
+                    TexteUI.message("Groupe : "+p.getGroupe());
+                    TexteUI.message("Avec "+p.getImmobilier()+" construction(s)");
                 }
             }
             if (d1==d2){
