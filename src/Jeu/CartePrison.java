@@ -18,7 +18,6 @@ public class CartePrison extends Carte{
     @Override
     public void action(Joueur j){
         j.sortPrison();
-        j.utilCartePrison(this);
     }
     
 }

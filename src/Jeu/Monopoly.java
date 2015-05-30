@@ -57,6 +57,14 @@ public class Monopoly {
 				}
 				else if(caseType.compareTo("CT") == 0){
 					TexteUI.message("Case Tirage :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
+                                        CarteType t;
+                                        if (data.get(i)[2].equals("Chance")) {
+                                            t = CarteType.chance;
+                                        } else {
+                                            t = CarteType.communautaire;
+                                        }
+                                        CarreauTirage cT = new CarreauTirage(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this,t,cartes);
+                                        this.addCarreau(cT);
 				}
 				else if(caseType.compareTo("CA") == 0){
 					TexteUI.message("Case Argent :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
@@ -65,6 +73,8 @@ public class Monopoly {
 				}
 				else if(caseType.compareTo("CM") == 0){
 					TexteUI.message("Case Mouvement :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
+                                        CarreauMouvement cM = new CarreauMouvement(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this);
+                                        this.addCarreau(cM);
 				}
 				else
 					System.err.println("[buildGamePleateau()] : Invalid Data type");
@@ -122,7 +132,9 @@ public class Monopoly {
             this.initialiserPartie();
             while (joueurs.size()>1) {
                 for (Joueur j : joueurs) {
-                    this.jouerUnCoup(j);
+                    TexteUI.message("Au tour de " + j.getNomJoueur());
+                    
+                    this.jouerUnCoup(j,0);
                 }
             }
         }
@@ -138,24 +150,52 @@ public class Monopoly {
                 }
 	}*/
         
-        public void jouerUnCoup(Joueur aJ) {
+        public void jouerUnCoup(Joueur aJ,int s) {
+            if (aJ.getPrison()) {
+                int nbCarte = aJ.getNBCartePrison();
+                TexteUI.message("Vous êtes en prison. Carte sortie de prison disponible : " + nbCarte);
+                boolean lanceDe = true;
+                if (nbCarte>0) {
+                     if (TexteUI.question("Voulez-vous utiliser une carte ? (oui/non)").equals("oui")) {
+                         aJ.utilCartePrison();
+                         lanceDe = false;
+                     } 
+                } else {
+                    TexteUI.question("Vous ne pouvez que lancer des dés");
+                }
+                if (lanceDe) {
+                     int d1 = lancerDe();
+                     int d2 = lancerDe();
+                     TexteUI.message("Valeur du dé n°1 : " + d1);
+                     TexteUI.message("Valeur du dé n°2 : " + d2);
+                     if (d1==d2) {
+                         int somme = d1+d2;
+                         TexteUI.message("C'est un double, vous sortez de prison et vous avancez de " + somme + "case(s)");
+                     }
+                }
+            } else {
+                TexteUI.question("Que voulez-vous faire ? (Jouer/Construire/Echange)");
             boolean twice = true;
-            int i = 0;
+            int comp=0;
             while (twice) {
-                twice = lancerDesAvancer(aJ);
-                i++;
-                if(i==3){
+                twice = lancerDesAvancer(aJ,0);
+                if (twice) {
+                  comp++;  
+                }
+                if(comp==3){
                     // Si le joueur fait 3 doubles d'affilé, il va en prison.
                     aJ.enPrison();
-                    TexteUI.message("Le joueur "+aJ.getNomJoueur()+" est envoyé en prison!");
+                    TexteUI.message("Le joueur "+aJ.getNomJoueur()+" a fait trois double de suite, il est envoyé en prison!");
+                    twice = false;
                 }else{
                     this.action(aJ);
                 }
             }
+            }
 	}
               
-	public boolean lancerDesAvancer(Joueur aJ) {
-            TexteUI.message("Nom : "+aJ.getNomJoueur());
+	public boolean lancerDesAvancer(Joueur aJ,int s) {
+            //TexteUI.message("Nom : "+aJ.getNomJoueur());
             int d1 = lancerDe();
             int d2 = lancerDe();
             int sD = d1+d2;
@@ -165,7 +205,7 @@ public class Monopoly {
             Avancer(aJ, sD);
             TexteUI.message("Nouveau carreau : "+aJ.getPositionCourante().getNom());
             // Donne les noms, positions, argent, propriétés de tous les joueurs de la partie.
-            for (Joueur j : joueurs){
+            /*for (Joueur j : joueurs){
                 TexteUI.message("Nom : "+j.getNomJoueur());
                 TexteUI.message("Position : "+j.getPositionCourante());
                 TexteUI.message("Argent : "+j.getCash());
@@ -181,7 +221,7 @@ public class Monopoly {
                     TexteUI.message("Groupe : "+p.getGroupe());
                     TexteUI.message("Avec "+p.getImmobilier()+" construction(s)");
                 }
-            }
+            }*/
             if (d1==d2){
                 // Si le joueur effectue un double, retourne vrai, faux sinon.
                 return true;

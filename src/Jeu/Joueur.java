@@ -4,7 +4,6 @@ import Jeu.Monopoly;
 import Jeu.ProprieteAConstruire;
 import Ui.TexteUI;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Joueur {
 	private String nomJoueur;
@@ -15,18 +14,20 @@ public class Joueur {
 	private Carreau positionCourante;
 	private ArrayList<ProprieteAConstruire> proprietesAConstruire = new ArrayList<ProprieteAConstruire>();
         private int compDouble;
-        private boolean enPrison;
-        private HashSet<CartePrison> cartePrison ;
+        private int enPrison;
+        private ArrayList<CartePrison> cartePrison ;
         private int sommeDesDepart;
 
     public Joueur(String nomJoueur, Monopoly monopoly) {
         this.nomJoueur = nomJoueur;
         this.monopoly = monopoly;
         this.setCash(1500);
+        this.setPrison(false);
         compagnies = new ArrayList<>();
         gares = new ArrayList<>();
         proprietesAConstruire = new ArrayList<>();
         sommeDesDepart = monopoly.lancerDe();
+        cartePrison = new ArrayList<>();
         this.setPositionCourante(1);
     }
 
@@ -55,6 +56,13 @@ public class Joueur {
     }
     
     public void setPositionCourante(int p) {
+       if (p>40) {
+           p-=40;
+       } 
+       if (p!=1) {
+           TexteUI.message("Vous venez de passer par la case départ, vous recevez 200€");
+           this.addCash(200);
+       }
        this.setPositionCourante(monopoly.getCarreau(p));
     }
 
@@ -69,15 +77,29 @@ public class Joueur {
             this.setPrison(false);
         }
         
-        public void utilCartePrison(CartePrison c){
+        public void utilCartePrison(){
+            CartePrison c = cartePrison.get(0);
+            c.action(this);
             cartePrison.remove(c);
             monopoly.retourCarte(c);
         }
         private void setPrison(boolean p){
-            enPrison=p;
+            if (p) {
+                enPrison=1;
+            } else {
+                enPrison=0;
+            }
         }
         public boolean getPrison(){
-            return enPrison;
+            if (enPrison>0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        public int getNBCartePrison() {
+            return cartePrison.size();
         }
 	public int getCash() {
 		return this.cash;
