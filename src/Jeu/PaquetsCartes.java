@@ -112,11 +112,8 @@ public class PaquetsCartes {
             Collections.shuffle(cartesChances);
             cartesChancesPoubelle.clear();
         }
-        
-        Random gene = new Random();
-        int rang = gene.nextInt(cartesChances.size());
-        Carte c = cartesChances.get(rang);
-        cartesChances.remove(rang);
+        Carte c = cartesChances.get(0);
+        cartesChances.remove(0);
         return c;
     }
     
@@ -128,12 +125,8 @@ public class PaquetsCartes {
             Collections.shuffle(cartesCommunautaires);
             cartesCommunautairesPoubelle.clear();
         }
-        // Création d'un Random pour générer un entier compris entre 1 et la taille de la liste cartesCommunautaires, on récupère ensuite la carte
-        // correspondant au rang.
-        Random gene = new Random();
-        int rang = gene.nextInt(cartesCommunautaires.size());
-        Carte c = cartesCommunautaires.get(rang);
-        cartesCommunautaires.remove(rang);
+        Carte c = cartesCommunautaires.get(0);
+        cartesCommunautaires.remove(0);
         return c;
     }
     
