@@ -149,6 +149,10 @@ public class Joueur {
         public int getNombreCompagnies() {
             return compagnies.size();
         }
+        
+        public int getNombreMaisons() {
+            return proprietesAConstruire.size();
+        }
 
 	/**
 	 * @return ArrayList<Joueur>
