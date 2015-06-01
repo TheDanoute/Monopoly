@@ -65,11 +65,11 @@ public class Joueur {
     
     public void setPositionCourante(int p) {
        if (p>40) {
-           p-=40;
-       } 
-       if (p!=1) {
+           p-=40; 
+           if (p!=1) {
            TexteUI.message("Vous venez de passer par la case départ, vous recevez 200€");
            this.addCash(200);
+           }
        }
        this.setPositionCourante(monopoly.getCarreau(p));
     }
