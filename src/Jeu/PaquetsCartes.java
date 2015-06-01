@@ -130,7 +130,7 @@ public class PaquetsCartes {
             cartesCommunautairesPoubelle.clear();
         }
         // Création d'un Random pour générer un entier compris entre 1 et la taille de la liste cartesCommunautaires, on récupère ensuite la carte
-        // correspondant au rang 
+        // correspondant au rang.
         Random gene = new Random();
         int rang = gene.nextInt(cartesCommunautaires.size());
         Carte c = cartesCommunautaires.get(rang);
@@ -139,8 +139,8 @@ public class PaquetsCartes {
     }
     
     public void retourCarte(Carte c){
-        // Permet de mettre une carte dans la liste poubelle, si c'est une carte chance, dans la liste carteChancesPoubelle; si c'est une carte communautaire,
-        // dans la liste carteCommunautairesPoubelle
+        // Permet de mettre une carte dans la liste poubelle, si c'est une carte chance, dans la liste carteChancesPoubelle; sinon
+        // dans la liste carteCommunautairesPoubelle.
         if (c.getType()==CarteType.chance) {
             cartesChancesPoubelle.add(c);
         } else {
