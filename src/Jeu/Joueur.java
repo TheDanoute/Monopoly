@@ -55,6 +55,14 @@ public class Joueur {
         this.positionCourante = positionCourante;
     }
     
+    public int getNBTourPrison(){
+        return enPrison;
+    }
+    
+    public void ajouterTourPrison() {
+        enPrison++;
+    }
+    
     public void setPositionCourante(int p) {
        if (p>40) {
            p-=40;

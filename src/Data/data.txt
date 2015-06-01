@@ -8,7 +8,7 @@ P,7,Rue de Vaugirard,bleuCiel,100,6,30,90,270,400,550,50,50
 CT,8,Chance
 P,9,Rue de Courcelles,bleuCiel,100,6,30,90,270,400,550,50,50
 P,10,Av. de la République,bleuCiel,120,8,40,100,300,450,600,50,50
-CA,11,Simple Visite / En Prison,0
+CP,11,Simple Visite / En Prison,0
 P,12,Bd de la Villette,violet,140,10,50,150,450,625,750,100,100
 C,13,Companie de distribution d'électricité,150
 P,14,Rue de Paradis,violet,160,12,60,180,500,700,900,100,100

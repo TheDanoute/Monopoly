@@ -55,6 +55,11 @@ public class Monopoly {
                                         Compagnie comp = new Compagnie(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this,Integer.valueOf(data.get(i)[3]));
                                         this.addCarreau(comp);
 				}
+                                else if(caseType.compareTo("CP") == 0){
+					TexteUI.message("Case Prison :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
+                                        CarreauPrison cp = new CarreauPrison(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this);
+                                        this.addCarreau(cp);
+				}
 				else if(caseType.compareTo("CT") == 0){
 					TexteUI.message("Case Tirage :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                                         CarteType t;
@@ -152,33 +157,13 @@ public class Monopoly {
         
         public void jouerUnCoup(Joueur aJ,int s) {
             if (aJ.getPrison()) {
-                int nbCarte = aJ.getNBCartePrison();
-                TexteUI.message("Vous êtes en prison. Carte sortie de prison disponible : " + nbCarte);
-                boolean lanceDe = true;
-                if (nbCarte>0) {
-                     if (TexteUI.question("Voulez-vous utiliser une carte ? (oui/non)").equals("oui")) {
-                         aJ.utilCartePrison();
-                         lanceDe = false;
-                     } 
-                } else {
-                    TexteUI.question("Vous ne pouvez que lancer des dés");
-                }
-                if (lanceDe) {
-                     int d1 = lancerDe();
-                     int d2 = lancerDe();
-                     TexteUI.message("Valeur du dé n°1 : " + d1);
-                     TexteUI.message("Valeur du dé n°2 : " + d2);
-                     if (d1==d2) {
-                         int somme = d1+d2;
-                         TexteUI.message("C'est un double, vous sortez de prison et vous avancez de " + somme + "case(s)");
-                     }
-                }
+                this.action(aJ);
             } else {
                 TexteUI.question("Que voulez-vous faire ? (Jouer/Construire/Echange)");
             boolean twice = true;
             int comp=0;
             while (twice) {
-                twice = lancerDesAvancer(aJ,0);
+                twice = lancerDesAvancer(aJ,s);
                 if (twice) {
                   comp++;  
                 }
@@ -195,10 +180,19 @@ public class Monopoly {
 	}
               
 	public boolean lancerDesAvancer(Joueur aJ,int s) {
+            //s = 0 si le joueur sort de prison en faisant un double
             //TexteUI.message("Nom : "+aJ.getNomJoueur());
-            int d1 = lancerDe();
-            int d2 = lancerDe();
-            int sD = d1+d2;
+            int d1,d2,sD;
+            if (s==0) {
+            d1 = lancerDe();
+            d2 = lancerDe();
+            sD = d1+d2;
+            } else {
+                //d1 et d2 sont égaux pour return true
+                d1 = 0;
+                d2 = 0;
+                sD = s;
+            }
             // Donne des informations sur la somme des dés, la position actuelle du joueur et la position qu'il occupe après avoir avancé.
             TexteUI.message("Somme des dés : "+sD);
             TexteUI.message("Carreau actuel : "+aJ.getPositionCourante().getNom());
