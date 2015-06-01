@@ -1,5 +1,7 @@
 package Jeu;
 
+import Ui.TexteUI;
+
 public class Gare extends CarreauPropriete {
         
         private int loyer;
@@ -22,6 +24,25 @@ public class Gare extends CarreauPropriete {
 	}
 
         @Override
-        public void action(Joueur aJ) {
+        public void action(Joueur j) {
+            if (this.getProprietaire()==null) {
+                TexteUI.message("Cette gare : " + this.getNom() + " est disponible à l'achat au prix de " + this.getPrix() +"€");
+                String r = TexteUI.question("Voulez-vous acheter cette gare ? (oui/non)");
+                if (r.equals("oui")) {
+                    if (j.getCash()>this.getPrix()) {
+                        j.removeCash(this.getPrix());
+                        TexteUI.message("Il vous reste " + j.getCash() + "€");
+                    } else {
+                        TexteUI.message("Vous n'avez pas assez d'argent");
+                    }
+                }
+            } else if (this.getProprietaire()==j) {
+                TexteUI.message("Vous êtes sur votre gare : " + this.getNom());
+            } else {
+                TexteUI.message("Vous êtes tomber sur une gare qui à déjà un propriétaire, vous payez : "+this.getLoyer()+"€");
+                int l = this.getLoyer();
+                j.removeCash(l);
+                this.getProprietaire().addCash(l);
+            }
         }
 }
