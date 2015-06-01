@@ -112,8 +112,7 @@ public class PaquetsCartes {
             Collections.shuffle(cartesChances);
             cartesChancesPoubelle.clear();
         }
-        // Création d'un Random pour générer un entier compris entre 1 et la taille de la liste cartesChances, on récupère ensuite la carte correspondant
-        // au rang
+        
         Random gene = new Random();
         int rang = gene.nextInt(cartesChances.size());
         Carte c = cartesChances.get(rang);
