@@ -5,6 +5,8 @@
  */
 package Jeu;
 
+import Ui.TexteUI;
+
 /**
  *
  * @author DanJeux
@@ -28,6 +30,7 @@ public class CarteArgent extends Carte{
     
     @Override
     public void action(Joueur j){
+        TexteUI.message(this.getDescription());
         j.addCash(montant);
     }
     

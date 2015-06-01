@@ -5,6 +5,8 @@
  */
 package Jeu;
 
+import Ui.TexteUI;
+
 /**
  *
  * @author DanJeux
@@ -17,7 +19,11 @@ public class CartePrison extends Carte{
     
     @Override
     public void action(Joueur j){
-        j.sortPrison();
+        if (j.getPrison()) {
+            j.sortPrison();
+        } else {
+            TexteUI.message(this.getDescription());
+        }
     }
     
 }

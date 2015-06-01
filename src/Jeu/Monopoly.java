@@ -68,7 +68,7 @@ public class Monopoly {
                                         } else {
                                             t = CarteType.communautaire;
                                         }
-                                        CarreauTirage cT = new CarreauTirage(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this,t,cartes);
+                                        CarreauTirage cT = new CarreauTirage(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this,t);
                                         this.addCarreau(cT);
 				}
 				else if(caseType.compareTo("CA") == 0){
@@ -132,8 +132,8 @@ public class Monopoly {
 	}
 
         public void jouerUnePartie(String dataFilename) {
-            this.buildGamePlateau(dataFilename);
             cartes = new PaquetsCartes("cartes_"+dataFilename);
+            this.buildGamePlateau(dataFilename);
             this.initialiserPartie();
             while (joueurs.size()>1) {
                 for (Joueur j : joueurs) {
@@ -175,6 +175,7 @@ public class Monopoly {
                 }else{
                     this.action(aJ);
                 }
+                s = 0;
             }
             }
 	}
@@ -187,6 +188,7 @@ public class Monopoly {
             d1 = lancerDe();
             d2 = lancerDe();
             sD = d1+d2;
+            TexteUI.message("D1 = " + d1 + " ; D2 = " + d2 + " ; Somme des dés = " + sD);
             } else {
                 //d1 et d2 sont égaux pour return true
                 d1 = 0;
@@ -194,7 +196,6 @@ public class Monopoly {
                 sD = s;
             }
             // Donne des informations sur la somme des dés, la position actuelle du joueur et la position qu'il occupe après avoir avancé.
-            TexteUI.message("Somme des dés : "+sD);
             TexteUI.message("Carreau actuel : "+aJ.getPositionCourante().getNom());
             Avancer(aJ, sD);
             TexteUI.message("Nouveau carreau : "+aJ.getPositionCourante().getNom());
@@ -233,7 +234,11 @@ public class Monopoly {
 	public void Avancer(Joueur aJ, int aNumCase) {
             aJ.setPositionCourante(getCarreau(aJ.getPositionCourante().getNum()+aNumCase));
 	}
-
+        
+        public PaquetsCartes getPaquetsCartes() {
+            return cartes;
+        }
+        
 	public int getPosition(Joueur aJ) {
                 return aJ.getPositionCourante().getNum();
 	}

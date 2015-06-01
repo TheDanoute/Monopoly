@@ -5,6 +5,8 @@
  */
 package Jeu;
 
+import Ui.TexteUI;
+
 /**
  *
  * @author DanJeux
@@ -37,6 +39,7 @@ public class CarteMouvement extends Carte{
     
     @Override
     public void action(Joueur j){
+        TexteUI.message(this.getDescription());
         if (verifDep && j.getPositionCourante().getNum()>carreau){
             j.addCash(200);
         }
