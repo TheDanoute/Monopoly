@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
@@ -120,9 +121,16 @@ public class Monopoly {
                     String nomJ = TexteUI.question("Nom du joueur : ");
                     Joueur j = new Joueur(nomJ, this);
                     joueurs.add(j);
+                    String d = TexteUI.question("Somme du premier lancé de dés : " + j.getSommeDesDepart());
                     String c = TexteUI.question("Voules-vous ajouter un nouveau joueur? (oui/non)");
                         if (!c.equals("oui")){
                             nJ = false;
+                            Collections.sort(joueurs, new Comparator<Joueur>() {
+                                @Override
+                                public int compare(Joueur j1, Joueur j2) {
+                                return j1.getSommeDesDepart().compareTo(j2.getSommeDesDepart());
+                            }
+                        });
                         }
                 }
 	}
