@@ -136,7 +136,6 @@ public class Monopoly {
                             for (int i =0; i<joueurs.size();i++) {
                                 TexteUI.message("Somme dés" + joueurs.get(i).getSommeDesDepart());
                             }
-                            
                             /*for (int i =0; i<joueurs.size();i++){
                                 if(joueurs.get(i).getSommeDesDepart()==joueurs.get(i+1).getSommeDesDepart()){
                                     joueurs.get(i).getMonopoly().lancerDe();
@@ -179,7 +178,7 @@ public class Monopoly {
             if (aJ.getPrison()) {
                 this.action(aJ);
             } else {
-                TexteUI.question("Que voulez-vous faire ? (Jouer/Construire/Echange)");
+                TexteUI.message("Début du tour :");
             boolean twice = true;
             int comp=0;
             while (twice) {
@@ -252,7 +251,7 @@ public class Monopoly {
 	}
 
 	public void Avancer(Joueur aJ, int aNumCase) {
-            aJ.setPositionCourante(getCarreau(aJ.getPositionCourante().getNum()+aNumCase));
+            aJ.setPositionCourante(aJ.getPositionCourante().getNum()+aNumCase);
 	}
         
         public PaquetsCartes getPaquetsCartes() {

@@ -30,6 +30,7 @@ public class CarreauPrison extends Carreau {
                 rep = TexteUI.question("Vous ne pouvez pas lancer les dés quatre fois de suite, vous devez payer ou utiliser une carte. (payer/carte)");
             }
             if (rep.equals("payer")) {
+                TexteUI.message("Vous payez 50€ pour sortir de prison.");
                 j.removeCash(50);
                 j.sortPrison();
                 fini = true;
@@ -53,6 +54,7 @@ public class CarreauPrison extends Carreau {
                 } else {
                     TexteUI.message("Vous restez en prison.");
                     j.ajouterTourPrison();
+                    fini = true ;
                 }
             }
             }
