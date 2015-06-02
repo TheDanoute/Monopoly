@@ -187,7 +187,7 @@ public class Monopoly {
                     this.action(aJ);
                     twice = false;
                 } else {
-                    twice = lancerDesAvancer(aJ,30);
+                    twice = lancerDesAvancer(aJ,s);
                     if (twice) {
                       comp++;  
                     }
