@@ -36,6 +36,7 @@ public class Compagnie extends CarreauPropriete {
                     if (j.getCash()>this.getPrix()) {
                         j.removeCash(this.getPrix());
                         TexteUI.message("Il vous reste " + j.getCash() + "€");
+                        this.setProprietaire(j);
                     } else {
                         TexteUI.message("Vous n'avez pas assez d'argent");
                     }
