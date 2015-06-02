@@ -47,6 +47,16 @@ public class Joueur {
         return proprietesAConstruire;
     }
     
+    public ArrayList<ProprieteAConstruire> getProprietesAConstruire(CouleurPropriete c) {
+        ArrayList<ProprieteAConstruire> list = new ArrayList<>();
+        for (ProprieteAConstruire p : proprietesAConstruire) {
+            if (p.getCouleur()==c) {
+                list.add(p);
+            }
+        }
+        return list;
+    }
+    
     public Monopoly getMonopoly(){
         return monopoly;
     }

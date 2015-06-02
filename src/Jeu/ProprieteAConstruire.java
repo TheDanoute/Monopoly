@@ -50,7 +50,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
         
         @Override
 	public int getNbPropriete() {
-		throw new UnsupportedOperationException();
+            return groupe.getNbPropriete();
 	}
         
         public CouleurPropriete getCouleur(){
