@@ -26,7 +26,7 @@ public class Joueur {
         compagnies = new ArrayList<>();
         gares = new ArrayList<>();
         proprietesAConstruire = new ArrayList<>();
-        sommeDesDepart = monopoly.lancerDe();
+        sommeDesDepart = monopoly.lancerDe() + monopoly.lancerDe();
         cartePrison = new ArrayList<>();
         this.setPositionCourante(1);
     }
@@ -160,6 +160,10 @@ public class Joueur {
         
         public int getSommeDesDepart() {
             return sommeDesDepart;
+        }
+        
+        protected void setSommeDesDepart(int newsomme) {
+            this.sommeDesDepart=newsomme;
         }
        
 

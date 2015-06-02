@@ -129,18 +129,15 @@ public class Monopoly {
                             Collections.sort(joueurs, new Comparator<Joueur>() {
                                 @Override
                                 public int compare(Joueur j1, Joueur j2) {
-                                return Integer.compare(j1.getSommeDesDepart(),j2.getSommeDesDepart());
+                                return Integer.compare(j2.getSommeDesDepart(),j1.getSommeDesDepart());
                             }
                             
                         });
-                            for (int i =0; i<joueurs.size();i++) {
-                                TexteUI.message("Somme dés" + joueurs.get(i).getSommeDesDepart());
+                            
+                            TexteUI.message("Odre des joueurs");
+                            for (Joueur jou : joueurs) {
+                                TexteUI.message(""+ jou.getNomJoueur());
                             }
-                            /*for (int i =0; i<joueurs.size();i++){
-                                if(joueurs.get(i).getSommeDesDepart()==joueurs.get(i+1).getSommeDesDepart()){
-                                    joueurs.get(i).getMonopoly().lancerDe();
-                                    joueurs.get(i+1).getMonopoly().lancerDe();}
-                            }*/
                         }
                 }
 	}
