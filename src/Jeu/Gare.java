@@ -32,6 +32,7 @@ public class Gare extends CarreauPropriete {
                     if (r.equals("oui")) {
                         j.removeCash(this.getPrix());
                         TexteUI.message("Il vous reste " + j.getCash() + "€");
+                        this.setProprietaire(j);
                     }
                 }else{
                     TexteUI.message("Vous n'avez pas assez d'argent pour acheter cette gare");

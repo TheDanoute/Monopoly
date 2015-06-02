@@ -178,27 +178,29 @@ public class Monopoly {
         public void jouerUnCoup(Joueur aJ,int s) {
             TexteUI.message("Vous avez "+aJ.getCash()+"€");
             TexteUI.question("Appuyer sur enter pour continuer");
-            if (aJ.getPrison()) {
-                this.action(aJ);
-            } else {
-                TexteUI.message("Début du tour :");
+            TexteUI.message("Début du tour :");
+            
             boolean twice = true;
             int comp=0;
             while (twice) {
-                twice = lancerDesAvancer(aJ,s);
-                if (twice) {
-                  comp++;  
-                }
-                if(comp==3){
-                    // Si le joueur fait 3 doubles d'affilé, il va en prison.
-                    aJ.enPrison();
-                    TexteUI.message("Le joueur "+aJ.getNomJoueur()+" a fait trois double de suite, il est envoyé en prison!");
-                    twice = false;
-                }else{
+                if (aJ.getPrison()) {
                     this.action(aJ);
+                    twice = false;
+                } else {
+                    twice = lancerDesAvancer(aJ,30);
+                    if (twice) {
+                      comp++;  
+                    }
+                    if(comp==3){
+                        // Si le joueur fait 3 doubles d'affilé, il va en prison.
+                        aJ.enPrison();
+                        TexteUI.message("Le joueur "+aJ.getNomJoueur()+" a fait trois double de suite, il est envoyé en prison!");
+                        twice = false;
+                    }else{
+                        this.action(aJ);
+                    }
+                    s = 0;
                 }
-                s = 0;
-            }
             }
             
 	}
@@ -219,9 +221,9 @@ public class Monopoly {
                 sD = s;
             }
             // Donne des informations sur la somme des dés, la position actuelle du joueur et la position qu'il occupe après avoir avancé.
-            TexteUI.message("Carreau actuel : "+aJ.getPositionCourante().getNom());
+            TexteUI.message("Ancien Carreau : "+aJ.getPositionCourante().getNom());
             Avancer(aJ, sD);
-            TexteUI.message("Nouveau carreau : "+aJ.getPositionCourante().getNom());
+            TexteUI.message("Carreau Actuel : "+aJ.getPositionCourante().getNom());
             // Donne les noms, positions, argent, propriétés de tous les joueurs de la partie.
             /*for (Joueur j : joueurs){
                 TexteUI.message("Nom : "+j.getNomJoueur());
