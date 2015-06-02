@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -121,19 +122,30 @@ public class Monopoly {
                     String nomJ = TexteUI.question("Nom du joueur : ");
                     Joueur j = new Joueur(nomJ, this);
                     joueurs.add(j);
-                    String d = TexteUI.question("Somme du premier lancé de dés : " + j.getSommeDesDepart());
+                    TexteUI.message("Somme du premier lancé de dés : " + j.getSommeDesDepart());
                     String c = TexteUI.question("Voules-vous ajouter un nouveau joueur? (oui/non)");
                         if (!c.equals("oui")){
                             nJ = false;
                             Collections.sort(joueurs, new Comparator<Joueur>() {
                                 @Override
                                 public int compare(Joueur j1, Joueur j2) {
-                                return j1.getSommeDesDepart().compareTo(j2.getSommeDesDepart());
+                                return Integer.compare(j1.getSommeDesDepart(),j2.getSommeDesDepart());
                             }
+                            
                         });
+                            for (int i =0; i<joueurs.size();i++) {
+                                TexteUI.message("Somme dés" + joueurs.get(i).getSommeDesDepart());
+                            }
+                            
+                            /*for (int i =0; i<joueurs.size();i++){
+                                if(joueurs.get(i).getSommeDesDepart()==joueurs.get(i+1).getSommeDesDepart()){
+                                    joueurs.get(i).getMonopoly().lancerDe();
+                                    joueurs.get(i+1).getMonopoly().lancerDe();}
+                            }*/
                         }
                 }
 	}
+        
 
 	public void action(Joueur aJ) {
                 aJ.getPositionCourante().action(aJ);
