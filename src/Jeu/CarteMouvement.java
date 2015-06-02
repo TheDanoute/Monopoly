@@ -44,5 +44,6 @@ public class CarteMouvement extends Carte{
             j.addCash(200);
         }
         j.setPositionCourante(carreau);
+        j.getMonopoly().getCarreau(carreau).action(j);
     }
 }

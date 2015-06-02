@@ -156,6 +156,7 @@ public class Monopoly {
             this.initialiserPartie();
             while (joueurs.size()>1) {
                 for (Joueur j : joueurs) {
+                    TexteUI.message("***************************************");
                     TexteUI.message("Au tour de " + j.getNomJoueur());
                     
                     this.jouerUnCoup(j,0);
@@ -175,6 +176,8 @@ public class Monopoly {
 	}*/
         
         public void jouerUnCoup(Joueur aJ,int s) {
+            TexteUI.message("Vous avez "+aJ.getCash()+"€");
+            TexteUI.question("Appuyer sur enter pour continuer");
             if (aJ.getPrison()) {
                 this.action(aJ);
             } else {
@@ -197,6 +200,7 @@ public class Monopoly {
                 s = 0;
             }
             }
+            
 	}
               
 	public boolean lancerDesAvancer(Joueur aJ,int s) {

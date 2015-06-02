@@ -94,6 +94,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
                             String rep2 = TexteUI.question(("Voulez vous l'acheter . (oui/non)"));
                             if (rep2.equals("oui")){
                                 aJ.removeCash(this.getPrixMaison());
+                                TexteUI.message("Il vous reste " + aJ.getCash() + "€");
                                 this.immobilier++;
                                 if (this.getImmobilier()<4){
                                     TexteUI.message("Vous avez actuellement "+this.getImmobilier()+" maisons sur cette propriété");
