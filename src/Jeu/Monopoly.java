@@ -18,7 +18,8 @@ public class Monopoly {
 	private int nbHotels = 12;
         private PaquetsCartes cartes;
 	private HashMap<Integer,Carreau> carreaux = new HashMap<>();
-	private ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
+	private ArrayList<Joueur> joueurs = new ArrayList<>();
+        private ArrayList<Joueur> joueursTemp = new ArrayList<>();
 	private Interface interface_2;
 
 	public Monopoly(String dataFilename){
@@ -121,26 +122,35 @@ public class Monopoly {
                 while (nJ) {
                     String nomJ = TexteUI.question("Nom du joueur : ");
                     Joueur j = new Joueur(nomJ, this);
-                    joueurs.add(j);
+                    joueursTemp.add(j);
                     TexteUI.message("Somme du premier lancé de dés : " + j.getSommeDesDepart());
                     String c = TexteUI.question("Voules-vous ajouter un nouveau joueur? (oui/non)");
                         if (!c.equals("oui")){
                             nJ = false;
-                            Collections.sort(joueurs, new Comparator<Joueur>() {
-                                @Override
-                                public int compare(Joueur j1, Joueur j2) {
-                                return Integer.compare(j2.getSommeDesDepart(),j1.getSommeDesDepart());
+                            trierListeJoueurs(joueursTemp);
+                            for (int i = 0; i<joueursTemp.size(); i++) {
+                                for (int x = 0; i<joueursTemp.size();x++) {
+                                    if(x!=i) {
+                                        
+                                    }
                             }
-                            
-                        });
-                            
-                            TexteUI.message("Odre des joueurs");
+                            }
+                            TexteUI.message("Ordre des joueurs");
                             for (Joueur jou : joueurs) {
                                 TexteUI.message(""+ jou.getNomJoueur());
                             }
                         }
                 }
 	}
+        
+        public void trierListeJoueurs(ArrayList<Joueur> listeJoueurs) {
+            Collections.sort(listeJoueurs, new Comparator<Joueur>() {
+                @Override
+                public int compare(Joueur j1, Joueur j2) {
+                return Integer.compare(j1.getSommeDesDepart(),j2.getSommeDesDepart());
+                }   
+            });
+        }
         
 
 	public void action(Joueur aJ) {

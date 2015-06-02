@@ -26,7 +26,7 @@ public class Joueur {
         compagnies = new ArrayList<>();
         gares = new ArrayList<>();
         proprietesAConstruire = new ArrayList<>();
-        sommeDesDepart = monopoly.lancerDe() + monopoly.lancerDe();
+        sommeDesDepart = monopoly.lancerDe();
         cartePrison = new ArrayList<>();
         this.setPositionCourante(1);
     }
