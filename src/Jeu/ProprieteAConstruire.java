@@ -34,9 +34,55 @@ public class ProprieteAConstruire extends CarreauPropriete {
         public int getImmobilier() {
 		return immobilier;
 	}
+        
+        public String getImmobilierString() {
+            String rep;
+		switch (immobilier) {
+                    case 0:
+                    {
+                        rep = " vide";
+                        break;
+                    }
+                    case 1:
+                    {
+                        rep = " une maison";
+                        break;
+                    }
+                    case 2:
+                    {
+                        rep = " deux maisons";
+                        break;
+                    }
+                    case 3:
+                    {
+                        rep = " trois maisons";
+                        break;
+                    }
+                    case 4:
+                    {
+                        rep = " quatre maisons";
+                        break;
+                    }
+                    case 5:
+                    {
+                        rep = " un hôtel";
+                        break;
+                    }
+                    default:
+                    {
+                        rep = "error";
+                        break;
+                    }
+                }
+                return rep;
+	}
 
 	private void setImmobilier(int i) {
 		immobilier=i;
+	}
+        
+        private void addImmobilier() {
+		immobilier++;
 	}
         
         public Groupe getGroupe(){
@@ -65,7 +111,16 @@ public class ProprieteAConstruire extends CarreauPropriete {
             this.prixMaison = prixMaison;
         }
 
-
+        public void construire() {
+            if (this.getProprietaire().getCash()<this.getPrixMaison()) {
+                TexteUI.message("Vous n'avez pas assez d'argent...");
+            } else {
+                this.getProprietaire().removeCash(this.getPrixMaison());
+                this.addImmobilier();
+                TexteUI.message("Ce terrain dispose maintenant de : " + this.getImmobilierString());
+                TexteUI.message("Il vous reste " + this.getProprietaire().getCash() + "€");
+            }
+        }
         
          @Override
         public void action (Joueur aJ){
