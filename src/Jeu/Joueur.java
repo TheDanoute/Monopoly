@@ -12,7 +12,7 @@ public class Joueur {
 	private ArrayList<Compagnie> compagnies;
 	private ArrayList<Gare> gares;
 	private Carreau positionCourante;
-	private ArrayList<ProprieteAConstruire> proprietesAConstruire = new ArrayList<ProprieteAConstruire>();
+	private ArrayList<ProprieteAConstruire> proprietesAConstruire;
         private int compDouble;
         private int enPrison;
         private ArrayList<CartePrison> cartePrison ;
@@ -175,12 +175,24 @@ public class Joueur {
         protected void setSommeDesDepart(int newsomme) {
             this.sommeDesDepart=newsomme;
         }
-       
+        
+        public void addPropriete(ProprieteAConstruire p) {
+            proprietesAConstruire.add(p);
+        }
+        public void removePropriete(ProprieteAConstruire p) {
+            proprietesAConstruire.remove(p);
+        }
+        public void addGare(Gare g){
+            gares.add(g);
+        }
+        public void removeGare(Gare g){
+            gares.remove(g);
+        }
+        public void addCompagnie(Compagnie c){
+            compagnies.add(c);
+        }
+        public void removeCompagnie(Compagnie c){
+            compagnies.remove(c);
+        }
 
-	/**
-	 * @return ArrayList<Joueur>
-	 */
-	public ArrayList<Joueur> getJoueurs() {
-		throw new UnsupportedOperationException();
-	}
 }

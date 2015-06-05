@@ -8,7 +8,7 @@ public abstract class CarreauPropriete extends Carreau {
 	public CarreauPropriete(int num,String nom,Monopoly m,int p) {
             super(num,nom,m);
             this.setPrix(p);
-            this.setProprietaire(null);
+            proprietaire=null;
         }
         
         public Joueur getProprietaire() {

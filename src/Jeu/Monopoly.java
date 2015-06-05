@@ -128,19 +128,20 @@ public class Monopoly {
                         if (!c.equals("oui")){
                             nJ = false;
                             trierListeJoueurs(joueursTemp);
-                            for (int i = 0; i<joueursTemp.size(); i++) {
+                            /*for (int i = 0; i<joueursTemp.size(); i++) {
                                 for (int x = 0; i<joueursTemp.size();x++) {
                                     if(x!=i) {
                                         
                                     }
                             }
-                            }
+                            }*/
                             TexteUI.message("Ordre des joueurs");
-                            for (Joueur jou : joueurs) {
+                            for (Joueur jou : joueursTemp) {
                                 TexteUI.message(""+ jou.getNomJoueur());
                             }
                         }
                 }
+            joueurs = joueursTemp;
 	}
         
         public void trierListeJoueurs(ArrayList<Joueur> listeJoueurs) {
@@ -184,9 +185,23 @@ public class Monopoly {
         
         public void jouerUnCoup(Joueur aJ,int s) {
             TexteUI.message("Vous avez "+aJ.getCash()+"€");
-            TexteUI.question("Appuyer sur enter pour continuer");
-            TexteUI.message("Début du tour :");
-            
+            carreaux.get(2).action(aJ);
+            carreaux.get(4).action(aJ);
+            String rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger)");
+            while (!rep.equals("avancer")) {
+                switch(rep) {
+                    case "construire":
+                    {
+                        this.construire(aJ);
+                    }
+                    case "echanger":
+                    {
+                        //this.echanger(aJ);
+                    }
+                }
+                rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger)");
+            }
+            TexteUI.message("Vous avancer");
             boolean twice = true;
             int comp=0;
             while (twice) {
@@ -268,32 +283,33 @@ public class Monopoly {
 	}
         
          public void construire(Joueur j) {
-            //ArrayList<ProprieteAConstruire> list = j.getProprietesAConstruire();
-            HashMap<Groupe,ArrayList<ProprieteAConstruire>> list = new HashMap<>();
+            TexteUI.message("Construction :");
+            HashMap<String,ArrayList<ProprieteAConstruire>> list = new HashMap<>();
             for (ProprieteAConstruire p : j.getProprietesAConstruire()) {
-                if (!list.containsKey(p.getGroupe())) {
+                if (!list.containsKey(p.getGroupe().toString())) {
                     ArrayList<ProprieteAConstruire> sousList = new ArrayList<>();
-                    list.put(p.getGroupe(),sousList);
+                    list.put(p.getGroupe().toString(),sousList);
                 }
-                list.get(p.getGroupe()).add(p);
+                list.get(p.getGroupe().toString()).add(p);
             }
-            for (Groupe g : list.keySet()) {
-                if (list.get(g).size()!=g.getNbPropriete()) {
-                    list.remove(g);
+            for (String s : list.keySet()) {
+                if (list.get(s).size()!=list.get(s).get(0).getNbPropriete()) {
+                    list.remove(s);
                 }
             }
             
             if (list.isEmpty()) {
-                TexteUI.message("Vous ne possédez aucun groupe de propriete complet...");
+                TexteUI.message("Vous ne possédez aucun groupe de proprietes complet...");
             } else {
                 TexteUI.message("Vous possédez les groupes :");
-                for (Groupe g : list.keySet()) {
-                    TexteUI.message(g.getCouleur().toString());
+                for (String s : list.keySet()) {
+                    TexteUI.message(s);
                 }
-                String rep = TexteUI.question("Sur quel groupe voulez vous construire ?");
-                for (Groupe g : list.keySet()) {
-                    if (rep.equals(g.getCouleur().toString())) {
-                        ArrayList<ProprieteAConstruire> listP = list.get(g);
+                String rep = "";
+                while (!list.containsKey(rep)) {
+                    rep = TexteUI.question("Sur quel groupe voulez vous construire ?");
+                }
+                        ArrayList<ProprieteAConstruire> listP = list.get(rep);
                         boolean stop = false;
                         while (!stop) {
                             int max = listP.get(0).getImmobilier();
@@ -310,34 +326,25 @@ public class Monopoly {
                                 stop=true;
                                 TexteUI.message("Tous ces terrains on déjà des hotels, impossible de construire dessus");
                             } else {
-                                ArrayList<ProprieteAConstruire> listPPotentiel = new ArrayList<>();
-                                if (onAChanger) {
-                                    for (ProprieteAConstruire p : listP) {
-                                        if (p.getImmobilier()<max) {
-                                        listPPotentiel.add(p);
-                                        }
-                                    }
-                                } else {
-                                    listPPotentiel = listP;
+                                HashMap<Integer,ProprieteAConstruire> listPPotentiel = new HashMap<>();
+                                if (!onAChanger) {
+                                    max++;
                                 }
                                 TexteUI.message("Vous pouvez construire sur :");
-                                for (ProprieteAConstruire p : listPPotentiel) {
-                                    TexteUI.message(p.getNom() + " : n°" + p.getNum());
+                                for (ProprieteAConstruire p : listP) {
+                                        if (p.getImmobilier()<max) {
+                                        listPPotentiel.put(p.getNum(), p);
+                                        TexteUI.message(p.getNom() + " ; Construction existante : "+ p.getImmobilierString() + " ; n°" + p.getNum());
+                                        }
                                 }
                                 String num = TexteUI.question("Sur quel numéro voulez construire ?");
-                                for (ProprieteAConstruire p : listPPotentiel) {
-                                    if (Integer.valueOf(num)==p.getNum()) {
-                                        //p.construire();
-                                    }
-                                }
+                                listPPotentiel.get(Integer.valueOf(num)).construire();
                                 if (TexteUI.question("Voulez-vous construire une autre maison/hotel ? (oui/non)").equals("non")) {
                                     stop = true;
                                 }
                             }
                         }
                     }
-                }
-            }
         }
         
         public PaquetsCartes getPaquetsCartes() {

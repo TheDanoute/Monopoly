@@ -121,53 +121,20 @@ public class ProprieteAConstruire extends CarreauPropriete {
                 TexteUI.message("Il vous reste " + this.getProprietaire().getCash() + "€");
             }
         }
-        
-         @Override
+        @Override
+        public void setProprietaire(Joueur j) {
+            if (this.getProprietaire()!=null) {
+                this.getProprietaire().removePropriete(this);
+            }
+            super.setProprietaire(j);
+            j.addPropriete(this);
+        }
+        @Override
         public void action (Joueur aJ){
             Scanner sa = new Scanner(System.in);
             if (aJ==this.getProprietaire()){
                 TexteUI.message("Cette propriété vous appartient");
-                boolean groupe = true;
-                for (CarreauPropriete c : this.getGroupe().getProprietes()){
-                    if (c.getProprietaire()!=aJ){
-                        groupe = false;
-                    }
-                }
-                if (groupe){
-                    if (this.getImmobilier()<4){
-                        TexteUI.message("Vous avez actuellement "+this.getImmobilier()+" maisons sur cette propriété");
-                        String rep = TexteUI.question("Voulez-vous acheter une maison / un hôtel ? (oui/non)");
-                    if (rep.equals("oui")){
-                        boolean okM = true;
-                        for (CarreauPropriete c : this.getGroupe().getProprietes()){
-                            if (c.getNbPropriete()<this.getNbPropriete()){
-                                okM=false;
-                            }
-                        }
-                        if (okM){
-                            TexteUI.message("Une maison / un hôtel coûte "+this.getPrixMaison());
-                            String rep2 = TexteUI.question(("Voulez vous l'acheter . (oui/non)"));
-                            if (rep2.equals("oui")){
-                                aJ.removeCash(this.getPrixMaison());
-                                TexteUI.message("Il vous reste " + aJ.getCash() + "€");
-                                this.immobilier++;
-                                if (this.getImmobilier()<4){
-                                    TexteUI.message("Vous avez actuellement "+this.getImmobilier()+" maisons sur cette propriété");
-                                }else{
-                                    TexteUI.message("Vous avez actuellement 1 hôtel sur cette propriété");
-                                }
-                                
-                            }
-                        }else{
-                            TexteUI.message("Vous ne pouvez pas acheter d'immobilier, tant que les autres propriétes de ce groupe n'en ont pas autant que celle là");
-                        }
-                        
-                    }
-                    }else{
-                        TexteUI.message("Vous avez actuellement 1 hôtel sur cette propriété");
-                    }
-                }
-            }else if (this.getProprietaire()==null){
+            } else if (this.getProprietaire()==null){
                 TexteUI.message("Vous êtes sur "+this.getNom());
                 TexteUI.message("Cette propriété est disponible à l'achat");
                 if (aJ.getCash()>=this.getPrix()){
@@ -180,7 +147,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
                 }else{
                     TexteUI.message("Vous n'avez pas assez d'argent pour acheter cette propriété");
                 }
-            }else{
+            } else{
                 TexteUI.message(this.getProprietaire().getNomJoueur()+" est le propriétaire de ce carreau");
                 TexteUI.message("Vous devez payer "+this.getLoyer()+"€");
                 aJ.removeCash(this.getLoyer());

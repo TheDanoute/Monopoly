@@ -46,4 +46,12 @@ public class Gare extends CarreauPropriete {
                 this.getProprietaire().addCash(l);
             }
         }
+        @Override
+        public void setProprietaire(Joueur j) {
+            if (this.getProprietaire()!=null) {
+                this.getProprietaire().removeGare(this);
+            }
+            super.setProprietaire(j);
+            j.addGare(this);
+        }
 }

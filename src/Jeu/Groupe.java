@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Groupe {
 	private int prixAchatMaison;
-	//private int prixAchatHotel;
+	//private int prixAchatHotel; //Même prix pour les maisons que pour l'hotel
 	private CouleurPropriete couleur;
 	private ArrayList<ProprieteAConstruire> proprietes;
         private int nbPropriete;
@@ -34,7 +34,7 @@ public class Groupe {
 		this.couleur = aC;
 	}
         private void setNbPropriete() {
-            if (this.getCouleur()==CouleurPropriete.mauve && this.getCouleur()==CouleurPropriete.bleuFonce) {
+            if (this.getCouleur()==CouleurPropriete.mauve || this.getCouleur()==CouleurPropriete.bleuFonce) {
                 nbPropriete=2;
             } else {
                 nbPropriete=3;
