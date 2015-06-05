@@ -284,17 +284,17 @@ public class Monopoly {
         
          public void construire(Joueur j) {
             TexteUI.message("Construction :");
-            HashMap<String,ArrayList<ProprieteAConstruire>> list = new HashMap<>();
+            HashMap<CouleurPropriete,ArrayList<ProprieteAConstruire>> list = new HashMap<>();
             for (ProprieteAConstruire p : j.getProprietesAConstruire()) {
-                if (!list.containsKey(p.getGroupe().toString())) {
+                if (!list.containsKey(p.getGroupe().getCouleur())) {
                     ArrayList<ProprieteAConstruire> sousList = new ArrayList<>();
-                    list.put(p.getGroupe().toString(),sousList);
+                    list.put(p.getGroupe().getCouleur(),sousList);
                 }
-                list.get(p.getGroupe().toString()).add(p);
+                list.get(p.getGroupe().getCouleur()).add(p);
             }
-            for (String s : list.keySet()) {
-                if (list.get(s).size()!=list.get(s).get(0).getNbPropriete()) {
-                    list.remove(s);
+            for (CouleurPropriete c : list.keySet()) {
+                if (list.get(c).size()!=list.get(c).get(0).getNbPropriete()) {
+                    list.remove(c);
                 }
             }
             
@@ -302,14 +302,24 @@ public class Monopoly {
                 TexteUI.message("Vous ne possédez aucun groupe de proprietes complet...");
             } else {
                 TexteUI.message("Vous possédez les groupes :");
-                for (String s : list.keySet()) {
-                    TexteUI.message(s);
+                for (CouleurPropriete c : list.keySet()) {
+                    TexteUI.message(c.toString());
                 }
-                String rep = "";
-                while (!list.containsKey(rep)) {
-                    rep = TexteUI.question("Sur quel groupe voulez vous construire ?");
-                }
-                        ArrayList<ProprieteAConstruire> listP = list.get(rep);
+                boolean ok = false;
+                CouleurPropriete coul = CouleurPropriete.bleuCiel;
+                do {
+                    try {
+                        coul = CouleurPropriete.valueOf(TexteUI.question("Sur quel groupe voulez vous construire ?"));
+                        if (list.containsKey(coul)) {
+                            ok = true;
+                        } else {
+                            TexteUI.message("Cette couleur ne fais pas partie de la liste");
+                        }
+                    } catch(java.lang.IllegalArgumentException e) {
+                        TexteUI.message("Erreur, recommencez. (Sensible à la case)");
+                    }
+                } while (!ok);
+                        ArrayList<ProprieteAConstruire> listP = list.get(coul);
                         boolean stop = false;
                         while (!stop) {
                             int max = listP.get(0).getImmobilier();
