@@ -185,8 +185,6 @@ public class Monopoly {
         
         public void jouerUnCoup(Joueur aJ,int s) {
             TexteUI.message("Vous avez "+aJ.getCash()+"€");
-            carreaux.get(2).action(aJ);
-            carreaux.get(4).action(aJ);
             String rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger)");
             while (!rep.equals("avancer")) {
                 switch(rep) {
