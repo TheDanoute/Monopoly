@@ -128,20 +128,36 @@ public class Monopoly {
                         if (!c.equals("oui")){
                             nJ = false;
                             trierListeJoueurs(joueursTemp);
-                            /*for (int i = 0; i<joueursTemp.size(); i++) {
-                                for (int x = 0; i<joueursTemp.size();x++) {
-                                    if(x!=i) {
-                                        
+                            for (Joueur joueur : joueursTemp) {
+                                for (Joueur joueurF : joueursTemp) {
+                                    if(joueur != joueurF) {
+                                        if (joueur.getSommeDesDepart()!=joueurF.getSommeDesDepart()) {
+                                            joueurs.add(joueur);
+                                            joueursTemp.remove(joueur);
+                                        } else{
+                                            int nvLancerJ1 = lancerDe();
+                                            int nvLancerJ2 = lancerDe();
+                                            if (nvLancerJ2<nvLancerJ1) {
+                                                joueurs.add(joueurF);
+                                                joueurs.add(joueur);
+                                                joueursTemp.remove(joueurF);
+                                                joueursTemp.remove(joueur);
+                                            } else {
+                                                joueurs.add(joueur);
+                                                joueurs.add(joueurF);
+                                                joueursTemp.remove(joueurF);
+                                                joueursTemp.remove(joueur);
+                                            }
+                                        }
                                     }
+                                }
                             }
-                            }*/
                             TexteUI.message("Ordre des joueurs");
-                            for (Joueur jou : joueursTemp) {
+                            for (Joueur jou : joueurs) {
                                 TexteUI.message(""+ jou.getNomJoueur());
                             }
                         }
                 }
-            joueurs = joueursTemp;
 	}
         
         public void trierListeJoueurs(ArrayList<Joueur> listeJoueurs) {
@@ -207,9 +223,7 @@ public class Monopoly {
                     this.action(aJ);
                     twice = false;
                 } else {
-                    CartePrison c = new CartePrison("CC","");
-                    aJ.
-                    twice = lancerDesAvancer(aJ,31);
+                    twice = lancerDesAvancer(aJ,s);
                     if (twice) {
                       comp++;  
                     }
