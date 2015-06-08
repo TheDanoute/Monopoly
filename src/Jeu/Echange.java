@@ -89,5 +89,14 @@ public class Echange {
            TexteUI.message("************************************************");
         }
     }
+
+    public void addPropriete(ProprieteAConstruire get) {
+        if (pro.contains(get)) {
+            TexteUI.message("L'échange contient déjà cette propriete");
+        } else {
+            pro.add(get);
+            TexteUI.message(get.getDescription() + "ajoutée à l'échange");
+        }
+    }
     
 }
