@@ -21,6 +21,7 @@ public class Echange {
     private ArrayList<Gare> gare;
     private ArrayList<Compagnie> comp;
     private ArrayList<CartePrison> pri;
+    private ArrayList<CarreauPropriete> listP;
     private int somme;
     
     public Echange(Joueur j) {
@@ -29,6 +30,7 @@ public class Echange {
         gare = new ArrayList<>();
         comp = new ArrayList<>();
         pri = new ArrayList<>();
+        listP = new ArrayList<>();
     }
 
     public Joueur getJoueur() {
@@ -54,7 +56,17 @@ public class Echange {
     public ArrayList<CartePrison> getPri() {
         return pri;
     }
+    
+    public void addP (CarreauPropriete cp){
+        listP.add(cp);
+    }
 
+    public ArrayList<CarreauPropriete> getListP() {
+        return listP;
+    }
+    
+    
+    
     public int getSomme() {
         return somme;
     }
