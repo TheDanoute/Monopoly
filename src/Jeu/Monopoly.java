@@ -261,7 +261,7 @@ public class Monopoly {
             }
             // Donne des informations sur la somme des dés, la position actuelle du joueur et la position qu'il occupe après avoir avancé.
             TexteUI.message("Ancien Carreau : "+aJ.getPositionCourante().getNom());
-            Avancer(aJ, 1);
+            Avancer(aJ, sD);
             TexteUI.message("Carreau Actuel : "+aJ.getPositionCourante().getNom());
             // Donne les noms, positions, argent, propriétés de tous les joueurs de la partie.
             /*for (Joueur j : joueurs){
