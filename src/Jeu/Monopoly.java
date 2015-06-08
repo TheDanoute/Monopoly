@@ -382,7 +382,7 @@ public class Monopoly {
                     }
         }
          
-          public void echanger(Joueur j1) {
+/*          public void echanger(Joueur j1) {
              TexteUI.message("Echange :");
              Joueur j2;
              {
@@ -440,7 +440,7 @@ public class Monopoly {
                  }
              }
         }
-        
+        */
         public PaquetsCartes getPaquetsCartes() {
             return cartes;
         }

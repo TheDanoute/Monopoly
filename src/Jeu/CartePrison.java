@@ -23,6 +23,7 @@ public class CartePrison extends Carte{
             j.sortPrison();
         } else {
             TexteUI.message(this.getDescription());
+            j.addCartePrison(this);
         }
     }
     
