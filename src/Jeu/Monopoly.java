@@ -128,20 +128,36 @@ public class Monopoly {
                         if (!c.equals("oui")){
                             nJ = false;
                             trierListeJoueurs(joueursTemp);
-                            /*for (int i = 0; i<joueursTemp.size(); i++) {
-                                for (int x = 0; i<joueursTemp.size();x++) {
-                                    if(x!=i) {
-                                        
+                            for (Joueur joueur : joueursTemp) {
+                                for (Joueur joueurF : joueursTemp) {
+                                    if(joueur != joueurF) {
+                                        if (joueur.getSommeDesDepart()!=joueurF.getSommeDesDepart()) {
+                                            joueurs.add(joueur);
+                                            joueursTemp.remove(joueur);
+                                        } else{
+                                            int nvLancerJ1 = lancerDe();
+                                            int nvLancerJ2 = lancerDe();
+                                            if (nvLancerJ2<nvLancerJ1) {
+                                                joueurs.add(joueurF);
+                                                joueurs.add(joueur);
+                                                joueursTemp.remove(joueurF);
+                                                joueursTemp.remove(joueur);
+                                            } else {
+                                                joueurs.add(joueur);
+                                                joueurs.add(joueurF);
+                                                joueursTemp.remove(joueurF);
+                                                joueursTemp.remove(joueur);
+                                            }
+                                        }
                                     }
+                                }
                             }
-                            }*/
                             TexteUI.message("Ordre des joueurs");
-                            for (Joueur jou : joueursTemp) {
+                            for (Joueur jou : joueurs) {
                                 TexteUI.message(""+ jou.getNomJoueur());
                             }
                         }
                 }
-            joueurs = joueursTemp;
 	}
         
         public void trierListeJoueurs(ArrayList<Joueur> listeJoueurs) {
@@ -207,9 +223,7 @@ public class Monopoly {
                     this.action(aJ);
                     twice = false;
                 } else {
-                    CartePrison c = new CartePrison("CC","");
-                    aJ.
-                    twice = lancerDesAvancer(aJ,31);
+                    twice = lancerDesAvancer(aJ,s);
                     if (twice) {
                       comp++;  
                     }
@@ -363,6 +377,28 @@ public class Monopoly {
                             }
                         }
                     }
+        }
+         
+          public void echanger(Joueur j1) {
+             TexteUI.message("Echange :");
+             Joueur j2;
+             {
+                ArrayList<Joueur> listJoueur = new ArrayList<>();
+                int i = 1;
+                for (Joueur jTemp : joueurs) {
+                    if (j1!=jTemp) {
+                        TexteUI.message("Joueur n°" + i + " : " + jTemp.getNomJoueur());
+                        listJoueur.add(jTemp);
+                    }
+                }
+                j2 = listJoueur.get(Integer.valueOf(TexteUI.question("Avec quel joueur voulez-vous échanger ? (numéro)")));
+             }
+             Echange echangeJ1 = new Echange(j1);
+             Echange echangeJ2 = new Echange(j2);
+             boolean stop = false;
+             while (!stop) {
+                 
+             }
         }
         
         public PaquetsCartes getPaquetsCartes() {

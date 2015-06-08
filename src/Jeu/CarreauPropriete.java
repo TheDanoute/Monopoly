@@ -4,11 +4,13 @@ package Jeu;
 public abstract class CarreauPropriete extends Carreau {
 	private int prix;
 	private Joueur proprietaire;
+        private boolean hypotheque;
 
 	public CarreauPropriete(int num,String nom,Monopoly m,int p) {
             super(num,nom,m);
             this.setPrix(p);
             proprietaire=null;
+            this.setHypotheque(false);
         }
         
         public Joueur getProprietaire() {
@@ -27,16 +29,19 @@ public abstract class CarreauPropriete extends Carreau {
             return prix;
        }
 
-        
-        
-	public int payerLoyer(Joueur aJ) {
-            return 1;
-		//Passage de l'argent
-	}
+    public boolean isHypotheque() {
+        return hypotheque;
+    }
+
+    public void setHypotheque(boolean hypotheque) {
+        this.hypotheque = hypotheque;
+    }
 
 	public abstract int getNbPropriete();
         
-        public abstract String getDescription();
+        public String getDescription() {
+            return super.getNom() + " n°" + super.getNum();
+        }
         
         
 }

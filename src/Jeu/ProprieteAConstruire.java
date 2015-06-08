@@ -10,7 +10,6 @@ public class ProprieteAConstruire extends CarreauPropriete {
 	private ArrayList<Integer> loyers;
 	private Groupe groupe;
         private int prixMaison;
-        private boolean hypotheque;
 
 	public ProprieteAConstruire(int num,String nom,Monopoly m,int p,ArrayList<Integer> l,Groupe g,int pM){
             super(num,nom,m,p);
@@ -18,7 +17,6 @@ public class ProprieteAConstruire extends CarreauPropriete {
             this.setLoyers(l);
             this.setGroupe(g);
             this.setPrixMaison(pM);
-            
         }
         
         public int getLoyer(){
@@ -33,15 +31,6 @@ public class ProprieteAConstruire extends CarreauPropriete {
             return loyers;
         }
 
-        public boolean isHypotheque() {
-            return hypotheque;
-        }
-
-        public void setHypotheque(boolean hypotheque) {
-            this.hypotheque = hypotheque;
-        }
-        
-        
         private void setLoyers(ArrayList<Integer> l){
             loyers=l;
         }
@@ -180,7 +169,10 @@ public class ProprieteAConstruire extends CarreauPropriete {
         
         @Override
         public String getDescription() {
-            String rep = super.getNom() + " ; Numéro : " + super.getNum() + " ; Groupe : " + this.getGroupe();
-            if 
+            if (super.isHypotheque()) {
+                return "Propriete HYPOTHEQUEE : " + super.getDescription() + " ; Groupe : " + this.getGroupe() + " ; Construction : " + this.getImmobilierString();
+            } else {
+               return "Propriete : " + super.getDescription() + " ; Groupe : " + this.getGroupe() + " ; Construction : " + this.getImmobilierString();
+            }
         }
 }

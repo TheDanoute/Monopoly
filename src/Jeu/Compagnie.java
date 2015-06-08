@@ -58,4 +58,12 @@ public class Compagnie extends CarreauPropriete {
             super.setProprietaire(j);
             j.addCompagnie(this);
         }
+        @Override
+        public String getDescription() {
+            if (super.isHypotheque()) {
+                return "Compagnie HYPOTHEQUEE : " + super.getDescription();
+            } else {
+                return "Compagnie : " + super.getDescription();
+            }
+        }
 }
