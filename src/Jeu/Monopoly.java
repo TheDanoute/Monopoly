@@ -293,7 +293,7 @@ public class Monopoly {
             }
             // Donne des informations sur la somme des dés, la position actuelle du joueur et la position qu'il occupe après avoir avancé.
             TexteUI.message("Ancien Carreau : "+aJ.getPositionCourante().getNom());
-            Avancer(aJ, 1);
+            Avancer(aJ, sD);
             TexteUI.message("Carreau Actuel : "+aJ.getPositionCourante().getNom());
             // Donne les noms, positions, argent, propriétés de tous les joueurs de la partie.
             /*for (Joueur j : joueurs){
@@ -486,137 +486,7 @@ public class Monopoly {
         }
         */
 
-         public void echanger(Joueur j1) {
-             TexteUI.message("Echange :"); 
-             Joueur j2;
-             {
-                ArrayList<Joueur> listJoueur = new ArrayList<>();
-                int i = 1;
-                for (Joueur jTemp : joueurs) {
-                    if (j1!=jTemp) {
-                        TexteUI.message("Joueur n°" + i + " : " + jTemp.getNomJoueur());
-                        TexteUI.message("Ses propriété(s) :");
-                    for (Compagnie c : jTemp.getCompagnies()){
-                        TexteUI.message(c.getNom());
-                    }
-                    for (Gare g : jTemp.getGares()){
-                        TexteUI.message(g.getNom());
-                    }
-                    for (ProprieteAConstruire p : jTemp.getProprietesAConstruire()){
-                        TexteUI.message(p.getNom());
-                        TexteUI.message("Groupe : "+p.getGroupe());
-                        TexteUI.message("Avec "+p.getImmobilier()+" construction(s)");
-                    }
-                        listJoueur.add(jTemp);
-                    }
-                }
-                j2 = listJoueur.get(Integer.valueOf(TexteUI.question("Avec quel joueur voulez-vous échanger ? (numéro)"))-1);
-             }
-             String rep = TexteUI.question("Que voulez-vous de " + j2.getNomJoueur() + " ? (propriete / carte / argent)");
-             switch (rep) {
-                     case "propriete":
-                     {
-                        
-                        Echange echangeJ2 = new Echange(j2);
-                        boolean stop = false;
-                        while (!stop){
-                            HashMap<Integer,CarreauPropriete> listP= new HashMap<>();
-                            TexteUI.message("Ses propriété(s) :");
-                            int i = 1;
-                            for (Compagnie c : j2.getCompagnies()){
-                                TexteUI.message("Propriété n°"+i+" : "+c.getNom());
-                                listP.put(i, c);
-                                i++;
-                            }
-                            for (Gare g : j2.getGares()){
-                                TexteUI.message("Propriété n°"+i+" : "+g.getNom());
-                                listP.put(i, g);
-                                i++;
-                            }
-                            //for (ProprieteAConstruire p : j2.getProprietesAConstruire()){
-                            for (CouleurPropriete c : CouleurPropriete.values()) {
-                                if (!j2.getProprietesAConstruire(c).isEmpty()) {
-                                    int immo = 0;
-                                    for (ProprieteAConstruire p : j2.getProprietesAConstruire(c)) {
-                                        immo+=p.getImmobilier();
-                                    }
-                                    if (immo==0) {
-                                        for (ProprieteAConstruire p : j2.getProprietesAConstruire(c)) {
-                                            TexteUI.message("Propriété n°"+i+" : "+p.getNom());
-                                            TexteUI.message("Groupe : "+p.getGroupe());
-                                            listP.put(i,p);
-                                            i++;
-                                        }
-                                    }
-                                }
-                            }
-                            int num = Integer.valueOf(TexteUI.question("Quelle propriete voulez-vous ? (numéro)"));
-                            echangeJ2.addP(listP.get(num));
-                            String rep2 = TexteUI.question("Voulez-vous une autre propriété de ce joueur ? (oui/non)");
-                            if (!rep2.equals("oui")){
-                                stop = true;
-                            }
-                        }
-                        Echange echangeJ1 = new Echange(j1);
-                        boolean stop2 = false;
-                        while (!stop2){
-                            HashMap<Integer,CarreauPropriete> listP= new HashMap<>();
-                            TexteUI.message("Vos propriété(s) :");
-                            int i = 1;
-                            for (Compagnie c : j1.getCompagnies()){
-                                TexteUI.message("Propriété n°"+i+" : "+c.getNom());
-                                listP.put(i, c);
-                                i++;
-                            }
-                            for (Gare g : j1.getGares()){
-                                TexteUI.message("Propriété n°"+i+" : "+g.getNom());
-                                listP.put(i, g);
-                                i++;
-                            }
-                            for (CouleurPropriete c : CouleurPropriete.values()) {
-                                if (!j1.getProprietesAConstruire(c).isEmpty()) {
-                                    int immo = 0;
-                                    for (ProprieteAConstruire p : j1.getProprietesAConstruire(c)) {
-                                        immo+=p.getImmobilier();
-                                    }
-                                    if (immo==0) {
-                                        for (ProprieteAConstruire p : j1.getProprietesAConstruire(c)) {
-                                            TexteUI.message("Propriété n°"+i+" : "+p.getNom());
-                                            TexteUI.message("Groupe : "+p.getGroupe());
-                                            listP.put(i,p);
-                                            i++;
-                                        }
-                                    }
-                                }
-                            }
-                            int num = Integer.valueOf(TexteUI.question("Quelle propriété proposez-vous? (numéro)"));
-                            echangeJ1.addP(listP.get(num));
-                            String rep2 = TexteUI.question("Voulez-vous proposer une autre propriété ? (oui/non)");
-                            if (!rep2.equals("oui")){
-                                stop2 = true;
-                            }
-                        }
-                        TexteUI.message(j2.getNomJoueur()+", "+j1.getNomJoueur()+" vous a proposé un échange.\nIl vous demande :");
-                        for (CarreauPropriete cp : echangeJ2.getListP()){
-                            TexteUI.message(cp.getNom());
-                        }
-                        TexteUI.message("Et il vous propose :");
-                        for (CarreauPropriete cp : echangeJ1.getListP()){
-                            TexteUI.message(cp.getNom());
-                        }
-                        String rep3 = TexteUI.question("Acceptez-vous l'échange ? (oui/non)");
-                        if (rep3.equals("oui")){
-                            for (CarreauPropriete cp : echangeJ1.getListP()){
-                                cp.setProprietaire(j2);
-                            }
-                            for (CarreauPropriete cp : echangeJ2.getListP()){
-                                cp.setProprietaire(j1);
-                            }
-                        }
-                        
-                     }
-                     }
-        }
+         
                 
         public PaquetsCartes getPaquetsCartes() {
             return cartes;

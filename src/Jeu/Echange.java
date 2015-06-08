@@ -31,11 +31,18 @@ public class Echange {
         comp = new ArrayList<>();
         pri = new ArrayList<>();
         listP = new ArrayList<>();
+        somme =0;
     }
 
     public Joueur getJoueur() {
         return joueur;
     }
+
+    public void setSomme(int somme) {
+        this.somme = somme;
+    }
+    
+    
 
     public void setJoueur(Joueur joueur) {
         this.joueur = joueur;
