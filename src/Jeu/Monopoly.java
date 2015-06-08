@@ -125,11 +125,11 @@ public class Monopoly {
                     Joueur j = new Joueur(nomJ, this);
                     joueursTemp.add(j);
                     TexteUI.message("Somme du premier lancé de dés : " + j.getSommeDesDepart());
-                    String c = GraphUI.questionBinaire("Voules-vous ajouter un nouveau joueur? (oui/non)");
+                    String c = TexteUI.question("Voules-vous ajouter un nouveau joueur? (oui/non)");
                         if (!c.equals("oui")){
                             nJ = false;
                             trierListeJoueurs(joueursTemp);
-                            for (Joueur joueur : joueursTemp) {
+                            /*for (Joueur joueur : joueursTemp) {
                                 for (Joueur joueurF : joueursTemp) {
                                     if(joueur != joueurF) {
                                         if (joueur.getSommeDesDepart()!=joueurF.getSommeDesDepart()) {
@@ -152,7 +152,8 @@ public class Monopoly {
                                         }
                                     }
                                 }
-                            }
+                            }*/
+                            joueurs=joueursTemp;
                             TexteUI.message("Ordre des joueurs");
                             for (Joueur jou : joueurs) {
                                 TexteUI.message(""+ jou.getNomJoueur());
@@ -235,6 +236,7 @@ public class Monopoly {
                         twice = false;
                     }else{
                         this.action(aJ);
+                        twice=false;
                     }
                     s = 0;
                 }
@@ -259,7 +261,7 @@ public class Monopoly {
             }
             // Donne des informations sur la somme des dés, la position actuelle du joueur et la position qu'il occupe après avoir avancé.
             TexteUI.message("Ancien Carreau : "+aJ.getPositionCourante().getNom());
-            Avancer(aJ, sD);
+            Avancer(aJ, 1);
             TexteUI.message("Carreau Actuel : "+aJ.getPositionCourante().getNom());
             // Donne les noms, positions, argent, propriétés de tous les joueurs de la partie.
             /*for (Joueur j : joueurs){

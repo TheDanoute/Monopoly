@@ -42,8 +42,13 @@ public class CarteMouvement extends Carte{
         TexteUI.message(this.getDescription());
         if (verifDep && j.getPositionCourante().getNum()>carreau){
             j.addCash(200);
+           
         }
         j.setPositionCourante(carreau);
-        j.getMonopoly().getCarreau(carreau).action(j);
+        if (verifDep) {
+            j.getMonopoly().getCarreau(carreau).action(j);
+        } else {
+            j.enPrison();
+        }
     }
 }

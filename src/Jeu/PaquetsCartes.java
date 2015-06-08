@@ -48,13 +48,13 @@ public class PaquetsCartes {
                         }
                     case "M":
                         {
-                            CarteMouvement c = new CarteMouvement(data.get(i)[0],data.get(i)[2],Integer.valueOf(data.get(i)[3]),false);
+                            CarteMouvement c = new CarteMouvement(data.get(i)[0],data.get(i)[2],Integer.valueOf(data.get(i)[3]),true);
                             this.addCarte(c);
                             break;
                         }
                     case "MA":
                         {
-                            CarteMouvement c = new CarteMouvement(data.get(i)[0],data.get(i)[2],Integer.valueOf(data.get(i)[3]),true);
+                            CarteMouvement c = new CarteMouvement(data.get(i)[0],data.get(i)[2],Integer.valueOf(data.get(i)[3]),false);
                             this.addCarte(c);
                             break;
                         }
