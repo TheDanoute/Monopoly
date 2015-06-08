@@ -123,37 +123,14 @@ public class Monopoly {
                 while (nJ) {
                     String nomJ = TexteUI.question("Nom du joueur : ");
                     Joueur j = new Joueur(nomJ, this);
-                    joueursTemp.add(j);
-                    TexteUI.message("Somme du premier lancé de dés : " + j.getSommeDesDepart());
+                    joueurs.add(j);
+                    TexteUI.message("Premier lancé de dés : " + j.getDesDepart());
                     String c = TexteUI.question("Voules-vous ajouter un nouveau joueur? (oui/non)");
                         if (!c.equals("oui")){
                             nJ = false;
-                            trierListeJoueurs(joueursTemp);
-                            /*for (Joueur joueur : joueursTemp) {
-                                for (Joueur joueurF : joueursTemp) {
-                                    if(joueur != joueurF) {
-                                        if (joueur.getSommeDesDepart()!=joueurF.getSommeDesDepart()) {
-                                            joueurs.add(joueur);
-                                            joueursTemp.remove(joueur);
-                                        } else{
-                                            int nvLancerJ1 = lancerDe();
-                                            int nvLancerJ2 = lancerDe();
-                                            if (nvLancerJ2<nvLancerJ1) {
-                                                joueurs.add(joueurF);
-                                                joueurs.add(joueur);
-                                                joueursTemp.remove(joueurF);
-                                                joueursTemp.remove(joueur);
-                                            } else {
-                                                joueurs.add(joueur);
-                                                joueurs.add(joueurF);
-                                                joueursTemp.remove(joueurF);
-                                                joueursTemp.remove(joueur);
-                                            }
-                                        }
-                                    }
-                                }
-                            }*/
-                            joueurs=joueursTemp;
+                            
+                            joueurs = trieRecursif(joueurs); //Méthode recursif
+                            
                             TexteUI.message("Ordre des joueurs");
                             for (Joueur jou : joueurs) {
                                 TexteUI.message(""+ jou.getNomJoueur());
@@ -161,12 +138,59 @@ public class Monopoly {
                         }
                 }
 	}
-                
+        
+        private ArrayList<Joueur> trieRecursif(ArrayList<Joueur> list) {
+            trierListeJoueurs(list);
+            int compteur1 = 0;
+            int compteur2 = 1;
+            int i = 0;
+            ArrayList<Joueur> listTemp = new ArrayList<>();
+            while(i<list.size()-1) {
+                if (list.get(compteur1).getDesDepart()==list.get(compteur2).getDesDepart()) {
+                    compteur2++;
+                } else {
+                    if (compteur2-compteur1<2) {
+                        compteur1=compteur2;
+                        compteur2++;
+                    } else {
+                        for (int j = compteur1;j<compteur2;j++){
+                            int value = lancerDe();
+                            TexteUI.message("Etant arriver ex aequo, " + list.get(j).getNomJoueur() + " relance le dé et obtient : " + value);
+                            list.get(j).setDesDepart(value);
+                            listTemp.add(list.get(j));
+                        }
+                        for (Joueur jou : trieRecursif(listTemp)) {
+                            list.set(compteur1, jou);
+                            compteur1++;         
+                        }
+                        listTemp.clear();
+                        compteur2++;
+                    }
+                }
+                i++;
+            }
+            if (compteur2-compteur1>=2) {
+                for (int j = compteur1;j<compteur2;j++){
+                    int value = lancerDe();
+                    TexteUI.message("Etant arriver ex aequo, " + list.get(j).getNomJoueur() + " relance le dé et obtient : " + value);
+                    list.get(j).setDesDepart(value);
+                    listTemp.add(list.get(j));
+                }
+                for (Joueur jou : trieRecursif(listTemp)) {
+                    list.set(compteur1, jou);
+                    compteur1++;
+                }
+            } else {
+                compteur1=compteur2;
+            }
+            return list;
+        }
+                     
         public void trierListeJoueurs(ArrayList<Joueur> listeJoueurs) {
             Collections.sort(listeJoueurs, new Comparator<Joueur>() {
                 @Override
                 public int compare(Joueur j1, Joueur j2) {
-                return Integer.compare(j1.getSommeDesDepart(),j2.getSommeDesDepart());
+                return Integer.compare(j2.getDesDepart(),j1.getDesDepart());
                 }   
             });
         }

@@ -16,7 +16,7 @@ public class Joueur {
         private int compDouble;
         private int enPrison;
         private ArrayList<Carte> cartePrison ;
-        private int sommeDesDepart;
+        private int desDepart;
 
     public Joueur(String nomJoueur, Monopoly monopoly) {
         this.nomJoueur = nomJoueur;
@@ -26,7 +26,7 @@ public class Joueur {
         compagnies = new ArrayList<>();
         gares = new ArrayList<>();
         proprietesAConstruire = new ArrayList<>();
-        sommeDesDepart = monopoly.lancerDe();
+        desDepart = Integer.valueOf(TexteUI.question(""));
         cartePrison = new ArrayList<>();
         this.setPositionCourante(1);
     }
@@ -173,12 +173,12 @@ public class Joueur {
             return compagnies.size();
         }
         
-        public int getSommeDesDepart() {
-            return sommeDesDepart;
+        public int getDesDepart() {
+            return desDepart;
         }
         
-        protected void setSommeDesDepart(int newsomme) {
-            this.sommeDesDepart=newsomme;
+        protected void setDesDepart(int newsomme) {
+            this.desDepart=newsomme;
         }
         
         public void addPropriete(ProprieteAConstruire p) {
