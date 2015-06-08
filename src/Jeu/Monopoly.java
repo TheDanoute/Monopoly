@@ -41,7 +41,7 @@ public class Monopoly {
                                              groupe = new Groupe(Integer.valueOf(data.get(i)[11]),couleur);
                                         }
                                         TexteUI.message("Propriété :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1] + "\tCouleur : " + couleur);
-                                        ArrayList<Integer> prix = new ArrayList<>();
+                                        ArrayList<Integer> prix = new ArrayList<>(); //Création de la liste de prix de loyer
                                         for (int j=5;j<11;j++) {
                                             prix.add(Integer.valueOf(data.get(i)[j]));
                                         }
@@ -141,46 +141,46 @@ public class Monopoly {
         
         private ArrayList<Joueur> trieRecursif(ArrayList<Joueur> list) {
             trierListeJoueurs(list);
-            int compteur1 = 0; //
+            int compteur = 0; //Compteur qui bloque la première itération identique
             int i = 0;
-            ArrayList<Joueur> listTemp = new ArrayList<>();
+            ArrayList<Joueur> listTemp = new ArrayList<>();//Liste des joueurs ayant obtenu le même score
             while(i<list.size()-1) {
-                if (list.get(compteur1).getDesDepart()==list.get(i+1).getDesDepart()) {
-                } else {
-                    if (i+1-compteur1<2) {
-                        compteur1=i+1;
+                if (list.get(compteur).getDesDepart()!=list.get(i+1).getDesDepart()) {
+                    if (i-compteur<1) { //Le compteur augmente si il n'y a pas eu d'itération identique précédemment
+                        compteur=i+1;
                     } else {
-                        for (int j = compteur1;j<i+1;j++){
-                            int value = lancerDe();
+                        for (int j = compteur;j<=i;j++){ //Boucle des joueurs ayant obtenu le même score
+                            int value = lancerDe(); 
                             TexteUI.message("Etant arriver ex aequo, " + list.get(j).getNomJoueur() + " relance le dé et obtient : " + value);
                             list.get(j).setDesDepart(value);
                             listTemp.add(list.get(j));
                         }
-                        for (Joueur jou : trieRecursif(listTemp)) {
-                            list.set(compteur1, jou);
-                            compteur1++;         
+                        for (Joueur jou : trieRecursif(listTemp)) { //Tri de la liste temporaire par la même méthode
+                            list.set(compteur, jou); //Remplissage pas à pas depuis la première itération (gelé par le compteur)
+                            compteur++;         
                         }
                         listTemp.clear();
                     }
+                } else {
                 }
                 i++;
             }
-            if (i+1-compteur1>=2) {
-                for (int j = compteur1;j<i+1;j++){
+            if (i-compteur>=1) { //Test si la fin de la liste contient des valeurs identiques
+                for (int j = compteur;j<=i;j++){
                     int value = lancerDe();
                     TexteUI.message("Etant arriver ex aequo, " + list.get(j).getNomJoueur() + " relance le dé et obtient : " + value);
                     list.get(j).setDesDepart(value);
                     listTemp.add(list.get(j));
                 }
                 for (Joueur jou : trieRecursif(listTemp)) {
-                    list.set(compteur1, jou);
-                    compteur1++;
+                    list.set(compteur, jou);
+                    compteur++;
                 }
             }
-            return list;
+            return list; //retourne le nouvel ordre de joueurs
         }
                      
-        public void trierListeJoueurs(ArrayList<Joueur> listeJoueurs) {
+        public void trierListeJoueurs(ArrayList<Joueur> listeJoueurs) { //Méthode permetant de trier une liste de joueur par ordre décroissant de leur résultat du lancé de dé
             Collections.sort(listeJoueurs, new Comparator<Joueur>() {
                 @Override
                 public int compare(Joueur j1, Joueur j2) {
@@ -333,29 +333,29 @@ public class Monopoly {
         
          public void construire(Joueur j) {
             TexteUI.message("Construction :");
-            HashMap<CouleurPropriete,ArrayList<ProprieteAConstruire>> list = new HashMap<>();
+            HashMap<CouleurPropriete,ArrayList<ProprieteAConstruire>> list = new HashMap<>(); //Liste par groupe de couleur de toutes les proprietes du joueur
             for (ProprieteAConstruire p : j.getProprietesAConstruire()) {
-                if (!list.containsKey(p.getGroupe().getCouleur())) {
+                if (!list.containsKey(p.getGroupe().getCouleur())) { //Création de la nouvel liste (dans la hashmap) pour un nouveau groupe
                     ArrayList<ProprieteAConstruire> sousList = new ArrayList<>();
-                    list.put(p.getGroupe().getCouleur(),sousList);
+                    list.put(p.getGroupe().getCouleur(),sousList); //Nouvelle valeur de hashMap
                 }
-                list.get(p.getGroupe().getCouleur()).add(p);
+                list.get(p.getGroupe().getCouleur()).add(p); //Nouvelle valeur de l'arrayList de la hashMap
             }
-            for (CouleurPropriete c : list.keySet()) {
+            for (CouleurPropriete c : list.keySet()) { //Boucle de vérification pour les groupes complets disponibles à la construction
                 if (list.get(c).size()!=list.get(c).get(0).getNbPropriete()) {
                     list.remove(c);
                 }
             }
             
             if (list.isEmpty()) {
-                TexteUI.message("Vous ne possédez aucun groupe de proprietes complet...");
+                TexteUI.message("Vous ne possédez aucun groupe de proprietes complet..."); //fin
             } else {
                 TexteUI.message("Vous possédez les groupes :");
                 for (CouleurPropriete c : list.keySet()) {
                     TexteUI.message(c.toString());
                 }
-                boolean ok = false;
-                CouleurPropriete coul = CouleurPropriete.bleuCiel;
+                boolean ok = false; //Boolean anti-faute de frappe
+                CouleurPropriete coul = CouleurPropriete.bleuCiel; //Initialisation de variable
                 do {
                     try {
                         coul = CouleurPropriete.valueOf(TexteUI.question("Sur quel groupe voulez vous construire ?"));
@@ -365,14 +365,14 @@ public class Monopoly {
                             TexteUI.message("Cette couleur ne fais pas partie de la liste");
                         }
                     } catch(java.lang.IllegalArgumentException e) {
-                        TexteUI.message("Erreur, recommencez. (Sensible à la case)");
+                        TexteUI.message("Erreur, recommencez. (Sensible à la casse)");
                     }
                 } while (!ok);
-                        ArrayList<ProprieteAConstruire> listP = list.get(coul);
-                        boolean stop = false;
+                        ArrayList<ProprieteAConstruire> listP = list.get(coul); //Récupération des proprietes du groupe selectionné
+                        boolean stop = false; //Boolean de construction rapide dans sur les mêmes propriétés
                         while (!stop) {
-                            int max = listP.get(0).getImmobilier();
-                            boolean onAChanger = false;
+                            int max = listP.get(0).getImmobilier(); //Max sera la valeur immobilère max des terrains (0 à 5)
+                            boolean onAChanger = false; //Restera false si les terrains ont le même nombre d'immobilier
                             for (ProprieteAConstruire p : listP) {
                                 if (p.getImmobilier()!=max) {
                                     onAChanger = true;
@@ -383,29 +383,29 @@ public class Monopoly {
                             }
                             if (!onAChanger && max==5) {
                                 stop=true;
-                                TexteUI.message("Tous ces terrains on déjà des hotels, impossible de construire dessus");
+                                TexteUI.message("Tous ces terrains on déjà des hotels, impossible de construire dessus"); //fin
                             } else {
-                                HashMap<Integer,ProprieteAConstruire> listPPotentiel = new HashMap<>();
+                                HashMap<Integer,ProprieteAConstruire> listPPotentiel = new HashMap<>(); //Liste contenant les proprietés constructibles
                                 if (!onAChanger) {
-                                    max++;
+                                    max++; //Tous les terrains ont la même valeur immobilière mais pas encore d'hotel
                                 }
                                 TexteUI.message("Vous pouvez construire sur :");
                                 for (ProprieteAConstruire p : listP) {
                                         if (p.getImmobilier()<max) {
-                                        listPPotentiel.put(p.getNum(), p);
+                                        listPPotentiel.put(p.getNum(), p); //Remplissage de la liste
                                         TexteUI.message(p.getNom() + " ; Construction existante : "+ p.getImmobilierString() + " ; n°" + p.getNum());
                                         }
                                 }
-                                if (max>4 && this.getNbHotels()<1) {
+                                if (max>4 && this.getNbHotels()<1) { //Vérification de maisons et hotels restant à la banque
                                     TexteUI.message("La banque n'a malheuresement plus d'hotel en stock, vous ne pouvez pas construire sur ces terrains...");
                                     stop = true;
                                 } else if (max<5 && this.getNbMaisons()<1) {
                                     TexteUI.message("La banque n'a malheuresement plus de maison en stock, vous ne pouvez pas construire sur ces terrains...");
                                     stop = true;
-                                } else {
-                                    String num = TexteUI.question("Sur quel numéro voulez construire ?");
+                                } else { //Choix du terrain
+                                    String num = TexteUI.question("Sur quel numéro voulez construire ? (numéro)");
                                     listPPotentiel.get(Integer.valueOf(num)).construire();
-                                    if (TexteUI.question("Voulez-vous construire une autre maison/hotel ? (oui/non)").equals("non")) {
+                                    if (TexteUI.question("Voulez-vous construire une autre maison/hotel ? (oui/non)").equals("non")) { //Boucle de reconstruction rapide
                                         stop = true;
                                     }
                                 }
@@ -413,6 +413,65 @@ public class Monopoly {
                         }
                     }
         }
+         
+         public void vendre(Joueur j) {
+             HashMap<CouleurPropriete,ArrayList<ProprieteAConstruire>> listP = new HashMap<>();
+             TexteUI.message("Liste des groupe avec des construction(s) :");
+             ArrayList<ProprieteAConstruire> pros;
+             for (CouleurPropriete c : CouleurPropriete.values()) {
+                 pros = j.getProprietesAConstruire(c);
+                 if (!pros.isEmpty() && pros.get(0).getNbPropriete()==pros.size()) {
+                    int immo = 0;
+                     for(ProprieteAConstruire p : pros) {
+                        immo+=p.getImmobilier();
+                    }
+                    if (immo>0) {
+                        TexteUI.message(pros.get(0).getCouleur().toString());
+                        listP.put(pros.get(0).getCouleur(), pros);
+                    } 
+                 }
+             }
+             boolean ok = false; //Boolean anti-faute de frappe
+                CouleurPropriete coul = CouleurPropriete.bleuCiel; //Initialisation de variable
+                do {
+                    try {
+                        coul = CouleurPropriete.valueOf(TexteUI.question("Sur quel groupe voulez vous détruire ?"));
+                        if (listP.containsKey(coul)) {
+                            ok = true;
+                        } else {
+                            TexteUI.message("Cette couleur ne fais pas partie de la liste");
+                        }
+                    } catch(java.lang.IllegalArgumentException e) {
+                        TexteUI.message("Erreur, recommencez. (Sensible à la casse)");
+                    }
+                } while (!ok);
+            pros = listP.get(coul);
+            boolean stop = false;
+            while (!stop) {
+                int min = pros.get(0).getImmobilier(); 
+                boolean onAChanger = false; 
+                for (ProprieteAConstruire p : pros) {
+                     if (p.getImmobilier()!=min) {
+                         onAChanger = true;
+                         if (p.getImmobilier()<min) {
+                             min = p.getImmobilier();
+                         }
+                    }
+                }
+                if (!onAChanger) {
+                    min--;
+                }
+                for (ProprieteAConstruire p : pros) {
+                    if (p.getImmobilier()<=min) {
+                        pros.remove(p);
+                    }
+                }
+                TexteUI.message("Vous pouvez détruire sur les proprietes suivantes : (attention les hotels ne rendront pas des maisons)");
+                for (ProprieteAConstruire p : pros) {
+                     
+                }
+            }
+         }
          
         /*  public void echanger(Joueur j1) {
              TexteUI.message("Echange :"); 
