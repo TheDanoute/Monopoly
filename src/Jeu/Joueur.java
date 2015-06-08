@@ -26,7 +26,7 @@ public class Joueur {
         compagnies = new ArrayList<>();
         gares = new ArrayList<>();
         proprietesAConstruire = new ArrayList<>();
-        desDepart = Integer.valueOf(TexteUI.question(""));
+        desDepart = monopoly.lancerDe();
         cartePrison = new ArrayList<>();
         this.setPositionCourante(1);
     }

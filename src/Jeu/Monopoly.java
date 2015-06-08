@@ -129,7 +129,7 @@ public class Monopoly {
                         if (!c.equals("oui")){
                             nJ = false;
                             
-                            joueurs = trieRecursif(joueurs); //Méthode recursif
+                            joueurs = trieRecursif(joueurs); //Méthode recursive
                             
                             TexteUI.message("Ordre des joueurs");
                             for (Joueur jou : joueurs) {
@@ -299,7 +299,7 @@ public class Monopoly {
             }
             // Donne des informations sur la somme des dés, la position actuelle du joueur et la position qu'il occupe après avoir avancé.
             TexteUI.message("Ancien Carreau : "+aJ.getPositionCourante().getNom());
-            Avancer(aJ, sD);
+            Avancer(aJ, 1);
             TexteUI.message("Carreau Actuel : "+aJ.getPositionCourante().getNom());
             // Donne les noms, positions, argent, propriétés de tous les joueurs de la partie.
             /*for (Joueur j : joueurs){
@@ -539,12 +539,22 @@ public class Monopoly {
                                 listP.put(i, g);
                                 i++;
                             }
-                            for (ProprieteAConstruire p : j2.getProprietesAConstruire()){
-                                TexteUI.message("Propriété n°"+i+" : "+p.getNom());
-                                listP.put(i, p);
-                                i++;
-                                TexteUI.message("Groupe : "+p.getGroupe());
-                                TexteUI.message("Avec "+p.getImmobilier()+" construction(s)");
+                            //for (ProprieteAConstruire p : j2.getProprietesAConstruire()){
+                            for (CouleurPropriete c : CouleurPropriete.values()) {
+                                if (!j2.getProprietesAConstruire(c).isEmpty()) {
+                                    int immo = 0;
+                                    for (ProprieteAConstruire p : j2.getProprietesAConstruire(c)) {
+                                        immo+=p.getImmobilier();
+                                    }
+                                    if (immo==0) {
+                                        for (ProprieteAConstruire p : j2.getProprietesAConstruire(c)) {
+                                            TexteUI.message("Propriété n°"+i+" : "+p.getNom());
+                                            TexteUI.message("Groupe : "+p.getGroupe());
+                                            listP.put(i,p);
+                                            i++;
+                                        }
+                                    }
+                                }
                             }
                             int num = Integer.valueOf(TexteUI.question("Quelle propriete voulez-vous ? (numéro)"));
                             echangeJ2.addP(listP.get(num));
@@ -569,12 +579,21 @@ public class Monopoly {
                                 listP.put(i, g);
                                 i++;
                             }
-                            for (ProprieteAConstruire p : j1.getProprietesAConstruire()){
-                                TexteUI.message("Propriété n°"+i+" : "+p.getNom());
-                                listP.put(i, p);
-                                i++;
-                                TexteUI.message("Groupe : "+p.getGroupe());
-                                TexteUI.message("Avec "+p.getImmobilier()+" construction(s)");
+                            for (CouleurPropriete c : CouleurPropriete.values()) {
+                                if (!j1.getProprietesAConstruire(c).isEmpty()) {
+                                    int immo = 0;
+                                    for (ProprieteAConstruire p : j1.getProprietesAConstruire(c)) {
+                                        immo+=p.getImmobilier();
+                                    }
+                                    if (immo==0) {
+                                        for (ProprieteAConstruire p : j1.getProprietesAConstruire(c)) {
+                                            TexteUI.message("Propriété n°"+i+" : "+p.getNom());
+                                            TexteUI.message("Groupe : "+p.getGroupe());
+                                            listP.put(i,p);
+                                            i++;
+                                        }
+                                    }
+                                }
                             }
                             int num = Integer.valueOf(TexteUI.question("Quelle propriété proposez-vous? (numéro)"));
                             echangeJ1.addP(listP.get(num));
