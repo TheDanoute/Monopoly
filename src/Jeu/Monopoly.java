@@ -207,7 +207,9 @@ public class Monopoly {
                     this.action(aJ);
                     twice = false;
                 } else {
-                    twice = lancerDesAvancer(aJ,s);
+                    CartePrison c = new CartePrison("CC","");
+                    aJ.
+                    twice = lancerDesAvancer(aJ,31);
                     if (twice) {
                       comp++;  
                     }
@@ -345,10 +347,18 @@ public class Monopoly {
                                         TexteUI.message(p.getNom() + " ; Construction existante : "+ p.getImmobilierString() + " ; n°" + p.getNum());
                                         }
                                 }
-                                String num = TexteUI.question("Sur quel numéro voulez construire ?");
-                                listPPotentiel.get(Integer.valueOf(num)).construire();
-                                if (TexteUI.question("Voulez-vous construire une autre maison/hotel ? (oui/non)").equals("non")) {
+                                if (max>4 && this.getNbHotels()<1) {
+                                    TexteUI.message("La banque n'a malheuresement plus d'hotel en stock, vous ne pouvez pas construire sur ces terrains...");
                                     stop = true;
+                                } else if (max<5 && this.getNbMaisons()<1) {
+                                    TexteUI.message("La banque n'a malheuresement plus de maison en stock, vous ne pouvez pas construire sur ces terrains...");
+                                    stop = true;
+                                } else {
+                                    String num = TexteUI.question("Sur quel numéro voulez construire ?");
+                                    listPPotentiel.get(Integer.valueOf(num)).construire();
+                                    if (TexteUI.question("Voulez-vous construire une autre maison/hotel ? (oui/non)").equals("non")) {
+                                        stop = true;
+                                    }
                                 }
                             }
                         }
@@ -396,6 +406,36 @@ public class Monopoly {
      */
     public void setNbHotels(int nbHotels) {
         this.nbHotels = nbHotels;
+    }
+    
+    public boolean removeHotel() {
+        if (nbHotels>0) {    
+            nbHotels--;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public void addHotel() {
+        nbHotels++;
+    }
+    
+    public boolean removeMaison() {
+        if (nbMaisons>0) {    
+            nbMaisons--;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public void addMaison() {
+        nbMaisons++;
+    }
+    
+    public void addMaison(int i) {
+        nbMaisons+=i;
     }
 
     /**

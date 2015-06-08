@@ -10,6 +10,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
 	private ArrayList<Integer> loyers;
 	private Groupe groupe;
         private int prixMaison;
+        private boolean hypotheque;
 
 	public ProprieteAConstruire(int num,String nom,Monopoly m,int p,ArrayList<Integer> l,Groupe g,int pM){
             super(num,nom,m,p);
@@ -17,15 +18,29 @@ public class ProprieteAConstruire extends CarreauPropriete {
             this.setLoyers(l);
             this.setGroupe(g);
             this.setPrixMaison(pM);
+            
         }
         
         public int getLoyer(){
-            return loyers.get(immobilier);
+            if (super.getProprietaire().getProprietesAConstruire(this.getCouleur()).size()==this.getNbPropriete() && immobilier==0) {
+                return loyers.get(immobilier)*2;
+            } else {
+                return loyers.get(immobilier);
+            }
         }
         
         public ArrayList<Integer> getListLoyers() {
             return loyers;
         }
+
+        public boolean isHypotheque() {
+            return hypotheque;
+        }
+
+        public void setHypotheque(boolean hypotheque) {
+            this.hypotheque = hypotheque;
+        }
+        
         
         private void setLoyers(ArrayList<Integer> l){
             loyers=l;
@@ -117,7 +132,14 @@ public class ProprieteAConstruire extends CarreauPropriete {
             } else {
                 this.getProprietaire().removeCash(this.getPrixMaison());
                 this.addImmobilier();
+                if (this.getImmobilier()<5) {
+                    super.getMonopoly().removeMaison();
+                } else {
+                    super.getMonopoly().addMaison(4);
+                    super.getMonopoly().removeHotel();
+                }
                 TexteUI.message("Ce terrain dispose maintenant de : " + this.getImmobilierString());
+                TexteUI.message("Les joueurs qui passeront sur ce terrain payeront : " + this.getLoyer() + "€");
                 TexteUI.message("Il vous reste " + this.getProprietaire().getCash() + "€");
             }
         }
@@ -154,5 +176,11 @@ public class ProprieteAConstruire extends CarreauPropriete {
                 this.getProprietaire().addCash(this.getLoyer());
                 TexteUI.message("Le propriétaire a reçu son argent !");    
             }
+        }
+        
+        @Override
+        public String getDescription() {
+            String rep = super.getNom() + " ; Numéro : " + super.getNum() + " ; Groupe : " + this.getGroupe();
+            if 
         }
 }

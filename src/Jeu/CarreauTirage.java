@@ -26,6 +26,10 @@ public class CarreauTirage extends CarreauAction {
             c = this.getMonopoly().getPaquetsCartes().piochezCarteCommunautaire();
         }
         c.action(j);
-        this.getMonopoly().getPaquetsCartes().retourCarte(c);
+        if (c.getClass().toString().equals("CartePrison")) {
+            j.addCartePrison(c);
+        } else {
+            this.getMonopoly().getPaquetsCartes().retourCarte(c);
+        }
     }
 }

@@ -36,6 +36,7 @@ public abstract class CarreauPropriete extends Carreau {
 
 	public abstract int getNbPropriete();
         
+        public abstract String getDescription();
         
         
 }

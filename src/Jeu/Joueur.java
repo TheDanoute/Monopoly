@@ -15,7 +15,7 @@ public class Joueur {
 	private ArrayList<ProprieteAConstruire> proprietesAConstruire;
         private int compDouble;
         private int enPrison;
-        private ArrayList<CartePrison> cartePrison ;
+        private ArrayList<Carte> cartePrison ;
         private int sommeDesDepart;
 
     public Joueur(String nomJoueur, Monopoly monopoly) {
@@ -96,7 +96,7 @@ public class Joueur {
         }
         
         public void utilCartePrison(){
-            CartePrison c = cartePrison.get(0);
+            Carte c = cartePrison.get(0);
             c.action(this);
             cartePrison.remove(c);
             monopoly.retourCarte(c);
@@ -119,6 +119,11 @@ public class Joueur {
         public int getNBCartePrison() {
             return cartePrison.size();
         }
+        
+        public void addCartePrison(Carte c) {
+            cartePrison.add(c);
+        }
+        
 	public int getCash() {
 		return this.cash;
 	}
