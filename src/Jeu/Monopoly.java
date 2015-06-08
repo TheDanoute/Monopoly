@@ -141,19 +141,16 @@ public class Monopoly {
         
         private ArrayList<Joueur> trieRecursif(ArrayList<Joueur> list) {
             trierListeJoueurs(list);
-            int compteur1 = 0;
-            int compteur2 = 1;
+            int compteur1 = 0; //
             int i = 0;
             ArrayList<Joueur> listTemp = new ArrayList<>();
             while(i<list.size()-1) {
-                if (list.get(compteur1).getDesDepart()==list.get(compteur2).getDesDepart()) {
-                    compteur2++;
+                if (list.get(compteur1).getDesDepart()==list.get(i+1).getDesDepart()) {
                 } else {
-                    if (compteur2-compteur1<2) {
-                        compteur1=compteur2;
-                        compteur2++;
+                    if (i+1-compteur1<2) {
+                        compteur1=i+1;
                     } else {
-                        for (int j = compteur1;j<compteur2;j++){
+                        for (int j = compteur1;j<i+1;j++){
                             int value = lancerDe();
                             TexteUI.message("Etant arriver ex aequo, " + list.get(j).getNomJoueur() + " relance le dé et obtient : " + value);
                             list.get(j).setDesDepart(value);
@@ -164,13 +161,12 @@ public class Monopoly {
                             compteur1++;         
                         }
                         listTemp.clear();
-                        compteur2++;
                     }
                 }
                 i++;
             }
-            if (compteur2-compteur1>=2) {
-                for (int j = compteur1;j<compteur2;j++){
+            if (i+1-compteur1>=2) {
+                for (int j = compteur1;j<i+1;j++){
                     int value = lancerDe();
                     TexteUI.message("Etant arriver ex aequo, " + list.get(j).getNomJoueur() + " relance le dé et obtient : " + value);
                     list.get(j).setDesDepart(value);
@@ -180,8 +176,6 @@ public class Monopoly {
                     list.set(compteur1, jou);
                     compteur1++;
                 }
-            } else {
-                compteur1=compteur2;
             }
             return list;
         }
