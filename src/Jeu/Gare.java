@@ -54,4 +54,13 @@ public class Gare extends CarreauPropriete {
             super.setProprietaire(j);
             j.addGare(this);
         }
+        
+        @Override
+        public String getDescription() {
+            if (super.isHypotheque()) {
+                return "Gare HYPOTHEQUEE : " + super.getDescription();
+            } else {
+                return "Gare : " + super.getDescription();
+            }
+        }
 }

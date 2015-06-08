@@ -6,6 +6,7 @@
 
 package Jeu;
 
+import Ui.TexteUI;
 import java.util.ArrayList;
 
 /**
@@ -59,7 +60,34 @@ public class Echange {
     }
     
     public void description() {
-        
+        TexteUI.message("************************************************");
+        TexteUI.message("Argent à donner : " + somme);
+        TexteUI.message("************************************************");
+        if (!pro.isEmpty()) {
+            TexteUI.message("Liste de propriete(s) (" + pro.size() + ") :");
+            for (ProprieteAConstruire p : pro) {
+                TexteUI.message(p.getDescription());
+            }
+            TexteUI.message("************************************************");
+        }
+        if (!gare.isEmpty()) {
+            TexteUI.message("Liste de gare(s) (" + gare.size() + ") :");
+            for (Gare g : gare) {
+                TexteUI.message(g.getDescription());
+            }
+            TexteUI.message("************************************************");
+        }
+        if (!comp.isEmpty()) {
+            TexteUI.message("Liste de compagnie(s) (" + comp.size() + ") :");
+            for (Compagnie c : comp) {
+                TexteUI.message(c.getDescription());
+            }
+            TexteUI.message("************************************************");
+        }
+        if (!pri.isEmpty()) {
+           TexteUI.message("Nombre de carte sortie de prison : " + pri.size());
+           TexteUI.message("************************************************");
+        }
     }
     
 }

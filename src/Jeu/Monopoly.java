@@ -378,6 +378,28 @@ public class Monopoly {
                         }
                     }
         }
+         
+          public void echanger(Joueur j1) {
+             TexteUI.message("Echange :");
+             Joueur j2;
+             {
+                ArrayList<Joueur> listJoueur = new ArrayList<>();
+                int i = 1;
+                for (Joueur jTemp : joueurs) {
+                    if (j1!=jTemp) {
+                        TexteUI.message("Joueur n°" + i + " : " + jTemp.getNomJoueur());
+                        listJoueur.add(jTemp);
+                    }
+                }
+                j2 = listJoueur.get(Integer.valueOf(TexteUI.question("Avec quel joueur voulez-vous échanger ? (numéro)")));
+             }
+             Echange echangeJ1 = new Echange(j1);
+             Echange echangeJ2 = new Echange(j2);
+             boolean stop = false;
+             while (!stop) {
+                 
+             }
+        }
         
         public PaquetsCartes getPaquetsCartes() {
             return cartes;
