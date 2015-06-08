@@ -1,5 +1,6 @@
 package Jeu;
 
+import Ui.GraphUI;
 import Ui.TexteUI;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -124,7 +125,7 @@ public class Monopoly {
                     Joueur j = new Joueur(nomJ, this);
                     joueursTemp.add(j);
                     TexteUI.message("Somme du premier lancé de dés : " + j.getSommeDesDepart());
-                    String c = TexteUI.question("Voules-vous ajouter un nouveau joueur? (oui/non)");
+                    String c = GraphUI.questionBinaire("Voules-vous ajouter un nouveau joueur? (oui/non)");
                         if (!c.equals("oui")){
                             nJ = false;
                             trierListeJoueurs(joueursTemp);
@@ -159,7 +160,7 @@ public class Monopoly {
                         }
                 }
 	}
-        
+                
         public void trierListeJoueurs(ArrayList<Joueur> listeJoueurs) {
             Collections.sort(listeJoueurs, new Comparator<Joueur>() {
                 @Override
