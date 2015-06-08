@@ -545,6 +545,193 @@ public class Monopoly {
         }
         */
 
+         public void echanger(Joueur j1) {
+             TexteUI.message("Echange :"); 
+             Joueur j2;
+             {
+                ArrayList<Joueur> listJoueur = new ArrayList<>();
+                int i = 1;
+                for (Joueur jTemp : joueurs) {
+                    if (j1!=jTemp) {
+                        TexteUI.message("Joueur n°" + i + " : " + jTemp.getNomJoueur());
+                        TexteUI.message("Ses propriété(s) :");
+                    for (Compagnie c : jTemp.getCompagnies()){
+                        TexteUI.message(c.getNom());
+                    }
+                    for (Gare g : jTemp.getGares()){
+                        TexteUI.message(g.getNom());
+                    }
+                    for (ProprieteAConstruire p : jTemp.getProprietesAConstruire()){
+                        TexteUI.message(p.getNom());
+                        TexteUI.message("Groupe : "+p.getGroupe());
+                        TexteUI.message("Avec "+p.getImmobilier()+" construction(s)");
+                    }
+                        listJoueur.add(jTemp);
+                    }
+                }
+                j2 = listJoueur.get(Integer.valueOf(TexteUI.question("Avec quel joueur voulez-vous échanger ? (numéro)"))-1);
+             }
+             String rep = TexteUI.question("Que voulez-vous de " + j2.getNomJoueur() + " ? (propriete / carte)");
+             switch (rep) {
+                     case "propriete":
+                     {
+                        
+                        Echange echangeJ2 = new Echange(j2);
+                        boolean stop = false;
+                        boolean stop2 = false;
+                        boolean noTrade = false;
+                        HashMap<Integer,CarreauPropriete> listP2= new HashMap<>();
+                        while (!stop){
+                            TexteUI.message("Ses propriété(s) :");
+                            int i = 1;
+                            for (Compagnie c : j2.getCompagnies()){
+                                if (!echangeJ2.getListP().contains(c)){
+                                    TexteUI.message("Propriété n°"+i+" : "+c.getNom());
+                                    listP2.put(i, c);
+                                    i++;
+                                }
+                            }
+                            for (Gare g : j2.getGares()){
+                                if (!echangeJ2.getListP().contains(g)){
+                                    TexteUI.message("Propriété n°"+i+" : "+g.getNom());
+                                    listP2.put(i, g);
+                                    i++;
+                                }
+                            } 
+                            for (CouleurPropriete c : CouleurPropriete.values()) {
+                                if (!j2.getProprietesAConstruire(c).isEmpty()) {
+                                    int immo = 0;
+                                    for (ProprieteAConstruire p : j2.getProprietesAConstruire(c)) {
+                                        immo+=p.getImmobilier();
+                                    }
+                                    if (immo==0) {
+                                        for (ProprieteAConstruire p : j2.getProprietesAConstruire(c)) {
+                                            if (!echangeJ2.getListP().contains(p)){
+                                                TexteUI.message("Propriété n°"+i+" : "+p.getNom());
+                                                TexteUI.message("Groupe : "+p.getGroupe());
+                                                listP2.put(i,p);
+                                                i++; 
+                                            } 
+                                        }
+                                    }
+                                }
+                            }
+                            if (!listP2.isEmpty()){
+                                int num = Integer.valueOf(TexteUI.question("Quelle propriete voulez-vous ? (numéro)"));
+                                echangeJ2.addP(listP2.get(num));
+                                listP2.remove(num);
+                                String rep2 = TexteUI.question("Voulez-vous une autre propriété de ce joueur ? (oui/non)");
+                                if (!rep2.equals("oui")){
+                                    rep2=TexteUI.question("Voulez-vous qu'il rajoute de l'argent ? (oui/non)");
+                                    if(rep2.equals("oui")){
+                                        String arg =TexteUI.question("Somme :");
+                                        int somme= Integer.parseInt(arg);
+                                        echangeJ2.setSomme(somme);
+                                    }
+                                    stop=true;   
+                                }
+                            }else{
+                                TexteUI.message(j2.getNomJoueur()+" n'a pas de propriété échangeable");
+                                noTrade=true;
+                                stop=true;
+                            }
+                            
+                        }
+                        
+//************************************* J1 *******************************************************************************
+                        if (!noTrade){
+                        Echange echangeJ1 = new Echange(j1);
+                        HashMap<Integer,CarreauPropriete> listP1= new HashMap<>();
+                        while (!stop2){
+                            TexteUI.message("Vos propriété(s) :");
+                            int i = 1;
+                            for (Compagnie c : j1.getCompagnies()){
+                                if (!echangeJ1.getListP().contains(c)){
+                                    TexteUI.message("Propriété n°"+i+" : "+c.getNom());
+                                    listP1.put(i, c);
+                                    i++;
+                                }
+                            }
+                            for (Gare g : j1.getGares()){
+                                if (!echangeJ1.getListP().contains(g)){
+                                    TexteUI.message("Propriété n°"+i+" : "+g.getNom());
+                                    listP1.put(i, g);
+                                    i++;
+                                }
+                            }
+                            for (CouleurPropriete c : CouleurPropriete.values()) {
+                                if (!j1.getProprietesAConstruire(c).isEmpty()) {
+                                    int immo = 0;
+                                    for (ProprieteAConstruire p : j1.getProprietesAConstruire(c)) {
+                                        immo+=p.getImmobilier();
+                                    }
+                                    if (immo==0) {
+                                        for (ProprieteAConstruire p : j1.getProprietesAConstruire(c)) {
+                                            if (!echangeJ1.getListP().contains(p)){
+                                                TexteUI.message("Propriété n°"+i+" : "+p.getNom());
+                                                TexteUI.message("Groupe : "+p.getGroupe());
+                                                listP1.put(i,p);
+                                                i++;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            if (!listP1.isEmpty()){
+                                int num = Integer.valueOf(TexteUI.question("Quelle propriete proposez-vous ? (numéro)"));
+                                echangeJ1.addP(listP1.get(num));
+                                listP1.remove(num);
+                                String rep2 = TexteUI.question("Voulez-vous proposer une autre propriété ? (oui/non)");
+                                if (!rep2.equals("oui")){
+                                   
+                                    stop2=true;
+                                    
+                                }
+                            }else{
+                                TexteUI.message(j1.getNomJoueur()+" n'a pas de propriété échangeable");
+                                noTrade=true;
+                                stop2=true;
+                            }
+                        }
+                                String rep2=TexteUI.question("Voulez-vous ajouter de l'argent ? (oui/non)");
+                                if(rep2.equals("oui")){
+                                        String arg =TexteUI.question("Somme :");
+                                        int somme= Integer.parseInt(arg);
+                                        echangeJ1.setSomme(somme);
+                                    }
+                        
+                            if (noTrade && echangeJ1.getSomme()==0){
+                                TexteUI.message("Pas d'échange possible, vous n'avez rien proposé.");
+                            }else{
+                                TexteUI.message(j2.getNomJoueur()+", "+j1.getNomJoueur()+" vous a proposé un échange.\nIl vous demande :");
+                                for (CarreauPropriete cp : echangeJ2.getListP()){
+                                    TexteUI.message(cp.getNom());
+                                }
+                                TexteUI.message(String.valueOf(echangeJ2.getSomme())+"€");
+                                TexteUI.message("Et il vous propose :");
+                                for (CarreauPropriete cp : echangeJ1.getListP()){
+                                    TexteUI.message(cp.getNom());
+                                }
+                                TexteUI.message(String.valueOf(echangeJ1.getSomme())+"€");
+                                String rep3 = TexteUI.question("Acceptez-vous l'échange ? (oui/non)");
+                                if (rep3.equals("oui")){
+                                    for (CarreauPropriete cp : echangeJ1.getListP()){
+                                        cp.setProprietaire(j2);
+                                    }
+                                    for (CarreauPropriete cp : echangeJ2.getListP()){
+                                        cp.setProprietaire(j1);
+                                    }
+                                    j1.addCash(echangeJ2.getSomme());
+                                    j2.removeCash(echangeJ2.getSomme());
+                                    
+                                    j2.addCash(echangeJ1.getSomme());
+                                    j1.removeCash(echangeJ1.getSomme());
+                                }
+                            }
+                        }
+                     }
+            }
+        }
          
                 
         public PaquetsCartes getPaquetsCartes() {
