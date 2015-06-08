@@ -139,6 +139,9 @@ public class ProprieteAConstruire extends CarreauPropriete {
             }
             super.setProprietaire(j);
             j.addPropriete(this);
+            if (j.getProprietesAConstruire(this.getCouleur()).size()==this.getNbPropriete()) {
+                TexteUI.message(super.getProprietaire().getNomJoueur() + " possède maintenant tout les propriétés du groupe, il peut désormais construire dessus");
+            }
         }
         @Override
         public void action (Joueur aJ){
