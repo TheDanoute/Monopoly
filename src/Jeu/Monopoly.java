@@ -397,7 +397,44 @@ public class Monopoly {
              Echange echangeJ2 = new Echange(j2);
              boolean stop = false;
              while (!stop) {
-                 
+                 String rep = TexteUI.question("Que voulez-vous de " + j2.getNomJoueur() + " ? (propriete/gare/compagnie/carte/argent)");
+                 switch (rep) {
+                     case "propriete":
+                     {
+                        TexteUI.message("Propriete echangeable de " + j2.getNomJoueur());
+                        HashMap<Integer,ProprieteAConstruire> listPAC = new HashMap<>();
+                        for (CouleurPropriete c : CouleurPropriete.values()) {
+                            if (!j2.getProprietesAConstruire(c).isEmpty()) {
+                                int immo = 0;
+                                for (ProprieteAConstruire p : j2.getProprietesAConstruire(c)) {
+                                     immo+=p.getImmobilier();
+                                }
+                                if (immo>0) {
+                                    for (ProprieteAConstruire p : j2.getProprietesAConstruire(c)) {
+                                        listPAC.put(p.getNum(),p);
+                                    }
+                                }
+                            }
+                        }
+                        for (ProprieteAConstruire p : echangeJ2.getPro()) {
+                            try {    
+                                 listPAC.remove(p.getNum());
+                            } catch(NullPointerException e) {}
+                        }
+                        boolean fini = false;
+                        while (!fini) {
+                            for (ProprieteAConstruire p : listPAC.values()) {
+                                TexteUI.message(p.getDescription());
+                            }
+                            int num = Integer.valueOf(TexteUI.question("Quelle propriete voulez-vous ? (numéro)"));
+                            echangeJ2.addPropriete(listPAC.get(num));
+                            listPAC.remove(num);
+                            if (TexteUI.question("Voulez-vous ajouter une autre propriete ? (oui/non)").equals("non"))
+                        }
+                        
+                        
+                     }
+                 }
              }
         }
         
