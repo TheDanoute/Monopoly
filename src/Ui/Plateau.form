@@ -99,7 +99,7 @@
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="/users/info/etu-s2/gueganb/monopOpe.png"/>
+          <Image iconType="3" name="/Data/PlateauMonopoly.png"/>
         </Property>
       </Properties>
     </Component>
