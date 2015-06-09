@@ -614,77 +614,7 @@ public class Monopoly {
                 }
             }
          
-        /*  public void echanger(Joueur j1) {
-             TexteUI.message("Echange :"); 
-             Joueur j2;
-             {
-                ArrayList<Joueur> listJoueur = new ArrayList<>();
-                int i = 1;
-                for (Joueur jTemp : joueurs) {
-                    if (j1!=jTemp) {
-                        TexteUI.message("Joueur n°" + i + " : " + jTemp.getNomJoueur());
-                        TexteUI.message("Ses propriété(s) :");
-                    for (Compagnie c : jTemp.getCompagnies()){
-                        TexteUI.message(c.getNom());
-                    }
-                    for (Gare g : jTemp.getGares()){
-                        TexteUI.message(g.getNom());
-                    }
-                    for (ProprieteAConstruire p : jTemp.getProprietesAConstruire()){
-                        TexteUI.message(p.getNom());
-                        TexteUI.message("Groupe : "+p.getGroupe());
-                        TexteUI.message("Avec "+p.getImmobilier()+" construction(s)");
-                    }
-                        listJoueur.add(jTemp);
-                    }
-                }
-                j2 = listJoueur.get(Integer.valueOf(TexteUI.question("Avec quel joueur voulez-vous échanger ? (numéro)"))-1);
-             }
-             Echange echangeJ1 = new Echange(j1);
-             Echange echangeJ2 = new Echange(j2);
-             boolean stop = false;
-             while (!stop) {
-                 String rep = TexteUI.question("Que voulez-vous de " + j2.getNomJoueur() + " ? (propriete/gare/compagnie/carte/argent)");
-                 switch (rep) {
-                     case "propriete":
-                     {
-                        TexteUI.message("Propriete echangeable de " + j2.getNomJoueur());
-                        HashMap<Integer,ProprieteAConstruire> listPAC = new HashMap<>();
-                        for (CouleurPropriete c : CouleurPropriete.values()) {
-                            if (!j2.getProprietesAConstruire(c).isEmpty()) {
-                                int immo = 0;
-                                for (ProprieteAConstruire p : j2.getProprietesAConstruire(c)) {
-                                     immo+=p.getImmobilier();
-                                }
-                                if (immo>0) {
-                                    for (ProprieteAConstruire p : j2.getProprietesAConstruire(c)) {
-                                        listPAC.put(p.getNum(),p);
-                                    }
-                                }
-                            }
-                        }
-                        for (ProprieteAConstruire p : echangeJ2.getPro()) {
-                            try {    
-                                 listPAC.remove(p.getNum());
-                            } catch(NullPointerException e) {}
-                        }
-                        boolean fini = false;
-                        while (!fini) {
-                            for (ProprieteAConstruire p : listPAC.values()) {
-                                TexteUI.message(p.getDescription());
-                            }
-                            int num = Integer.valueOf(TexteUI.question("Quelle propriete voulez-vous ? (numéro)"));
-                            echangeJ2.addPropriete(listPAC.get(num));
-                            listPAC.remove(num);
-                            if (TexteUI.question("Voulez-vous ajouter une autre propriete ? (oui/non)").equals("non")){
-                        }}
-                        
-                        
-                     }
-                 }
-             }
-        }
-        */
+       
 
          public void echanger(Joueur j1) {
              boolean toutVendu = true;
