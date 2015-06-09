@@ -20,7 +20,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
         }
         
         public int getLoyer(){
-            if (super.getProprietaire().getProprietesAConstruire(this.getCouleur()).size()==this.getNbPropriete() && immobilier==0) {
+            if (immobilier==0 && super.getProprietaire().getProprietesAConstruire(this.getCouleur()).size()==this.getNbPropriete() && this.noHypo()) {
                 return loyers.get(immobilier)*2;
             } else {
                 return loyers.get(immobilier);
@@ -203,7 +203,18 @@ public class ProprieteAConstruire extends CarreauPropriete {
             if (super.isHypotheque()) {
                 return "Propriete HYPOTHEQUEE : " + super.getDescription() + " ; Groupe : " + this.getGroupe() + " ; Construction : " + this.getImmobilierString();
             } else {
-               return "Propriete : " + super.getDescription() + " ; Groupe : " + this.getGroupe() + " ; Construction : " + this.getImmobilierString();
+               return "Propriete : " + super.getDescription() + " ; Groupe : " + this.getGroupe().toString() + " ; Construction : " + this.getImmobilierString();
             }
+        }
+        
+        public boolean noHypo() {
+            boolean retour = true;
+            ArrayList<ProprieteAConstruire> listP = groupe.getProprietes();
+            int i = 0;
+            while (retour && i<listP.size()) {
+                retour = !listP.get(i).isHypotheque();
+                i++;
+            }
+            return retour;
         }
 }

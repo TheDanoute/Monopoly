@@ -33,9 +33,23 @@ public abstract class CarreauPropriete extends Carreau {
         return hypotheque;
     }
 
-    public void setHypotheque(boolean hypotheque) {
+    private void setHypotheque(boolean hypotheque) {
         this.hypotheque = hypotheque;
     }
+    
+        public int getPrixHypotheque(){
+            return (int)((prix/2)*1.1); 
+        }    
+    
+        public void leverHypotheque() {
+             this.getProprietaire().removeCash(this.getPrixHypotheque());
+             this.setHypotheque(false);
+        }
+        
+        public void hypotheqer() {
+            this.getProprietaire().addCash(prix/2);
+            this.setHypotheque(true);
+        }
 
 	public abstract int getNbPropriete();
         

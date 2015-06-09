@@ -24,7 +24,7 @@ public class CarteSpecial extends Carte{
         specialNumber=s;
     }
     
-    private int getPrixHotelMaison(Joueur j){
+    /*private int getPrixHotelMaison(Joueur j){
         int pm,ph;
         if (specialNumber==2) {
             pm = 25;
@@ -45,7 +45,7 @@ public class CarteSpecial extends Carte{
         TexteUI.message("Prix pour les hotels : " + ph + "*" + nbh + "=" + ph*nbh);
         TexteUI.message("Total : " + nbm*pm+nbh*ph + "€");
         return nbm*pm+nbh*ph;
-    }
+    }*/
     @Override
     public void action(Joueur j){
         TexteUI.message(super.getDescription());
@@ -73,11 +73,27 @@ public class CarteSpecial extends Carte{
                 }
             break;
             case 2:
-                j.removeCash(this.getPrixHotelMaison(j));
-                TexteUI.message("Vous avez " + j.getCash() + "€");
-            break;
             case 3:
-                j.removeCash(this.getPrixHotelMaison(j));
+                int pm,ph;
+                if (specialNumber==2) {
+                    pm = 25;
+                    ph = 100;
+                } else {
+                    pm = 40;
+                    ph = 115;
+                }
+                int nbh = 0,nbm = 0;
+                for (ProprieteAConstruire p : j.getProprietesAConstruire()){
+                    if (p.getImmobilier()>4){
+                         nbh++;
+                    } else {
+                        nbm+=p.getImmobilier();
+                    }
+                }
+                TexteUI.message("Prix pour les maisons : " + pm + "*" + nbm + "=" + pm*nbm);
+                TexteUI.message("Prix pour les hotels : " + ph + "*" + nbh + "=" + ph*nbh);
+                TexteUI.message("Total : " + nbm*pm+nbh*ph + "€");
+                j.removeCash(nbm*pm+nbh*ph);
                 TexteUI.message("Vous avez " + j.getCash() + "€");
             break;
             case 4:

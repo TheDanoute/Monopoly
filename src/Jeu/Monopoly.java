@@ -198,12 +198,16 @@ public class Monopoly {
             cartes = new PaquetsCartes("cartes_"+dataFilename);
             this.buildGamePlateau(dataFilename);
             this.initialiserPartie();
+            int i = 0;
             while (joueurs.size()>1) {
-                for (Joueur j : joueurs) {
+                Joueur j = joueurs.get(i);
                     TexteUI.message("***************************************");
                     TexteUI.message("Au tour de " + j.getNomJoueur());
                     
                     this.jouerUnCoup(j,0);
+                    i++;
+                if (i>=joueurs.size()) {
+                    i=0;
                 }
             }
         }
@@ -232,10 +236,10 @@ public class Monopoly {
             }
             for (ProprieteAConstruire p : aJ.getProprietesAConstruire()){
                 TexteUI.message("Propriété : "+p.getNom());
-                TexteUI.message("Groupe : "+p.getGroupe());
+                TexteUI.message("Groupe : "+p.getGroupe().getCouleur().toString());
                 TexteUI.message("Avec "+p.getImmobilier()+" construction(s)");
             }       
-            String rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger/detruire)");
+            String rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger/detruire/hypotheque)");
             while (!rep.equals("avancer")) {
                 switch(rep) {
                     case "construire":
@@ -253,13 +257,18 @@ public class Monopoly {
                         this.detruire(aJ);
                         break;
                     }
+                    case "hypotheque":
+                    {
+                        this.hypotheque(aJ);
+                        break;
+                    }
                     default:
                     {
                         TexteUI.message("Erreur");
                         break;
                     }
                 }
-                rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger/detruire)");
+                rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger/detruire/hypotheque)");
             }
             TexteUI.message("Vous avancer");
             boolean twice = true;
@@ -382,6 +391,12 @@ public class Monopoly {
                 } while (!ok);
                         ArrayList<ProprieteAConstruire> listP = list.get(coul); //Récupération des proprietes du groupe selectionné
                         boolean stop = false; //Boolean de construction rapide dans sur les mêmes propriétés
+                        for (ProprieteAConstruire p : listP) {
+                            if (p.isHypotheque()) {
+                                TexteUI.message("Au moins une des propriétés de ce groupe est hypothéquée, impossible de construire");
+                                stop = false;
+                            }
+                        }
                         while (!stop) {
                             int max = listP.get(0).getImmobilier(); //Max sera la valeur immobilère max des terrains (0 à 5)
                             boolean onAChanger = false; //Restera false si les terrains ont le même nombre d'immobilier
@@ -507,6 +522,97 @@ public class Monopoly {
                }
              }
          }
+        
+        public void hypotheque(Joueur j){
+            String rep = TexteUI.question("Voulez-vous lever une hypotheque ou hypothequer ? (lever/hypotheque)");
+            switch(rep) {
+                case "lever":
+                {
+                    HashMap<Integer,CarreauPropriete> list = new HashMap<>();
+                    TexteUI.message("Liste des proprietes hypothéquées :");
+                    for (ProprieteAConstruire p : j.getProprietesAConstruire()) {
+                        if (p.isHypotheque()) {
+                            list.put(p.getNum(), p);
+                            TexteUI.message(p.getDescription());
+                        }
+                    }
+                    for (Gare g : j.getGares()) {
+                        if (g.isHypotheque()) {
+                            list.put(g.getNum(), g);
+                            TexteUI.message(g.getDescription());
+                        }
+                    }
+                    for (Compagnie c : j.getCompagnies()) {
+                        if (c.isHypotheque()) {
+                            list.put(c.getNum(), c);
+                            TexteUI.message(c.getDescription());
+                        }
+                    }
+                    if (list.isEmpty()){
+                        TexteUI.message("Vous n'avez aucune propriété hypothequée");
+                    } else {
+                        CarreauPropriete c = list.get(Integer.valueOf(TexteUI.question("Sur quelle propriété voulez-vous lever l'hypotheque ? (numéro)")));
+                        TexteUI.message("Lever l'hypothèque de cette propriété coute : " + c.getPrixHypotheque() + "€");
+                        if (j.getCash()<c.getPrixHypotheque()) {
+                            TexteUI.message("Vous n'avez pas assez d'argent pour lever l'hypothèque");
+                        } else {
+                            if (TexteUI.question("Voulez-vous continuer ? (oui/non)").equals("oui")) {
+                                c.leverHypotheque();
+                            }
+                        }
+                    }
+                    break;
+                }
+                case "hypotheque":
+                {
+                    HashMap<Integer,CarreauPropriete> list = new HashMap<>();
+                    TexteUI.message("Liste des proprietes disponible à l'hypotheque :");
+                    for (CouleurPropriete c : CouleurPropriete.values()) {
+                        ArrayList<ProprieteAConstruire> pros = j.getProprietesAConstruire(c);
+                        boolean ok = true;
+                        if(!pros.isEmpty()) {
+                            if (pros.size()==pros.get(0).getNbPropriete()) {
+                                int nb = 0;
+                                for (ProprieteAConstruire p : pros) {
+                                    nb+=p.getImmobilier();
+                                }
+                                if (nb>0) {
+                                    ok = false;
+                                }
+                            }
+                            if (ok) {
+                                for (ProprieteAConstruire p : pros) {
+                                    if (!p.isHypotheque()){
+                                        list.put(p.getNum(), p);
+                                    }
+                                }
+                            }
+                        }    
+                    }
+                    for (Gare g : j.getGares()) {
+                        if (!g.isHypotheque()) {
+                            list.put(g.getNum(), g);
+                            TexteUI.message(g.getDescription());
+                        }
+                    }
+                    for (Compagnie c : j.getCompagnies()) {
+                        if (!c.isHypotheque()) {
+                            list.put(c.getNum(), c);
+                            TexteUI.message(c.getDescription());
+                        }
+                    }
+                    if (list.isEmpty()){
+                        TexteUI.message("Vous n'avez aucune propriété disponible à l'hypotheque");
+                    } else {
+                        CarreauPropriete c = list.get(Integer.valueOf(TexteUI.question("Quelle propriété voulez-vous hypothequer ? (numéro)")));
+                        TexteUI.message("L'hypotheque vous rapporte" + c.getPrix()/2 + "€");
+                            if (TexteUI.question("Voulez-vous continuer ? (oui/non)").equals("oui")) {
+                                c.hypotheqer();
+                            }
+                        }
+                    }
+                }
+            }
          
         /*  public void echanger(Joueur j1) {
              TexteUI.message("Echange :"); 
