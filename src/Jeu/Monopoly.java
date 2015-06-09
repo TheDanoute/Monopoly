@@ -124,6 +124,7 @@ public class Monopoly {
                     String nomJ = TexteUI.question("Nom du joueur : ");
                     Joueur j = new Joueur(nomJ, this);
                     joueurs.add(j);
+                    j.addCartePrison();
                     TexteUI.message("Premier lancé de dés : " + j.getDesDepart());
                     String c = TexteUI.question("Voules-vous ajouter un nouveau joueur? (oui/non)");
                         if (!c.equals("oui")){
@@ -696,17 +697,18 @@ public class Monopoly {
                     if (j1!=jTemp) {
                         TexteUI.message("Joueur n°" + i + " : " + jTemp.getNomJoueur());
                         TexteUI.message("Ses propriété(s) :");
-                    for (Compagnie c : jTemp.getCompagnies()){
-                        TexteUI.message(c.getNom());
-                    }
-                    for (Gare g : jTemp.getGares()){
-                        TexteUI.message(g.getNom());
-                    }
-                    for (ProprieteAConstruire p : jTemp.getProprietesAConstruire()){
-                        TexteUI.message(p.getNom());
-                        TexteUI.message("Groupe : "+p.getGroupe());
-                        TexteUI.message("Avec "+p.getImmobilier()+" construction(s)");
-                    }
+                        for (Compagnie c : jTemp.getCompagnies()){
+                            TexteUI.message(c.getNom());
+                        }
+                        for (Gare g : jTemp.getGares()){
+                            TexteUI.message(g.getNom());
+                        }
+                        for (ProprieteAConstruire p : jTemp.getProprietesAConstruire()){
+                            TexteUI.message(p.getNom());
+                            TexteUI.message("Groupe : "+p.getGroupe());
+                            TexteUI.message("Avec "+p.getImmobilier()+" construction(s)");
+                        }
+                        TexteUI.message("Nombre de carte(s) sortie de prison : "+jTemp.getNBCartePrison());
                         listJoueur.add(jTemp);
                     }
                 }
@@ -870,6 +872,25 @@ public class Monopoly {
                                 }
                             }
                         }
+                        break;
+                     }
+                    case "carte":
+                     {
+                        if (j2.getNBCartePrison()==0){
+                            TexteUI.message(j2.getNomJoueur()+" n'a pas de cartes sortie de prison, échange impossible.");
+                        }else{
+                            String rep2 = TexteUI.question(j2.getNomJoueur()+" a une carte sortie de prison, combien lui en proposez-vous ?");
+                            String rep3 = TexteUI.question(j2.getNomJoueur()+", "+j1.getNomJoueur()+" vous propose "+rep2+"€ contre une carte sortie de prison, êtes-vous d'accord? (oui/non)");
+                            if (rep3.equals("oui")){
+                                j2.removeCartePrison();
+                                j1.addCartePrison();
+                                j2.addCash(Integer.parseInt(rep2));
+                                j1.removeCash(Integer.parseInt(rep2));
+                            }else{
+                                TexteUI.message("Echange annulé, "+j2.getNomJoueur()+" l'a refusé.");
+                            }
+                        }
+                        break;
                      }
             }
         }
