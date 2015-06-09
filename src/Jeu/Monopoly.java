@@ -1,6 +1,7 @@
 package Jeu;
 
 import Ui.GraphUI;
+import Ui.JoueurUI;
 import Ui.TexteUI;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
