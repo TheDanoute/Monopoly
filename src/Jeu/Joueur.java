@@ -199,5 +199,10 @@ public class Joueur {
         public void removeCompagnie(Compagnie c){
             compagnies.remove(c);
         }
-
+        public void addCartePrison (){
+            cartePrison.add(new CartePrison("CC","P"));
+        }
+        public void removeCartePrison(){
+            cartePrison.remove(0);
+        }
 }
