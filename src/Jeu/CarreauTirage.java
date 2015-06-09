@@ -21,15 +21,15 @@ public class CarreauTirage extends CarreauAction {
     public void action(Joueur j){
         Carte c;
         if (type==CarteType.chance){
-            c = this.getMonopoly().getPaquetsCartes().piochezCarteChance();
+            c = this.getMonopoly().getCartes().piochezCarteChance();
         } else {
-            c = this.getMonopoly().getPaquetsCartes().piochezCarteCommunautaire();
+            c = this.getMonopoly().getCartes().piochezCarteCommunautaire();
         }
         c.action(j);
         if (c.getClass().toString().equals("CartePrison")) {
             j.addCartePrison(c);
         } else {
-            this.getMonopoly().getPaquetsCartes().retourCarte(c);
+            this.getMonopoly().getCartes().retourCarte(c);
         }
     }
 }

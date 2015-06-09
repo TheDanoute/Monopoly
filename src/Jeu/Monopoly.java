@@ -844,10 +844,6 @@ public class Monopoly {
             } 
         }
          
-                
-        public PaquetsCartes getPaquetsCartes() {
-            return cartes;
-        }
         
 	public int getPosition(Joueur aJ) {
                 return aJ.getPositionCourante().getNum();
