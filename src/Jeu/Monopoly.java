@@ -617,6 +617,7 @@ public class Monopoly {
        
 
          public void echanger(Joueur j1) {
+                    // On teste si toutes le propriétés ont été vendues (condition pour faire un échange)
              boolean toutVendu = true;
              int j = 0;
              for (CarreauPropriete cp : this.getCarreauxPropriete()){
