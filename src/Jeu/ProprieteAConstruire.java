@@ -89,6 +89,10 @@ public class ProprieteAConstruire extends CarreauPropriete {
 		immobilier++;
 	}
         
+        private void removeImmobilier() {
+		immobilier--;
+	}
+        
         public Groupe getGroupe(){
             return groupe;
         }
@@ -132,6 +136,26 @@ public class ProprieteAConstruire extends CarreauPropriete {
                 TexteUI.message("Il vous reste " + this.getProprietaire().getCash() + "€");
             }
         }
+        
+        public void detruire() {
+            int argent;
+            if(this.getImmobilier()>4) {
+                this.setImmobilier(0);
+                super.getMonopoly().addHotel();
+                argent = (int)(prixMaison*2.5);
+                TexteUI.message("La vente de cet hotel vous rapporte " + argent + "€");
+                super.getProprietaire().addCash(argent);
+                TexteUI.message("Ce terrain est maintenant vide de construction");
+            } else {
+                this.removeImmobilier();
+                super.getMonopoly().addMaison();
+                argent = prixMaison/2;
+                super.getProprietaire().addCash(argent);
+                TexteUI.message("la vente de cette maison vous rapporte " + argent + "€");
+                TexteUI.message("Il reste sur ce terrain : " + this.getImmobilierString());
+            }
+        }
+        
         @Override
         public void setProprietaire(Joueur j) {
             if (this.getProprietaire()!=null) {
@@ -163,10 +187,14 @@ public class ProprieteAConstruire extends CarreauPropriete {
                 }
             } else{
                 TexteUI.message(this.getProprietaire().getNomJoueur()+" est le propriétaire de ce carreau");
-                TexteUI.message("Vous devez payer "+this.getLoyer()+"€");
-                aJ.removeCash(this.getLoyer());
-                this.getProprietaire().addCash(this.getLoyer());
-                TexteUI.message("Le propriétaire a reçu son argent !");    
+                if (super.isHypotheque()) {
+                    TexteUI.message("Cette propriete est hypothéquée, vous ne payez rien");
+                } else {
+                    TexteUI.message("Vous devez payer "+this.getLoyer()+"€");
+                    aJ.removeCash(this.getLoyer());
+                    this.getProprietaire().addCash(this.getLoyer());
+                    TexteUI.message("Le propriétaire a reçu son argent !");  
+                }
             }
         }
         

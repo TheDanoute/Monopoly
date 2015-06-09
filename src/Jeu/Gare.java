@@ -40,10 +40,15 @@ public class Gare extends CarreauPropriete {
             } else if (this.getProprietaire()==j) {
                 TexteUI.message("Vous êtes sur votre gare : " + this.getNom());
             } else {
-                TexteUI.message("Vous êtes tomber sur une gare qui à déjà un propriétaire, vous payez : "+this.getLoyer()+"€");
-                int l = this.getLoyer();
-                j.removeCash(l);
-                this.getProprietaire().addCash(l);
+                TexteUI.message("Vous êtes tomber sur une gare qui à déjà un propriétaire");
+                 if (super.isHypotheque()) {
+                    TexteUI.message("Cette gare est hypothéquée, vous ne payez rien");
+                } else {
+                     TexteUI.message("Vous payez : "+this.getLoyer()+"€");
+                    int l = this.getLoyer();
+                    j.removeCash(l);
+                    this.getProprietaire().addCash(l);
+                 }
             }
         }
         @Override

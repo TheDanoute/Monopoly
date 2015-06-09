@@ -45,9 +45,14 @@ public class Compagnie extends CarreauPropriete {
                 TexteUI.message("Vous êtes sur votre : " + this.getNom());
             } else {
                 TexteUI.message("Vous êtes tomber sur une compagnie qui à déjà un propriétaire.");
-                int l = this.getLoyer();
-                j.removeCash(l);
-                this.getProprietaire().addCash(l);
+                 if (super.isHypotheque()) {
+                    TexteUI.message("Cette compagnie est hypothéquée, vous ne payez rien");
+                } else {
+                    TexteUI.message("Vous devez payer " + this.getLoyer() + "€");
+                    int l = this.getLoyer();
+                    j.removeCash(l);
+                    this.getProprietaire().addCash(l);
+                 }
             }
         }
         @Override
