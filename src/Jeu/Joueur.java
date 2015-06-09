@@ -134,23 +134,70 @@ public class Joueur {
 
 	public void addCash(int aC) {
             // Ajoute au joueur le montant aC
-            this.cash+=aC;
-            // Dans le cas où le joueur tire une carte avec un malus, aC sera négatif, et si après le retrait, le cash du joueur est négatif, il fait
-            // faillite, il a donc perdu et il est retiré de la partie.
-            if (this.getCash()<0){
-                TexteUI.message("Le joueur "+this.getNomJoueur()+" n'a pas assez d'argent pour payer. \n Il a perdu !");
-                this.getMonopoly().getJoueurs().remove(this);
+            if (aC>0){
+                this.cash+=aC;
+            } else {// Dans le cas où le joueur tire une carte avec un malus, aC sera négatif
+                //this.removeCash(-aC);
             }
 	}
 
-	public void removeCash(int aC) {
+	public void removeCash(int aC){
                 // Soustrait au joueur le montant aC
 		this.cash-=aC;
                 // Si le cash du joueur est négatif après le retrait, il fait faillite, il a donc perdu et il est retiré de la partie.
                 if (this.getCash()<0){
-                TexteUI.message("Le joueur "+this.getNomJoueur()+" n'a pas assez d'argent pour payer. \n Il a perdu !");
-                this.getMonopoly().getJoueurs().remove(this);
-            }
+                TexteUI.message("Le joueur "+this.getNomJoueur()+" n'a pas assez d'argent pour payer. Il doit detruire et/ou hypothequer");
+                boolean vendre = true ;
+                boolean hypotheque = true ;
+                    while (this.getCash()<0 && (vendre || hypotheque))    {
+                        String rep = TexteUI.question("Que veut il faire ? (hypotheque/detruire)");
+                        switch(rep) {
+                            case "detruire":
+                            {
+                                if (vendre) {
+                                    try {
+                                        this.getMonopoly().detruire(this);
+                                    } catch(Exception e){
+                                        TexteUI.message(e.getMessage());
+                                        vendre = false;
+                                    }
+                                } else {
+                                    TexteUI.message("Vous n'avez plus d'immobilier à détruire");
+                                }
+                                 break;
+                            }
+                            case "hypotheque":
+                            {
+                                if(hypotheque) {
+                                    try {
+                                        this.getMonopoly().hypotheque(this);
+                                    } catch(Exception e){
+                                        TexteUI.message(e.getMessage());
+                                        hypotheque = false;
+                                    }
+                                } else {
+                                    TexteUI.message("Vous n'avez plus de propriete à hypothequer");
+                                }
+                                 break;
+                            }
+                        }
+                        TexteUI.message("Vous avez " + cash + "€");
+                    }
+                    if (this.getCash()<0) {
+                        TexteUI.message("Le joueur " + this.nomJoueur + " n'a pas de quoi payer, il fait donc faillite et sort du jeu...");
+                        for (ProprieteAConstruire p : proprietesAConstruire) {
+                            p.retourBanque();
+                        }
+                        for (Compagnie c : compagnies) {
+                           c.retourBanque();
+                        }
+                        for (Gare g : gares) {
+                            g.retourBanque();
+                        }
+                    } else {
+                        TexteUI.message("La faillite à été épargnée pour le moment");
+                    }
+                }
 	}
 
 	public String getNomJoueur() {

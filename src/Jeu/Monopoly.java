@@ -254,12 +254,20 @@ public class Monopoly {
                     }
                     case "detruire":
                     {
-                        this.detruire(aJ);
+                        try {
+                            this.detruire(aJ);
+                        } catch (Exception e) {
+                            TexteUI.message(e.getMessage());
+                        }
                         break;
                     }
                     case "hypotheque":
                     {
-                        this.hypotheque(aJ);
+                        try {
+                            this.hypotheque(aJ);
+                        } catch (Exception e) {
+                            TexteUI.message(e.getMessage());
+                        }
                         break;
                     }
                     default:
@@ -445,9 +453,7 @@ public class Monopoly {
                     }
         }
          
-         public void detruire(Joueur j) {
-             this.getCarreau(2).action(j);
-             this.getCarreau(4).action(j);
+         public void detruire(Joueur j) throws Exception {
              HashMap<CouleurPropriete,ArrayList<ProprieteAConstruire>> listP = new HashMap<>();
              TexteUI.message("Liste des groupe avec des construction(s) :");
              ArrayList<ProprieteAConstruire> pros;
@@ -465,7 +471,7 @@ public class Monopoly {
                  }
              }
              if (listP.isEmpty()) {
-                 TexteUI.message("Aucun de vos groupes de propriétés ne contiennent des constructions");
+                 throw new Exception("Aucun de vos groupes de propriétés ne contiennent des constructions");
              } else {
                 boolean ok = false; //Boolean anti-faute de frappe
                    CouleurPropriete coul = CouleurPropriete.bleuCiel; //Initialisation de variable
@@ -523,7 +529,7 @@ public class Monopoly {
              }
          }
         
-        public void hypotheque(Joueur j){
+        public void hypotheque(Joueur j) throws Exception{
             String rep = TexteUI.question("Voulez-vous lever une hypotheque ou hypothequer ? (lever/hypotheque)");
             switch(rep) {
                 case "lever":
@@ -602,7 +608,7 @@ public class Monopoly {
                         }
                     }
                     if (list.isEmpty()){
-                        TexteUI.message("Vous n'avez aucune propriété disponible à l'hypotheque");
+                        throw new Exception("Vous n'avez aucune propriété disponible à l'hypotheque");
                     } else {
                         CarreauPropriete c = list.get(Integer.valueOf(TexteUI.question("Quelle propriété voulez-vous hypothequer ? (numéro)")));
                         TexteUI.message("L'hypotheque vous rapporte" + c.getPrix()/2 + "€");

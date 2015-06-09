@@ -217,4 +217,15 @@ public class ProprieteAConstruire extends CarreauPropriete {
             }
             return retour;
         }
+        
+        @Override
+        public void retourBanque() {
+            super.retourBanque();
+            if (this.getImmobilier()>4) {
+                this.getMonopoly().addHotel();
+            } else {
+                this.getMonopoly().addMaison(immobilier);
+            }
+            this.setImmobilier(0);
+        }
 }

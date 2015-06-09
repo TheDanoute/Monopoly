@@ -68,4 +68,10 @@ public class Gare extends CarreauPropriete {
                 return "Gare : " + super.getDescription();
             }
         }
+        
+        @Override
+        public void retourBanque(){
+            super.retourBanque();
+            this.setProprietaire(null);
+        }
 }

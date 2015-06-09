@@ -71,4 +71,10 @@ public class Compagnie extends CarreauPropriete {
                 return "Compagnie : " + super.getDescription();
             }
         }
+        
+        @Override
+        public void retourBanque(){
+            super.retourBanque();
+            this.setProprietaire(null);
+        }
 }
