@@ -122,16 +122,11 @@ public class Monopoly {
         public void initialiserPartie() {
 		boolean nJ = true;
                 while (nJ) {
-                    String nomJ = TexteUI.question("Nom du joueur : ");
-                    Joueur j = new Joueur(nomJ, this);
-                    joueurs.add(j);
-                    TexteUI.message("Premier lancé de dés : " + j.getDesDepart());
+                    ajouterJoueur();
                     String c = TexteUI.question("Voules-vous ajouter un nouveau joueur? (oui/non)");
                         if (!c.equals("oui")){
                             nJ = false;
-                            
                             joueurs = trieRecursif(joueurs); //Méthode recursive
-                            
                             TexteUI.message("Ordre des joueurs");
                             for (Joueur jou : joueurs) {
                                 TexteUI.message(""+ jou.getNomJoueur());
@@ -140,6 +135,13 @@ public class Monopoly {
                 }
 	}
         
+        public void ajouterJoueur () {
+            String nomJ = TexteUI.question("Nom du joueur : ");
+            Joueur j = new Joueur(nomJ, this);
+            joueurs.add(j);
+            TexteUI.message("Premier lancé de dés : " + j.getDesDepart());
+        }
+             
         private ArrayList<Joueur> trieRecursif(ArrayList<Joueur> list) {
             trierListeJoueurs(list);
             int compteur = 0; //Compteur qui bloque la première itération identique
