@@ -55,9 +55,9 @@ public abstract class CarreauPropriete extends Carreau {
         
         public abstract int getLoyer();
         
-        public String getDescription() {
+        /*public String getDescription() {
             return super.getNom() + " n°" + super.getNum();
-        }
+        }*/
         
         public void retourBanque() {
             this.setHypotheque(false);

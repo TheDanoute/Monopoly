@@ -5,6 +5,8 @@
  */
 package Jeu;
 
+import Ui.CarteUI;
+import Ui.JoueurUI;
 import Ui.TexteUI;
 
 /**
@@ -57,19 +59,16 @@ public class CarteSpecial extends Carte{
                         j.addCash(10);
                      }
                  }
-                 TexteUI.message("Vous avez " + j.getCash() + "€");
+                 JoueurUI.printCashVous(j);
             break;
             case 1:
-                String s = "";
-                while (s.equals("chance")||s.equals("payer")){
-                s = TexteUI.question("(chance/payer)");
+                String s = CarteUI.jAiDeLaChance();
                 if (s.equals("payer")) {
                     j.removeCash(10);
-                } else if (s.equals("chance")) {
+                } else {
                     Carte c = j.getMonopoly().getCartes().piochezCarteChance();
                     c.action(j);
                     j.getMonopoly().getCartes().retourCarte(c);
-                }
                 }
             break;
             case 2:
@@ -90,15 +89,13 @@ public class CarteSpecial extends Carte{
                         nbm+=p.getImmobilier();
                     }
                 }
-                TexteUI.message("Prix pour les maisons : " + pm + "*" + nbm + "=" + pm*nbm);
-                TexteUI.message("Prix pour les hotels : " + ph + "*" + nbh + "=" + ph*nbh);
-                TexteUI.message("Total : " + nbm*pm+nbh*ph + "€");
+                CarteUI.payerHotelMaison(pm,nbm,ph,nbh);
                 j.removeCash(nbm*pm+nbh*ph);
-                TexteUI.message("Vous avez " + j.getCash() + "€");
+                JoueurUI.printCashVous(j);
             break;
             case 4:
                 j.setPositionCourante(j.getPositionCourante().getNum()-3);
-                TexteUI.message("Vous êtes donc a la case n°" + j.getPositionCourante().getNum() + ":" + j.getPositionCourante().getNom());
+                CarteUI.deplacement(j.getPositionCourante());
             break;
         }
     }

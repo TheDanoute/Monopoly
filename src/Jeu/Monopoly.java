@@ -269,7 +269,7 @@ public class Monopoly {
                 }
                 rep = TexteUI.choixTour();
             }
-            TexteUI.message("Vous avancer");
+            TexteUI.avancer();
             boolean twice = true;
             int comp=0;
             while (twice) {
@@ -284,7 +284,7 @@ public class Monopoly {
                     if(comp==3){
                         // Si le joueur fait 3 doubles d'affilé, il va en prison.
                         aJ.enPrison();
-                        TexteUI.message("Le joueur "+aJ.getNomJoueur()+" a fait trois double de suite, il est envoyé en prison!");
+                        TexteUI.troisDouble(aJ);
                         twice = false;
                     }else{
                         this.action(aJ);

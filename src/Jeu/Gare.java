@@ -30,7 +30,7 @@ public class Gare extends CarreauPropriete {
         public void action(Joueur j){
             if (this.getProprietaire()==null) {
                 if (ProprieteUI.printAchat(this)) {
-                    if (j.getCash()>this.getPrix()) {
+                    if (j.getCash()>=this.getPrix()) {
                         j.removeCash(this.getPrix());
                         JoueurUI.printCashVous(j);
                         this.setProprietaire(j);
@@ -60,14 +60,14 @@ public class Gare extends CarreauPropriete {
             j.addGare(this);
         }
         
-        @Override
+        /*@Override
         public String getDescription() {
             if (super.isHypotheque()) {
                 return "Gare HYPOTHEQUEE : " + super.getDescription();
             } else {
                 return "Gare : " + super.getDescription();
             }
-        }
+        }*/
         
         @Override
         public void retourBanque(){

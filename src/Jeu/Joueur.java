@@ -2,6 +2,7 @@ package Jeu;
 
 import Jeu.Monopoly;
 import Jeu.ProprieteAConstruire;
+import Ui.JoueurUI;
 import Ui.TexteUI;
 import java.util.ArrayList;
 
@@ -77,8 +78,8 @@ public class Joueur {
        if (p>40) {
            p-=40; 
            if (p!=1) {
-           TexteUI.message("Vous venez de passer par la case départ, vous recevez 200€");
            this.addCash(200);
+           JoueurUI.passageDepart(this);
            }
        }
        this.setPositionCourante(monopoly.getCarreau(p));

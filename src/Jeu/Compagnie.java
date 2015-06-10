@@ -34,7 +34,7 @@ public class Compagnie extends CarreauPropriete {
         public void action(Joueur j){
             if (this.getProprietaire()==null) {
                 if (ProprieteUI.printAchat(this)) {
-                    if (j.getCash()>this.getPrix()) {
+                    if (j.getCash()>=this.getPrix()) {
                         j.removeCash(this.getPrix());
                         JoueurUI.printCashVous(j);
                         this.setProprietaire(j);
@@ -63,14 +63,14 @@ public class Compagnie extends CarreauPropriete {
             super.setProprietaire(j);
             j.addCompagnie(this);
         }
-        @Override
+        /*@Override
         public String getDescription() {
             if (super.isHypotheque()) {
                 return "Compagnie HYPOTHEQUEE : " + super.getDescription();
             } else {
                 return "Compagnie : " + super.getDescription();
             }
-        }
+        }*/
         
         @Override
         public void retourBanque(){

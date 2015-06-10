@@ -6,6 +6,7 @@
 
 package Jeu;
 
+import Ui.CarreauUI;
 import Ui.TexteUI;
 
 /**
@@ -22,21 +23,21 @@ public class CarreauPrison extends Carreau {
     public void action(Joueur j){
         if (j.getPrison()) {
             int nbCarte = j.getNBCartePrison();
-            TexteUI.message("Vous êtes en prison, nombre de carte sortie de prison disponible : " + nbCarte);
+            CarreauUI.accueilPrison(nbCarte);
             boolean fini = false;
             while (!fini) {
-            String rep = TexteUI.question("Que voulez-vous faire ? (payer/carte/des)");
+            String rep = CarreauUI.choixActionPrison();
             if (j.getNBTourPrison()>3 && rep.equals("des")) {
-                rep = TexteUI.question("Vous ne pouvez pas lancer les dés quatre fois de suite, vous devez payer ou utiliser une carte. (payer/carte)");
+                rep = CarreauUI.toMuchWastedTime();
             }
             if (rep.equals("payer")) {
-                TexteUI.message("Vous payez 50€ pour sortir de prison.");
                 j.removeCash(50);
                 j.sortPrison();
                 fini = true;
+                CarreauUI.prisonPayer(j);
             } else if (rep.equals("carte")) {
                 if (nbCarte==0) {
-                    TexteUI.message("Vous n'avez pas de carte sortie de prison...");
+                    CarreauUI.errorCartePrison();
                 } else {
                     j.utilCartePrison();
                     fini = true;
@@ -45,21 +46,19 @@ public class CarreauPrison extends Carreau {
                 int d1,d2;
                 d1 = this.getMonopoly().lancerDe();
                 d2 = this.getMonopoly().lancerDe();
-                TexteUI.message("Vous avez obtenu : D1 = " + d1 + " ; D2 = " + d2);
+                CarreauUI.desPrison(d1,d2);
                 if (d1==d2) {
-                    TexteUI.message("Vous sortez de prison.");
                     j.sortPrison();
                     this.getMonopoly().jouerUnCoup(j, d1+d2);
                     fini = true ;
                 } else {
-                    TexteUI.message("Vous restez en prison.");
                     j.ajouterTourPrison();
                     fini = true ;
                 }
             }
             }
         } else {
-            TexteUI.message("Vous êtes en visite à la prison.");
+            CarreauUI.visitePrison();
         }
             
     }

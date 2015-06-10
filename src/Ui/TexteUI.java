@@ -207,5 +207,13 @@ public class TexteUI {
         return rep;
     }
     
+    public static void avancer(){
+        System.out.println("Vous avancer");
+    }
+    
+    public static void troisDouble(Joueur j) {
+        System.out.println("Le joueur "+j.getNomJoueur()+" a fait trois double de suite, il est envoyé en prison!");
+    }
+    
     
 }

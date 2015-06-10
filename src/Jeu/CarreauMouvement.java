@@ -1,5 +1,7 @@
 package Jeu;
 
+import Ui.CarreauUI;
+
 public class CarreauMouvement extends CarreauAction {
     
     public CarreauMouvement(int n,String nom,Monopoly m){
@@ -8,6 +10,7 @@ public class CarreauMouvement extends CarreauAction {
     
     @Override
     public void action(Joueur j){
+        CarreauUI.allerEnPrison();
         j.enPrison();
     }
 }

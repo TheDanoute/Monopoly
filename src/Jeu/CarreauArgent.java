@@ -1,5 +1,6 @@
 package Jeu;
 
+import Ui.CarreauUI;
 import Ui.TexteUI;
 
 public class CarreauArgent extends CarreauAction {
@@ -22,9 +23,9 @@ public class CarreauArgent extends CarreauAction {
         @Override
         public void action(Joueur j){
             if (prix<0){
-                TexteUI.message("Vous devez payer : "+this.prix+"€");
+                CarreauUI.removeArgent(-prix);
             }else{
-                TexteUI.message("Vous recevez : "+this.prix+"€");
+                CarreauUI.addArgent(-prix);
             }
             j.addCash(prix);
         }

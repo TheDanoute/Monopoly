@@ -163,14 +163,14 @@ public class ProprieteAConstruire extends CarreauPropriete {
             super.setProprietaire(j);
             j.addPropriete(this);
             if (j.getProprietesAConstruire(this.getCouleur()).size()==this.getNbPropriete()) {
-                TexteUI.message(super.getProprietaire().getNomJoueur() + " possède maintenant tout les propriétés du groupe, il peut désormais construire dessus");
+                ProprieteUI.possession(super.getProprietaire());
             }
         }
         @Override
         public void action(Joueur j){
             if (this.getProprietaire()==null) {
                 if (ProprieteUI.printAchat(this)) {
-                    if (j.getCash()>this.getPrix()) {
+                    if (j.getCash()>=this.getPrix()) {
                         j.removeCash(this.getPrix());
                         JoueurUI.printCashVous(j);
                         this.setProprietaire(j);

@@ -204,7 +204,7 @@ public class ProprieteUI {
         
         public static boolean printAchat(CarreauPropriete c) {
         System.out.println("Cette " + c.getClass().getSimpleName() + " : " + c.getNom() + " est disponible à l'achat au prix de " + c.getPrix() +"€");
-        return TexteUI.bool("Voulez-vous acheter cette compagnie ? (oui/non)");
+        return TexteUI.bool("Voulez-vous acheter cette " + c.getClass().getSimpleName() + " ? (oui/non)");
     }
         
         public static void printProprePAC(CarreauPropriete c) {
@@ -242,6 +242,10 @@ public class ProprieteUI {
             System.out.println("La vente de cet hotel vous rapporte " + argent + "€");
             System.out.println("Ce terrain est maintenant vide de construction");
             JoueurUI.printCashVous(p.getProprietaire());
+        }
+        
+        public static void possession(Joueur j) {
+            System.out.println(j.getNomJoueur() + " possède maintenant tout les propriétés du groupe, il peut désormais construire dessus");
         }
         
         

@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package Jeu;
+import Ui.CarteUI;
+import Ui.TexteUI;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -71,19 +73,20 @@ public class PaquetsCartes {
                             break;
                         }
                     default:
-                        System.err.println("[initPaquetsCartes()] : Invalid Data type");
+                        TexteUI.errorFile(0);
                         break;
                 }
                 
 	    }
         } catch(FileNotFoundException e){
-            System.err.println("[initPaquetsCartes()] : File is not found!");
+            TexteUI.errorFile(1);
 	} catch(IOException e){
-            System.err.println("[initPaquetsCartes()] : Error while reading file!");
+            TexteUI.errorFile(2);
 	}
     }
     
     private void addCarte(Carte c){
+        CarteUI.printInfo(c);
         if(c.getType()==CarteType.communautaire){
             cartesCommunautaires.add(c);
         } else {
