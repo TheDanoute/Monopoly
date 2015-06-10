@@ -170,7 +170,7 @@ public class Joueur {
                             {
                                 if(hypotheque) {
                                     try {
-                                        this.getMonopoly().hypotheque(this);
+                                        this.getMonopoly().hypotheque(this,false);
                                     } catch(Exception e){
                                         TexteUI.message(e.getMessage());
                                         hypotheque = false;

@@ -69,5 +69,13 @@ public class JoueurUI {
         return listP;
     }
     
+    public static void printCashVous(Joueur j) {
+        System.out.println("Vous avez maintenant " + j.getCash() + "€");
+    }
+     public static void printCashLe(Joueur j) {
+        System.out.println("Le joueur " + j.getNomJoueur() + " a maintenant "+ j.getCash() + "€");
+    }
+    
+    
    
 }

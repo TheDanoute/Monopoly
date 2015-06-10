@@ -107,6 +107,38 @@ public class TexteUI {
     }
     
     public static void pasEncoreEch(){
-        System.out.println("Vous ne pouvez pas faire d'échange, toutes les propriétés n'ont pas encore été vendu");
+        System.out.println("Vous ne pouvez pas faire d'échange, toutes les propriétés n'ont pas encore été vendues");
+    }
+    
+    public static boolean bool(String g) {
+        String rep = question(g);
+        while (!rep.equals("non") && !rep.equals("oui")) {
+            System.out.println("Erreur, vous devez saisir oui ou non ! Recommencez : ") ;
+            rep = question(g);
+        }
+        return rep.equals("oui");
+    }
+    
+    public static int inte(String g) {
+        do {
+            try { 
+                return Integer.valueOf(question(g));
+            } catch(java.lang.NumberFormatException e) {
+                System.out.println("Vous devez rentrer un numéro, recommencez :");
+            }
+        } while(true);
+    }
+    
+    public static void dés(int d1,int d2) {
+       int sD = d1+d2;
+       System.out.println("D1 = " + d1 + " ; D2 = " + d2 + " ; Somme des dés = " + sD); 
+    }
+    
+    public static void printAncienCarreau(Carreau c) {
+        System.out.println("Ancien Carreau : " + c.getNom());
+    }
+    
+    public static void printNouveauCarreau(Carreau c) {
+        System.out.println("Nouveau Carreau : " + c.getNom());
     }
 }
