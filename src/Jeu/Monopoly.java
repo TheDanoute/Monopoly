@@ -118,7 +118,6 @@ public class Monopoly {
                         if (!TexteUI.ajouterJoueur()){
                             nJ = false;
                             joueurs = trieRecursif(joueurs); //Méthode recursive
-                            TexteUI.afficherJoueurs(joueurs);
                         }
                 }
 	}
@@ -271,6 +270,7 @@ public class Monopoly {
                 } else {
                     twice = lancerDesAvancer(aJ,s);
                     if (twice) {
+                        TexteUI.dooble();
                       comp++;  
                     }
                     if(comp==3){
@@ -280,7 +280,6 @@ public class Monopoly {
                         twice = false;
                     }else{
                         this.action(aJ);
-                        twice=false;
                     }
                     s = 0;
                 }
@@ -310,29 +309,23 @@ public class Monopoly {
             TexteUI.printNouveauCarreau(aJ.getPositionCourante());
             // Donne les noms, positions, argent, propriétés de tous les joueurs de la partie.
             /*for (Joueur j : joueurs){
-                TexteUI.message("Nom : "+j.getNomJoueur());
-                TexteUI.message("Position : "+j.getPositionCourante());
-                TexteUI.message("Argent : "+j.getCash());
-                TexteUI.message("Propriété(s) :");
-                for (Compagnie c : j.getCompagnies()){
-                    TexteUI.message(c.getNom());
-                }
-                for (Gare g : j.getGares()){
-                    TexteUI.message(g.getNom());
-                }
-                for (ProprieteAConstruire p : j.getProprietesAConstruire()){
-                    TexteUI.message(p.getNom());
-                    TexteUI.message("Groupe : "+p.getGroupe());
-                    TexteUI.message("Avec "+p.getImmobilier()+" construction(s)");
-                }
+            TexteUI.message("Nom : "+j.getNomJoueur());
+            TexteUI.message("Position : "+j.getPositionCourante());
+            TexteUI.message("Argent : "+j.getCash());
+            TexteUI.message("Propriété(s) :");
+            for (Compagnie c : j.getCompagnies()){
+            TexteUI.message(c.getNom());
+            }
+            for (Gare g : j.getGares()){
+            TexteUI.message(g.getNom());
+            }
+            for (ProprieteAConstruire p : j.getProprietesAConstruire()){
+            TexteUI.message(p.getNom());
+            TexteUI.message("Groupe : "+p.getGroupe());
+            TexteUI.message("Avec "+p.getImmobilier()+" construction(s)");
+            }
             }*/
-            if (d1==d2){
-                // Si le joueur effectue un double, retourne vrai, faux sinon.
-                return true;
-            }
-            else{
-                return false;
-            }
+            return d1==d2;
 	}
 
 	public int lancerDe() {

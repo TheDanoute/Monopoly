@@ -220,6 +220,10 @@ public class TexteUI {
         System.out.println("Au tour de "+ j.getNomJoueur());
     }
 
+    public static void dooble() {
+        System.out.println("Vous avez fait un double, vous rejouez");
+    }
+
     
     
 }

@@ -5,6 +5,8 @@
  */
 package Jeu;
 
+import Ui.CarteUI;
+import Ui.JoueurUI;
 import Ui.TexteUI;
 
 /**
@@ -42,7 +44,8 @@ public class CarteMouvement extends Carte{
         TexteUI.message(this.getDescription());
         if (verifDep && j.getPositionCourante().getNum()>carreau){
             j.addCash(200);
-           
+            CarteUI.laChance();
+            JoueurUI.printCashVous(j);
         }
         j.setPositionCourante(carreau);
         if (verifDep) {

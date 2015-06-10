@@ -139,7 +139,7 @@ public class Joueur {
             if (aC>0){
                 this.cash+=aC;
             } else {// Dans le cas où le joueur tire une carte avec un malus, aC sera négatif
-                //this.removeCash(-aC);
+                this.removeCash(-aC);
             }
 	}
 

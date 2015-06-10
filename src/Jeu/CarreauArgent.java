@@ -1,6 +1,7 @@
 package Jeu;
 
 import Ui.CarreauUI;
+import Ui.JoueurUI;
 import Ui.TexteUI;
 
 public class CarreauArgent extends CarreauAction {
@@ -25,8 +26,9 @@ public class CarreauArgent extends CarreauAction {
             if (prix<0){
                 CarreauUI.removeArgent(-prix);
             }else{
-                CarreauUI.addArgent(-prix);
+                CarreauUI.addArgent(prix);
             }
             j.addCash(prix);
+            JoueurUI.printCashVous(j);
         }
 }

@@ -38,4 +38,8 @@ public class CarteUI {
     public static void printInfo(Carte c) {
         System.out.println("Carte type : " + c.getType() + " ; " + c.getDescription());
     }
+
+    public static void laChance() {
+        System.out.println("Vous êtes passé par la case départ");
+    }
 }
