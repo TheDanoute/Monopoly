@@ -201,4 +201,35 @@ public class ProprieteUI {
         public static void printHypo(CarreauPropriete c) {
             System.out.println("L'hypotheque vous rapporte" + c.getPrix()/2 + "€");
         }
+        
+        public static boolean printAchat(CarreauPropriete c) {
+        System.out.println("Cette " + c.getClass().getSimpleName() + " : " + c.getNom() + " est disponible à l'achat au prix de " + c.getPrix() +"€");
+        return TexteUI.bool("Voulez-vous acheter cette compagnie ? (oui/non)");
+    }
+        
+        public static void printProprePAC(CarreauPropriete c) {
+            System.out.println("Vous êtes sur votre : " + c.getNom());
+        }
+        
+        public static boolean toucherLoyer(CarreauPropriete c) {
+             System.out.println("Vous êtes tomber sur une " + c.getClass().getSimpleName() + " qui à déjà un propriétaire.");
+             if (c.isHypotheque()) {
+                 System.out.println("Cette " + c.getClass().getSimpleName() + " est hypothéquée, vous ne payez rien");
+                 return false;
+             } else {
+                System.out.println("Vous devez payer " + c.getLoyer() + "€");
+                return true;
+             }
+        }
+        
+        public static void nouvelleConstruction(ProprieteAConstruire p) {
+            System.out.println("Ce terrain dispose maintenant de : " + getImmobilier(p));
+            System.out.println("Les joueurs qui passeront sur ce terrain payeront : " + p.getLoyer() + "€");
+            JoueurUI.printCashVous(p.getProprietaire());
+        }
+        
+        public static void destruction(ProprieteAConstruire p) {
+            System.out.println("la vente de cette maison vous rapporte " + p.getProprietaire().getCash() + "€");
+            System.out.println("Il reste sur ce terrain : " + getImmobilier(p));
+        }
 }

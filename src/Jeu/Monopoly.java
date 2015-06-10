@@ -531,7 +531,7 @@ public class Monopoly {
                         }
                         ProprieteUI.leverHypo(c);
                         if (j.getCash()<c.getPrixHypotheque()) {
-                            JoueurUI.errorHypo(j);
+                            JoueurUI.errorArgent(j);
                         } else {
                             if (ProprieteUI.continuerHypo()) {
                                 c.leverHypotheque();

@@ -1,6 +1,8 @@
 package Jeu;
 
 
+import Ui.JoueurUI;
+import Ui.ProprieteUI;
 import Ui.TexteUI;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -19,6 +21,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
             this.setPrixMaison(pM);
         }
         
+        @Override
         public int getLoyer(){
             if (immobilier==0 && super.getProprietaire().getProprietesAConstruire(this.getCouleur()).size()==this.getNbPropriete() && this.noHypo()) {
                 return loyers.get(immobilier)*2;
@@ -39,7 +42,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
 		return immobilier;
 	}
         
-        public String getImmobilierString() {
+        /*public String getImmobilierString() {
             String rep;
 		switch (immobilier) {
                     case 0:
@@ -79,7 +82,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
                     }
                 }
                 return rep;
-	}
+	}*/
 
 	private void setImmobilier(int i) {
 		immobilier=i;
@@ -121,7 +124,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
 
         public void construire() {
             if (this.getProprietaire().getCash()<this.getPrixMaison()) {
-                TexteUI.message("Vous n'avez pas assez d'argent...");
+                JoueurUI.errorArgent(super.getProprietaire());
             } else {
                 this.getProprietaire().removeCash(this.getPrixMaison());
                 this.addImmobilier();
@@ -131,9 +134,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
                     super.getMonopoly().addMaison(4);
                     super.getMonopoly().removeHotel();
                 }
-                TexteUI.message("Ce terrain dispose maintenant de : " + this.getImmobilierString());
-                TexteUI.message("Les joueurs qui passeront sur ce terrain payeront : " + this.getLoyer() + "€");
-                TexteUI.message("Il vous reste " + this.getProprietaire().getCash() + "€");
+                ProprieteUI.nouvelleConstruction(this);
             }
         }
         
@@ -151,8 +152,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
                 super.getMonopoly().addMaison();
                 argent = prixMaison/2;
                 super.getProprietaire().addCash(argent);
-                TexteUI.message("la vente de cette maison vous rapporte " + argent + "€");
-                TexteUI.message("Il reste sur ce terrain : " + this.getImmobilierString());
+                ProprieteUI.destruction(this);
             }
         }
         
@@ -168,44 +168,39 @@ public class ProprieteAConstruire extends CarreauPropriete {
             }
         }
         @Override
-        public void action (Joueur aJ){
-            Scanner sa = new Scanner(System.in);
-            if (aJ==this.getProprietaire()){
-                TexteUI.message("Cette propriété vous appartient");
-            } else if (this.getProprietaire()==null){
-                TexteUI.message("Vous êtes sur "+this.getNom());
-                TexteUI.message("Cette propriété est disponible à l'achat");
-                if (aJ.getCash()>=this.getPrix()){
-                    String rep = TexteUI.question("Cette propriété coûte "+this.getPrix()+"€, voulez-vous l'acheter ? (oui/non)");
-                    if (rep.equals("oui")){
-                        this.setProprietaire(aJ);
-                        aJ.removeCash(this.getPrix());
-                        TexteUI.message(aJ.getNomJoueur()+" est désormais le propriétaire de "+this.getNom());
+        public void action(Joueur j){
+            if (this.getProprietaire()==null) {
+                if (ProprieteUI.printAchat(this)) {
+                    if (j.getCash()>this.getPrix()) {
+                        j.removeCash(this.getPrix());
+                        JoueurUI.printCashVous(j);
+                        this.setProprietaire(j);
+                    } else {
+                        JoueurUI.errorArgent(j);
                     }
-                }else{
-                    TexteUI.message("Vous n'avez pas assez d'argent pour acheter cette propriété");
                 }
-            } else{
-                TexteUI.message(this.getProprietaire().getNomJoueur()+" est le propriétaire de ce carreau");
-                if (super.isHypotheque()) {
-                    TexteUI.message("Cette propriete est hypothéquée, vous ne payez rien");
-                } else {
-                    TexteUI.message("Vous devez payer "+this.getLoyer()+"€");
-                    aJ.removeCash(this.getLoyer());
-                    this.getProprietaire().addCash(this.getLoyer());
-                    TexteUI.message("Le propriétaire a reçu son argent !");  
-                }
+            } else if (this.getProprietaire()==j) {
+                ProprieteUI.printProprePAC(this);
+            } else {
+                ProprieteUI.toucherLoyer(this);
+                if (ProprieteUI.toucherLoyer(this)) {
+                    int l = this.getLoyer();
+                    j.removeCash(l);
+                    this.getProprietaire().addCash(l);
+                    JoueurUI.printCashLe(super.getProprietaire());
+                    JoueurUI.printCashLe(j);
+                 }
             }
         }
         
-        @Override
+        /*@Override
         public String getDescription() {
             if (super.isHypotheque()) {
                 return "Propriete HYPOTHEQUEE : " + super.getDescription() + " ; Groupe : " + this.getGroupe() + " ; Construction : " + this.getImmobilierString();
             } else {
                return "Propriete : " + super.getDescription() + " ; Groupe : " + this.getGroupe().toString() + " ; Construction : " + this.getImmobilierString();
             }
-        }
+        }*/
         
         public boolean noHypo() {
             boolean retour = true;

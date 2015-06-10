@@ -76,7 +76,7 @@ public class JoueurUI {
         System.out.println("Le joueur " + j.getNomJoueur() + " a maintenant "+ j.getCash() + "€");
     }
     
-     public static void errorHypo(Joueur j){
+     public static void errorArgent(Joueur j){
          System.out.println("Vous n'avez pas assez d'argent : vous avez " + j.getCash() + "€");
      }
     

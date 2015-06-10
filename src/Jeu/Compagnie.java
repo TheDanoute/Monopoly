@@ -1,5 +1,7 @@
 package Jeu;
 
+import Ui.JoueurUI;
+import Ui.ProprieteUI;
 import Ui.TexteUI;
 import java.util.Random;
 
@@ -9,6 +11,7 @@ public class Compagnie extends CarreauPropriete {
             super(num,nom,m,p);
         }
 
+        @Override
 	public int getLoyer() {
             Random gene = new Random();
                 if (this.getNbPropriete()>1) {
@@ -30,28 +33,25 @@ public class Compagnie extends CarreauPropriete {
         @Override
         public void action(Joueur j){
             if (this.getProprietaire()==null) {
-                TexteUI.message("Cette compagnie : " + this.getNom() + " est disponible à l'achat au prix de " + this.getPrix() +"€");
-                String r = TexteUI.question("Voulez-vous acheter cette compagnie ? (oui/non)");
-                if (r.equals("oui")) {
+                if (ProprieteUI.printAchat(this)) {
                     if (j.getCash()>this.getPrix()) {
                         j.removeCash(this.getPrix());
-                        TexteUI.message("Il vous reste " + j.getCash() + "€");
+                        JoueurUI.printCashVous(j);
                         this.setProprietaire(j);
                     } else {
-                        TexteUI.message("Vous n'avez pas assez d'argent");
+                        JoueurUI.errorArgent(j);
                     }
                 }
             } else if (this.getProprietaire()==j) {
-                TexteUI.message("Vous êtes sur votre : " + this.getNom());
+                ProprieteUI.printProprePAC(this);
             } else {
-                TexteUI.message("Vous êtes tomber sur une compagnie qui à déjà un propriétaire.");
-                 if (super.isHypotheque()) {
-                    TexteUI.message("Cette compagnie est hypothéquée, vous ne payez rien");
-                } else {
-                    TexteUI.message("Vous devez payer " + this.getLoyer() + "€");
+                ProprieteUI.toucherLoyer(this);
+                if (ProprieteUI.toucherLoyer(this)) {
                     int l = this.getLoyer();
                     j.removeCash(l);
                     this.getProprietaire().addCash(l);
+                    JoueurUI.printCashLe(super.getProprietaire());
+                    JoueurUI.printCashLe(j);
                  }
             }
         }
