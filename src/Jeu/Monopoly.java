@@ -189,16 +189,11 @@ public class Monopoly {
             cartes = new PaquetsCartes("cartes_"+dataFilename);
             this.buildGamePlateau(dataFilename);
             this.initialiserPartie();
-            TexteUI.message("Ordre des joueurs");
-            for (Joueur jou : joueurs) {
-                TexteUI.message(""+ jou.getNomJoueur());
-            }
+            TexteUI.afficherJoueurs(joueurs);
             int i = 0;
             while (joueurs.size()>1) {
                 Joueur j = joueurs.get(i);
-                    TexteUI.message("***************************************");
-                    TexteUI.message("Au tour de " + j.getNomJoueur());
-                    
+                    TexteUI.nouveauTour(j);
                     this.jouerUnCoup(j,0);
                     i++;
                 if (i>=joueurs.size()) {
@@ -222,7 +217,8 @@ public class Monopoly {
             JoueurUI.printCashVous(aJ);
             JoueurUI.printVosProprietes(aJ);
             String rep = TexteUI.choixTour();
-            while (!rep.equals("avancer")) {
+            boolean sort = false;
+            while (!rep.equals("avancer")&&!sort) {
                 switch(rep) {
                     case "construire":
                     {
@@ -252,6 +248,11 @@ public class Monopoly {
                         }
                         break;
                     }
+                    case "sortir":
+                    {
+                        sort = aJ.sortDuJeu();
+                        break;
+                    }
                     default:
                     {
                         break;
@@ -259,6 +260,7 @@ public class Monopoly {
                 }
                 rep = TexteUI.choixTour();
             }
+            if (rep.equals("avancer")) {
             TexteUI.avancer();
             boolean twice = true;
             int comp=0;
@@ -282,6 +284,7 @@ public class Monopoly {
                     }
                     s = 0;
                 }
+            }
             }
             
 	}

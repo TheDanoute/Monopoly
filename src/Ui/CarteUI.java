@@ -30,7 +30,7 @@ public class CarteUI {
         String rep = TexteUI.question("Vous choisissez ? (chance/payer)");
         while (!rep.equals("payer")&&!rep.equals("chance")) {
             System.out.println("Erreur : vous devez répondre par : chance/payer ! Recommencez :");
-            TexteUI.question("Que voulez-vous faire ? (chance/payer)");
+            rep = TexteUI.question("Que voulez-vous faire ? (chance/payer)");
         }
         return rep;
     }

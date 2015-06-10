@@ -16,11 +16,11 @@ public class Compagnie extends CarreauPropriete {
             Random gene = new Random();
                 if (this.getNbPropriete()>1) {
                     int i = (gene.nextInt(6)+1)*10;
-                    TexteUI.message("Vous avez abtenu " + i/10 + " aux dés, donc vous payer : " + i +"€");
+                    ProprieteUI.payerCompagnies(i);
                     return i;
                 } else {
                     int i = (gene.nextInt(6)+1)*4;
-                    TexteUI.message("Vous avez abtenu " + i/4 + " aux dés, donc vous payer : " + i +"€");
+                     ProprieteUI.payerCompagnie(i);
                     return i;
                 }
 	}

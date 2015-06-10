@@ -248,5 +248,15 @@ public class ProprieteUI {
             System.out.println(j.getNomJoueur() + " possède maintenant tout les propriétés du groupe, il peut désormais construire dessus");
         }
         
+        public static void payerCompagnies(int value) {
+            System.out.println("Le proprietaire possédant les deux compagnies, vous allez payer dix fois la somme de votre lancer de dés");
+            System.out.println("Vous avez abtenu " + value/10 + " aux dés, donc vous payer : " + value +"€");
+        }
+        
+        public static void payerCompagnie(int value) {
+            System.out.println("Le proprietaire possédant une seule compagnie, vous allez payer 4 fois la somme de votre lancer de dés");
+            System.out.println("Vous avez abtenu " + value/10 + " aux dés, donc vous payer : " + value +"€");
+        }
+        
         
 }

@@ -148,11 +148,11 @@ public class Joueur {
 		this.cash-=aC;
                 // Si le cash du joueur est négatif après le retrait il doit vendre pour récuperer son négatif ou il fait faillite
                 if (this.getCash()<0){
-                TexteUI.message("Le joueur "+this.getNomJoueur()+" n'a pas assez d'argent pour payer. Il doit detruire et/ou hypothequer");
+                JoueurUI.cBientotLaFin(this);
                 boolean vendre = true ;
                 boolean hypotheque = true ;
                     while (this.getCash()<0 && (vendre || hypotheque))    {
-                        String rep = TexteUI.question("Que veut il faire ? (hypotheque/detruire)");
+                        String rep = JoueurUI.chooseLaFin();
                         switch(rep) {
                             case "detruire":
                             {
@@ -164,7 +164,7 @@ public class Joueur {
                                         vendre = false;
                                     }
                                 } else {
-                                    TexteUI.message("Vous n'avez plus d'immobilier à détruire");
+                                    JoueurUI.cLaFinDetruire();
                                 }
                                  break;
                             }
@@ -178,28 +178,32 @@ public class Joueur {
                                         hypotheque = false;
                                     }
                                 } else {
-                                    TexteUI.message("Vous n'avez plus de propriete à hypothequer");
+                                    JoueurUI.cLaFinHypo();
                                 }
                                  break;
                             }
                         }
-                        TexteUI.message("Vous avez " + cash + "€");
+                        JoueurUI.printCashVous(this);
                     }
                     if (this.getCash()<0) {
-                        TexteUI.message("Le joueur " + this.nomJoueur + " n'a pas de quoi payer, il fait donc faillite et sort du jeu...");
+                        JoueurUI.cLaFin(this);
                         this.faillite();
                     } else {
-                        TexteUI.message("La faillite à été épargnée pour le moment");
+                        JoueurUI.okJeGere();
                     }
                 }
 	}
         
-        public void sortDuJeu() {
-            this.faillite();
+        public boolean sortDuJeu() {
+            if (JoueurUI.sortDuJeu(this)) {
+                this.faillite();
+                return true;
+            } else {
+                return false;
+            }
         }
         
         private void faillite() {
-            TexteUI.message("Le joueur " + this.nomJoueur + " n'a pas de quoi payer, il fait donc faillite et sort du jeu...");
                         for (ProprieteAConstruire p : proprietesAConstruire) {
                             p.retourBanque();
                         }

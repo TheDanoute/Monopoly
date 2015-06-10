@@ -31,7 +31,7 @@ public class CarreauUI {
         String rep = TexteUI.question("Vous ne pouvez pas lancer les dés quatre fois de suite, vous devez payer ou utiliser une carte. (payer/carte)");
         while (!rep.equals("payer")&&!rep.equals("carte")) {
             System.out.println("Erreur : vous devez répondre par : payer/carte ! Recommencez :");
-            TexteUI.question("Que voulez-vous faire ? (payer/carte)");
+            rep = TexteUI.question("Que voulez-vous faire ? (payer/carte)");
         }
         return rep;
     }

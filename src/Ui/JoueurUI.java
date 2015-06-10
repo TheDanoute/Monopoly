@@ -111,9 +111,42 @@ public class JoueurUI {
          JoueurUI.printCashVous(j);
      }
      
-     public static void faillite(Joueur j) {
-         
+     public static void cLaFin(Joueur j) {
+         System.out.println("Le joueur " + j.getNomJoueur() + " n'a pas de quoi payer, il fait donc faillite et sort du jeu...");
      }
+     
+     public static void okJeGere() {
+         System.out.println("La faillite à été épargnée pour le moment");
+     }
+     
+     public static void cBientotLaFin(Joueur j) {
+        System.out.println("Le joueur "+j.getNomJoueur()+" n'a pas assez d'argent pour payer. Il doit detruire et/ou hypothequer"); 
+     }
+     public static void cLaFinDetruire() {
+            System.out.println("Vous n'avez plus d'immobilier à détruire");
+        }
+        
+        public static void cLaFinHypo() {
+            System.out.println("Vous n'avez plus de propriete à hypothequer");
+        }
+        
+        public static String chooseLaFin() {
+        String rep = TexteUI.question("Que voulez-vous faire ? (vendre/hypotheque)");
+        while (!rep.equals("vendre")&&!rep.equals("hypotheque")) {
+            System.out.println("Erreur : vous devez répondre par : vendre/hypotheque ! Recommencez :");
+            rep = TexteUI.question("Que voulez-vous faire ? (vendre/hypotheque)");
+        }
+        return rep;
+        }
+
+    public static boolean sortDuJeu(Joueur j) {
+        if (TexteUI.bool("Etes-vous sûr de vouloir arreter ? (oui/non)")) {
+            System.out.println("Le joueur " + j.getNomJoueur() + " sort du jeu... Ses possessions retournent à la banque");
+            return true;
+        } else {
+            return false;
+        }
+    }
     
    
 }

@@ -199,10 +199,10 @@ public class TexteUI {
     }
 
     public static String choixTour() {
-        String rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger/detruire/hypotheque)");
-        while (!rep.equals("avancer")&&!rep.equals("construire")&&!rep.equals("echanger")&&!rep.equals("detruire")&&!rep.equals("hypotheque")) {
-            System.out.println("Erreur : vous devez répondre par : avancer/construire/echanger/detruire/hypotheque ! Recommencez :");
-            TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger/detruire/hypotheque)");
+        String rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger/detruire/hypotheque/sortir)");
+        while (!rep.equals("avancer")&&!rep.equals("construire")&&!rep.equals("echanger")&&!rep.equals("detruire")&&!rep.equals("hypotheque")&&!rep.equals("sortir")) {
+            System.out.println("Erreur : vous devez répondre par : avancer/construire/echanger/detruire/hypotheque/sortir ! Recommencez :");
+            rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger/detruire/hypotheque/sortir)");
         }
         return rep;
     }
@@ -214,6 +214,12 @@ public class TexteUI {
     public static void troisDouble(Joueur j) {
         System.out.println("Le joueur "+j.getNomJoueur()+" a fait trois double de suite, il est envoyé en prison!");
     }
+    
+    public static void nouveauTour(Joueur j){
+        System.out.println("***************************************");
+        System.out.println("Au tour de "+ j.getNomJoueur());
+    }
+
     
     
 }

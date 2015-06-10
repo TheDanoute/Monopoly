@@ -96,6 +96,7 @@ public class CarteSpecial extends Carte{
             case 4:
                 j.setPositionCourante(j.getPositionCourante().getNum()-3);
                 CarteUI.deplacement(j.getPositionCourante());
+                j.getPositionCourante().action(j);
             break;
         }
     }
