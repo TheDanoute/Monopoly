@@ -3,8 +3,7 @@ package Jeu;
 import java.util.ArrayList;
 
 public class Groupe {
-	private int prixAchatMaison;
-	//private int prixAchatHotel; //Même prix pour les maisons que pour l'hotel
+	private int prixAchat;
 	private CouleurPropriete couleur;
 	private ArrayList<ProprieteAConstruire> proprietes;
         private int nbPropriete;
@@ -19,11 +18,11 @@ public class Groupe {
         }
         
         private void setPrix(int p) {
-            prixAchatMaison=p;
+            prixAchat=p;
         }
         
         public int getPrix() {
-            return prixAchatMaison;
+            return prixAchat    ;
         }
         
         public CouleurPropriete getCouleur() {
