@@ -6,16 +6,19 @@
 
 package Ui;
 
-/**
- *
- * @author gueganb
- */
-public class FenêtreInit extends javax.swing.JFrame {
+import Jeu.*;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
-    /**
-     * Creates new form FenêtreInit
-     */
-    public FenêtreInit() {
+
+public class FenêtreInit extends javax.swing.JFrame {
+    private Monopoly monop;
+
+    public FenêtreInit( Monopoly monop) {
+       this.monop=monop;
+       initComponents();
+    }
+    public FenêtreInit(){
         initComponents();
     }
 
@@ -29,10 +32,10 @@ public class FenêtreInit extends javax.swing.JFrame {
     private void initComponents() {
 
         label1 = new java.awt.Label();
-        list1 = new java.awt.List();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        listJou = new java.awt.List();
+        ajouter = new javax.swing.JButton();
+        lancerPartie = new javax.swing.JButton();
+        nomJ = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,11 +43,21 @@ public class FenêtreInit extends javax.swing.JFrame {
         label1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         label1.setText("Monopoly  :D");
 
-        jButton1.setText("Ajouter un joueur");
+        ajouter.setText("Ajouter un joueur");
+        ajouter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajouterActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Supprimer un joueur");
+        lancerPartie.setText("Lancer la partie !");
+        lancerPartie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lancerPartieActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Lancer la partie !");
+        nomJ.setText("Entrez un nom de joueur");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -53,12 +66,12 @@ public class FenêtreInit extends javax.swing.JFrame {
             .addComponent(label1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(list1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(listJou, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(ajouter, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                    .addComponent(lancerPartie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nomJ))
                 .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
@@ -66,21 +79,47 @@ public class FenêtreInit extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(list1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addGap(56, 56, 56)
-                        .addComponent(jButton3)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(listJou, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(nomJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ajouter)
+                        .addGap(37, 37, 37)
+                        .addComponent(lancerPartie)))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterActionPerformed
+        if (ajouter.isEnabled()){
+            monop.ajouterJoueur(nomJ.getText());
+            this.setListJ(monop.getJoueurs());
+        }
+    }//GEN-LAST:event_ajouterActionPerformed
+
+    private void lancerPartieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lancerPartieActionPerformed
+        // TODO add your handling code here:
+        if (lancerPartie.isEnabled()){
+            this.setVisible(false);
+            monop.lancerUnePartie();   
+        }
+            
+    }//GEN-LAST:event_lancerPartieActionPerformed
+
+    public void setListJ (ArrayList<Joueur> listJ){
+        listJou.clear();
+        for (Joueur j : listJ){
+            listJou.add(j.getNomJoueur());
+        }
+    }
+
+    
     /**
      * @param args the command line arguments
      */
@@ -112,15 +151,16 @@ public class FenêtreInit extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new FenêtreInit().setVisible(true);
+              
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton ajouter;
     private java.awt.Label label1;
-    private java.awt.List list1;
+    private javax.swing.JButton lancerPartie;
+    private java.awt.List listJou;
+    private javax.swing.JTextField nomJ;
     // End of variables declaration//GEN-END:variables
 }

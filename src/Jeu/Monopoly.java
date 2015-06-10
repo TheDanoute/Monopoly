@@ -21,7 +21,8 @@ public class Monopoly {
 	private ArrayList<Joueur> joueurs = new ArrayList<>();
         private ArrayList<Joueur> joueursTemp = new ArrayList<>();
 	private Interface interface_2;
-
+        private FenêtreInit init;
+        
 	public Monopoly(String dataFilename){
             this.jouerUnePartie(dataFilename);
 	}
@@ -120,7 +121,8 @@ public class Monopoly {
         public void initialiserPartie() {
 		boolean nJ = true;
                 while (nJ) {
-                    ajouterJoueur();
+                    String rep =TexteUI.question("Nom du joueur :");
+                    ajouterJoueur(rep);
                     String c = TexteUI.question("Voules-vous ajouter un nouveau joueur? (oui/non)");
                         if (!c.equals("oui")){
                             nJ = false;
@@ -133,11 +135,17 @@ public class Monopoly {
                 }
 	}
         
-        public void ajouterJoueur () {
-            String nomJ = TexteUI.question("Nom du joueur : ");
+        public void initPartieGraph(){
+            init = new FenêtreInit(this);
+            init.setVisible(true);
+            
+        }
+        
+        public void ajouterJoueur (String nomJ) {
             Joueur j = new Joueur(nomJ, this);
             joueurs.add(j);
-            TexteUI.message("Premier lancé de dés : " + j.getDesDepart());
+            TexteUI.message(nomJ+" a été ajouté.");
+            TexteUI.message("Son premier lancé de dés : " + j.getDesDepart());
         }
              
         private ArrayList<Joueur> trieRecursif(ArrayList<Joueur> list) {
@@ -198,7 +206,15 @@ public class Monopoly {
         public void jouerUnePartie(String dataFilename) {
             cartes = new PaquetsCartes("cartes_"+dataFilename);
             this.buildGamePlateau(dataFilename);
-            this.initialiserPartie();
+            this.initPartieGraph();
+        }
+        
+        public void lancerUnePartie(){
+            joueurs = this.trieRecursif(joueurs);
+            TexteUI.message("Ordre des joueurs");
+            for (Joueur jou : joueurs) {
+                TexteUI.message(""+ jou.getNomJoueur());
+            }
             int i = 0;
             while (joueurs.size()>1) {
                 Joueur j = joueurs.get(i);
