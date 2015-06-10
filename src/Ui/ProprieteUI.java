@@ -6,10 +6,7 @@
 
 package Ui;
 
-import Jeu.Compagnie;
-import Jeu.CouleurPropriete;
-import Jeu.Gare;
-import Jeu.ProprieteAConstruire;
+import Jeu.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -130,6 +127,18 @@ public class ProprieteUI {
             System.out.println("Ce terrain n'est pas destructible pour le moment");
         }
         
+        public static void errorHypoNonProposee(){
+            System.out.println("Erreur : Ce terrain n'est pas disponible à l'hypothèque, recommencez :");
+        }
+        
+        public static void errorNonHypo(){
+            System.out.println("Erreur : Ce terrain n'est pas hypothéqué, recommencez :");
+        }
+        
+        public static int chooseHypo() {
+            return TexteUI.inte("Sur quelle propriété voulez-vous lever a ? (numéro)");
+        }
+        
         public static boolean encoreConstruire() {
             return TexteUI.bool("Voulez-vous construire une autre maison/hotel ? (oui/non)");
         }
@@ -172,6 +181,24 @@ public class ProprieteUI {
         public static void printCompagnie(Compagnie c) {
             System.out.println("Compagnie : " + c.getNom() + " ; n°" + c.getNum());
         }
-         
         
+        public static void errorHypo() {
+            System.out.println("Vous n'avez aucune propriété hypothequée");
+        }
+         
+        public static void leverHypo(CarreauPropriete c) {
+            System.out.println("Lever l'hypothèque de cette propriété coute : " + c.getPrixHypotheque() + "€");
+        }
+        
+        public static boolean continuerHypo() {
+            return TexteUI.bool("Voulez-vous continuer ? (oui/non)");
+        }
+        
+        public static void hypoDispo() {
+            System.out.println("Liste des proprietes disponible à l'hypotheque :");
+        }
+        
+        public static void printHypo(CarreauPropriete c) {
+            System.out.println("L'hypotheque vous rapporte" + c.getPrix()/2 + "€");
+        }
 }

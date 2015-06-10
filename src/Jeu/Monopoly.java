@@ -517,14 +517,23 @@ public class Monopoly {
                         }
                     }
                     if (list.isEmpty()){
-                        TexteUI.message("Vous n'avez aucune propriété hypothequée");
+                        ProprieteUI.errorHypo();
                     } else {
-                        CarreauPropriete c = list.get(Integer.valueOf(TexteUI.question("Sur quelle propriété voulez-vous lever l'hypotheque ? (numéro)")));
-                        TexteUI.message("Lever l'hypothèque de cette propriété coute : " + c.getPrixHypotheque() + "€");
+                        boolean ok = false;
+                        CarreauPropriete c = (CarreauPropriete)carreaux.get(2); //Initialisation de la variable
+                        while (!ok) {
+                            try {
+                                c = list.get(ProprieteUI.chooseHypo());
+                                ok = true;
+                            } catch (java.lang.NullPointerException e) {
+                                ProprieteUI.errorNonHypo();
+                            }
+                        }
+                        ProprieteUI.leverHypo(c);
                         if (j.getCash()<c.getPrixHypotheque()) {
-                            TexteUI.message("Vous n'avez pas assez d'argent pour lever l'hypothèque");
+                            JoueurUI.errorHypo(j);
                         } else {
-                            if (TexteUI.question("Voulez-vous continuer ? (oui/non)").equals("oui")) {
+                            if (ProprieteUI.continuerHypo()) {
                                 c.leverHypotheque();
                             }
                         }
@@ -534,7 +543,7 @@ public class Monopoly {
                 case "hypotheque":
                 {
                     HashMap<Integer,CarreauPropriete> list = new HashMap<>();
-                    TexteUI.message("Liste des proprietes disponible à l'hypotheque :");
+                    ProprieteUI.hypoDispo();
                     for (CouleurPropriete c : CouleurPropriete.values()) {
                         ArrayList<ProprieteAConstruire> pros = j.getProprietesAConstruire(c);
                         boolean ok = true;
@@ -552,6 +561,7 @@ public class Monopoly {
                                 for (ProprieteAConstruire p : pros) {
                                     if (!p.isHypotheque()){
                                         list.put(p.getNum(), p);
+                                        ProprieteUI.printPropriete(p);
                                     }
                                 }
                             }
@@ -560,21 +570,30 @@ public class Monopoly {
                     for (Gare g : j.getGares()) {
                         if (!g.isHypotheque()) {
                             list.put(g.getNum(), g);
-                            TexteUI.message(g.getDescription());
+                            ProprieteUI.printGare(g);
                         }
                     }
                     for (Compagnie c : j.getCompagnies()) {
                         if (!c.isHypotheque()) {
                             list.put(c.getNum(), c);
-                            TexteUI.message(c.getDescription());
+                            ProprieteUI.printCompagnie(c);
                         }
                     }
                     if (list.isEmpty()){
                         throw new Exception("Vous n'avez aucune propriété disponible à l'hypotheque");
                     } else {
-                        CarreauPropriete c = list.get(Integer.valueOf(TexteUI.question("Quelle propriété voulez-vous hypothequer ? (numéro)")));
-                        TexteUI.message("L'hypotheque vous rapporte" + c.getPrix()/2 + "€");
-                            if (TexteUI.question("Voulez-vous continuer ? (oui/non)").equals("oui")) {
+                       boolean ok = false;
+                        CarreauPropriete c = (CarreauPropriete)carreaux.get(2); //Initialisation de la variable
+                        while (!ok) {
+                            try {
+                                c = list.get(ProprieteUI.chooseHypo());
+                                ok = true;
+                            } catch (java.lang.NullPointerException e) {
+                                ProprieteUI.errorHypoNonProposee();
+                            }
+                        }
+                        ProprieteUI.printHypo(c);
+                            if (ProprieteUI.continuerHypo()) {
                                 c.hypotheqer();
                             }
                         }
