@@ -144,15 +144,14 @@ public class ProprieteAConstruire extends CarreauPropriete {
                 this.setImmobilier(0);
                 super.getMonopoly().addHotel();
                 argent = (int)(prixMaison*2.5);
-                TexteUI.message("La vente de cet hotel vous rapporte " + argent + "€");
                 super.getProprietaire().addCash(argent);
-                TexteUI.message("Ce terrain est maintenant vide de construction");
+                ProprieteUI.destructionHotel(this,argent);
             } else {
                 this.removeImmobilier();
                 super.getMonopoly().addMaison();
                 argent = prixMaison/2;
                 super.getProprietaire().addCash(argent);
-                ProprieteUI.destruction(this);
+                ProprieteUI.destructionMaison(this,argent);
             }
         }
         

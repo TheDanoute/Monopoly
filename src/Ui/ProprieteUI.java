@@ -228,8 +228,21 @@ public class ProprieteUI {
             JoueurUI.printCashVous(p.getProprietaire());
         }
         
-        public static void destruction(ProprieteAConstruire p) {
-            System.out.println("la vente de cette maison vous rapporte " + p.getProprietaire().getCash() + "€");
-            System.out.println("Il reste sur ce terrain : " + getImmobilier(p));
+        public static void destructionMaison(ProprieteAConstruire p,int argent) {
+            System.out.println("La vente de cette maison vous rapporte " + argent + "€");
+            if(p.getImmobilier()>0) {
+                System.out.println("Il reste sur ce terrain : " + getImmobilier(p));
+            } else {
+                System.out.println("Ce terrain est maintenant vide de construction");
+            }
+            JoueurUI.printCashVous(p.getProprietaire());
         }
+        
+        public static void destructionHotel(ProprieteAConstruire p,int argent) {
+            System.out.println("La vente de cet hotel vous rapporte " + argent + "€");
+            System.out.println("Ce terrain est maintenant vide de construction");
+            JoueurUI.printCashVous(p.getProprietaire());
+        }
+        
+        
 }
