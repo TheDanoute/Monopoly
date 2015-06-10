@@ -146,7 +146,7 @@ public class Joueur {
 	public void removeCash(int aC){
                 // Soustrait au joueur le montant aC
 		this.cash-=aC;
-                // Si le cash du joueur est négatif après le retrait, il fait faillite, il a donc perdu et il est retiré de la partie.
+                // Si le cash du joueur est négatif après le retrait il doit vendre pour récuperer son négatif ou il fait faillite
                 if (this.getCash()<0){
                 TexteUI.message("Le joueur "+this.getNomJoueur()+" n'a pas assez d'argent pour payer. Il doit detruire et/ou hypothequer");
                 boolean vendre = true ;
@@ -187,6 +187,19 @@ public class Joueur {
                     }
                     if (this.getCash()<0) {
                         TexteUI.message("Le joueur " + this.nomJoueur + " n'a pas de quoi payer, il fait donc faillite et sort du jeu...");
+                        this.faillite();
+                    } else {
+                        TexteUI.message("La faillite à été épargnée pour le moment");
+                    }
+                }
+	}
+        
+        public void sortDuJeu() {
+            this.faillite();
+        }
+        
+        private void faillite() {
+            TexteUI.message("Le joueur " + this.nomJoueur + " n'a pas de quoi payer, il fait donc faillite et sort du jeu...");
                         for (ProprieteAConstruire p : proprietesAConstruire) {
                             p.retourBanque();
                         }
@@ -196,11 +209,8 @@ public class Joueur {
                         for (Gare g : gares) {
                             g.retourBanque();
                         }
-                    } else {
-                        TexteUI.message("La faillite à été épargnée pour le moment");
-                    }
-                }
-	}
+                        this.getMonopoly().getJoueurs().remove(this);
+        }
 
 	public String getNomJoueur() {
 		return this.nomJoueur;

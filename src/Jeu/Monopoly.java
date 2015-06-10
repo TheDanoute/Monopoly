@@ -21,7 +21,6 @@ public class Monopoly {
 	private ArrayList<Joueur> joueurs = new ArrayList<>();
         private ArrayList<Joueur> joueursTemp = new ArrayList<>();
 	private Interface interface_2;
-        private FenêtreInit init;
         
 	public Monopoly(String dataFilename){
             this.jouerUnePartie(dataFilename);
@@ -123,12 +122,7 @@ public class Monopoly {
                         }
                 }
 	}
-        
-        public void initPartieGraph(){
-            init = new FenêtreInit(this);
-            init.setVisible(true);
-            
-        }
+
         
         public void ajouterJoueur (String nomJ) {
             Joueur j = new Joueur(nomJ, this);
@@ -194,11 +188,7 @@ public class Monopoly {
         public void jouerUnePartie(String dataFilename) {
             cartes = new PaquetsCartes("cartes_"+dataFilename);
             this.buildGamePlateau(dataFilename);
-            this.initPartieGraph();
-        }
-        
-        public void lancerUnePartie(){
-            joueurs = this.trieRecursif(joueurs);
+            this.initialiserPartie();
             TexteUI.message("Ordre des joueurs");
             for (Joueur jou : joueurs) {
                 TexteUI.message(""+ jou.getNomJoueur());
@@ -216,7 +206,7 @@ public class Monopoly {
                 }
             }
         }
-
+  
 	/*public void achatPropriete(Joueur aJ, CarreauPropriete cP) {
 		if (aJ.getCash()<cP.getPrix()){
                     TexteUI.message(aJ.getNomJoueur()+" n'a pas assez d'argent pour acheter la propriété");

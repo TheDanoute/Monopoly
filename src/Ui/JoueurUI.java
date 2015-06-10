@@ -110,6 +110,10 @@ public class JoueurUI {
          System.out.println("Vous venez de passer par la case départ, vous recevez 200€");
          JoueurUI.printCashVous(j);
      }
+     
+     public static void faillite(Joueur j) {
+         
+     }
     
    
 }
