@@ -141,6 +141,71 @@ public class TexteUI {
     public static void printNouveauCarreau(Carreau c) {
         System.out.println("Nouveau Carreau : " + c.getNom());
     }
+
+    public static void printInfo(Carreau c) {
+        String info = "";
+        try {
+            ProprieteAConstruire pAC = (ProprieteAConstruire)c;
+            info = "Propriété : " + c.getNom() + " ; groupe : " + pAC.getCouleur().toString() +" ; case : " + c.getNum();
+        } catch(java.lang.ClassCastException e) {    
+            info = c.getClass().getSimpleName() + " : " + c.getNom() + " ; case : " + c.getNum();
+        } finally {
+            System.out.println(info);
+        }
+    }
+    
+    public static void errorFile(int error) {
+       switch (error) {
+           case 0:
+           {
+                System.err.println("[buildGamePleateau()] : Invalid Data type");
+                break;
+           }
+           case 1:
+           {
+                System.err.println("[buildGamePlateau()] : File is not found!");
+                break;
+           }
+           case 2:
+           {
+                System.err.println("[buildGamePlateau()] : Error while reading file!");
+                break;
+           }
+        }
+    }
+
+    public static String nouveauJoueur() {
+        return TexteUI.question("Nom du joueur ? ");
+    }
+    
+    public static boolean ajouterJoueur() {
+        return bool("Voules-vous ajouter un nouveau joueur? (oui/non)");
+    }
+    
+    public static void afficherJoueurs(ArrayList<Joueur> list) {
+        System.out.println("Ordre des joueurs");
+        for (Joueur jou : list) {
+            System.out.println(" - "+ jou.getNomJoueur());
+        }
+    }
+    
+    public static void ajoutJoueur(Joueur j) {
+        System.out.println(j.getNomJoueur() + " a été ajouté.");
+        System.out.println("Son premier lancé de dés : " + j.getDesDepart());
+    }
+    
+    public static void trieJoueur(Joueur j,int value) {
+        System.out.println("Etant arriver ex aequo, " + j.getNomJoueur() + " relance le dé et obtient : " + value);
+    }
+
+    public static String choixTour() {
+        String rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger/detruire/hypotheque)");
+        while (!rep.equals("avancer")&&!rep.equals("construire")&&!rep.equals("echanger")&&!rep.equals("detruire")&&!rep.equals("hypotheque")) {
+            System.out.println("Erreur : vous devez répondre par : avancer/construire/echanger/detruire/hypotheque ! Recommencez :");
+            TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger/detruire/hypotheque)");
+        }
+        return rep;
+    }
     
     
 }

@@ -40,7 +40,6 @@ public class Monopoly {
                                              couleur = data.get(i)[3];
                                              groupe = new Groupe(Integer.valueOf(data.get(i)[11]),couleur);
                                         }
-                                        TexteUI.message("Propriété :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1] + "\tCouleur : " + couleur);
                                         ArrayList<Integer> prix = new ArrayList<>(); //Création de la liste de prix de loyer
                                         for (int j=5;j<11;j++) {
                                             prix.add(Integer.valueOf(data.get(i)[j]));
@@ -50,22 +49,18 @@ public class Monopoly {
                                 }
                                 
 				else if(caseType.compareTo("G") == 0){
-					TexteUI.message("Gare :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                                         Gare gare = new Gare (Integer.valueOf(data.get(i)[1]),data.get(i)[2],this,Integer.valueOf(data.get(i)[3]));
                                         this.addCarreau(gare);
                                 }
 				else if(caseType.compareTo("C") == 0){
-					TexteUI.message("Compagnie :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                                         Compagnie comp = new Compagnie(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this,Integer.valueOf(data.get(i)[3]));
                                         this.addCarreau(comp);
 				}
                                 else if(caseType.compareTo("CP") == 0){
-					TexteUI.message("Case Prison :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                                         CarreauPrison cp = new CarreauPrison(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this);
                                         this.addCarreau(cp);
 				}
 				else if(caseType.compareTo("CT") == 0){
-					TexteUI.message("Case Tirage :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                                         CarteType t;
                                         if (data.get(i)[2].equals("Chance")) {
                                             t = CarteType.chance;
@@ -76,30 +71,29 @@ public class Monopoly {
                                         this.addCarreau(cT);
 				}
 				else if(caseType.compareTo("CA") == 0){
-					TexteUI.message("Case Argent :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                                         CarreauArgent ca = new CarreauArgent(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this,Integer.valueOf(data.get(i)[3]));
                                         this.addCarreau(ca);
 				}
 				else if(caseType.compareTo("CM") == 0){
-					TexteUI.message("Case Mouvement :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                                         CarreauMouvement cM = new CarreauMouvement(Integer.valueOf(data.get(i)[1]),data.get(i)[2],this);
                                         this.addCarreau(cM);
 				}
 				else
-					System.err.println("[buildGamePleateau()] : Invalid Data type");
+					TexteUI.errorFile(0);
 			}
 			
 		} 
 		catch(FileNotFoundException e){
-			System.err.println("[buildGamePlateau()] : File is not found!");
+                    TexteUI.errorFile(1);
 		}
 		catch(IOException e){
-			System.err.println("[buildGamePlateau()] : Error while reading file!");
+                    TexteUI.errorFile(2);
 		}
 	}
         
         private void addCarreau(Carreau c) {
             carreaux.put(c.getNum(), c);
+            TexteUI.printInfo(c);
         }
 	
 	private ArrayList<String[]> readDataFile(String filename, String token) throws FileNotFoundException, IOException
@@ -121,16 +115,11 @@ public class Monopoly {
         public void initialiserPartie() {
 		boolean nJ = true;
                 while (nJ) {
-                    String rep =TexteUI.question("Nom du joueur :");
-                    ajouterJoueur(rep);
-                    String c = TexteUI.question("Voules-vous ajouter un nouveau joueur? (oui/non)");
-                        if (!c.equals("oui")){
+                    ajouterJoueur(TexteUI.nouveauJoueur());
+                        if (!TexteUI.ajouterJoueur()){
                             nJ = false;
                             joueurs = trieRecursif(joueurs); //Méthode recursive
-                            TexteUI.message("Ordre des joueurs");
-                            for (Joueur jou : joueurs) {
-                                TexteUI.message(""+ jou.getNomJoueur());
-                            }
+                            TexteUI.afficherJoueurs(joueurs);
                         }
                 }
 	}
@@ -144,8 +133,7 @@ public class Monopoly {
         public void ajouterJoueur (String nomJ) {
             Joueur j = new Joueur(nomJ, this);
             joueurs.add(j);
-            TexteUI.message(nomJ+" a été ajouté.");
-            TexteUI.message("Son premier lancé de dés : " + j.getDesDepart());
+            TexteUI.ajoutJoueur(j);
         }
              
         private ArrayList<Joueur> trieRecursif(ArrayList<Joueur> list) {
@@ -160,7 +148,7 @@ public class Monopoly {
                     } else {
                         for (int j = compteur;j<=i;j++){ //Boucle des joueurs ayant obtenu le même score
                             int value = lancerDe(); 
-                            TexteUI.message("Etant arriver ex aequo, " + list.get(j).getNomJoueur() + " relance le dé et obtient : " + value);
+                            TexteUI.trieJoueur(list.get(j), value);
                             list.get(j).setDesDepart(value);
                             listTemp.add(list.get(j));
                         }
@@ -177,7 +165,7 @@ public class Monopoly {
             if (i-compteur>=1) { //Test si la fin de la liste contient des valeurs identiques
                 for (int j = compteur;j<=i;j++){
                     int value = lancerDe();
-                    TexteUI.message("Etant arriver ex aequo, " + list.get(j).getNomJoueur() + " relance le dé et obtient : " + value);
+                    TexteUI.trieJoueur(list.get(j), value);
                     list.get(j).setDesDepart(value);
                     listTemp.add(list.get(j));
                 }
@@ -241,22 +229,9 @@ public class Monopoly {
 	}*/
         
         public void jouerUnCoup(Joueur aJ,int s) {
-            TexteUI.message("Vous avez "+aJ.getCash()+"€");
-            TexteUI.message("Vos propriété(s) :");
-            for (Compagnie c : aJ.getCompagnies()){
-                TexteUI.message("Propriété : "+c.getNom());
-
-            }
-            for (Gare g : aJ.getGares()){
-                TexteUI.message("Propriété : "+g.getNom());
-
-            }
-            for (ProprieteAConstruire p : aJ.getProprietesAConstruire()){
-                TexteUI.message("Propriété : "+p.getNom());
-                TexteUI.message("Groupe : "+p.getGroupe().getCouleur().toString());
-                TexteUI.message("Avec "+p.getImmobilier()+" construction(s)");
-            }       
-            String rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger/detruire/hypotheque)");
+            JoueurUI.printCashVous(aJ);
+            JoueurUI.printVosProprietes(aJ);
+            String rep = TexteUI.choixTour();
             while (!rep.equals("avancer")) {
                 switch(rep) {
                     case "construire":
@@ -289,11 +264,10 @@ public class Monopoly {
                     }
                     default:
                     {
-                        TexteUI.message("Erreur");
                         break;
                     }
                 }
-                rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger/detruire/hypotheque)");
+                rep = TexteUI.choixTour();
             }
             TexteUI.message("Vous avancer");
             boolean twice = true;

@@ -79,6 +79,32 @@ public class JoueurUI {
      public static void errorArgent(Joueur j){
          System.out.println("Vous n'avez pas assez d'argent : vous avez " + j.getCash() + "€");
      }
+     
+     public static void printVosProprietes(Joueur j){
+         System.out.println("Vos proriété(s) :");
+         if (j.getProprietesAConstruire().isEmpty() && j.getGares().isEmpty() && j.getCompagnies().isEmpty()) {
+             System.out.println("Vous n'avez aucune propriété...");
+         } else {
+             if (!j.getProprietesAConstruire().isEmpty()) {
+                  System.out.println("Vos proriété(s) à construire :");
+                  for (ProprieteAConstruire p : j.getProprietesAConstruire()){
+                    ProprieteUI.printPropriete(p);
+                    }
+             }
+            if (!j.getGares().isEmpty()) {
+                  System.out.println("Vos gare(s) :");
+                  for (Gare g : j.getGares()){
+                    ProprieteUI.printGare(g);
+                    }
+             }
+            if (!j.getCompagnies().isEmpty()) {
+                  System.out.println("Vos compagnies :");
+                  for (Compagnie c : j.getCompagnies()){
+                    ProprieteUI.printCompagnie(c);
+                    }
+             }
+         }
+     }
     
    
 }
