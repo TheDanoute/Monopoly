@@ -113,13 +113,19 @@ public class Monopoly {
         
         public void initialiserPartie() {
 		boolean nJ = true;
-                while (nJ) {
-                    ajouterJoueur(TexteUI.nouveauJoueur());
-                        if (!TexteUI.ajouterJoueur()){
-                            nJ = false;
-                            joueurs = trieRecursif(joueurs); //Méthode recursive
+                int comp = 1;
+                do {
+                    ajouterJoueur(TexteUI.nouveauJoueur(comp));    
+                        if (comp<6 && !TexteUI.ajouterJoueur()){
+                            if (comp<2) {
+                                TexteUI.errorNouveauJoueur();
+                            } else {    
+                                nJ = false;
+                            }
                         }
-                }
+                    comp++;
+                } while (nJ && comp<=6);
+                joueurs = trieRecursif(joueurs); //Méthode recursive
 	}
 
         
@@ -194,6 +200,7 @@ public class Monopoly {
                 Joueur j = joueurs.get(i);
                     TexteUI.nouveauTour(j);
                     this.jouerUnCoup(j,0);
+                    TexteUI.finTour();
                     i++;
                 if (i>=joueurs.size()) {
                     i=0;
@@ -270,7 +277,6 @@ public class Monopoly {
                 } else {
                     twice = lancerDesAvancer(aJ,s);
                     if (twice) {
-                        TexteUI.dooble();
                       comp++;  
                     }
                     if(comp==3){
@@ -280,6 +286,9 @@ public class Monopoly {
                         twice = false;
                     }else{
                         this.action(aJ);
+                    }
+                    if (comp>0){
+                       TexteUI.dooble();
                     }
                     s = 0;
                 }
@@ -477,7 +486,7 @@ public class Monopoly {
                     for (ProprieteAConstruire p : j.getProprietesAConstruire()) {
                         if (p.isHypotheque()) {
                             list.put(p.getNum(), p);
-                            ProprieteUI.printPropriete(p);
+                            ProprieteUI.printProprieteProprietaire(p);
                         }
                     }
                     for (Gare g : j.getGares()) {
@@ -511,6 +520,7 @@ public class Monopoly {
                         } else {
                             if (ProprieteUI.continuerHypo()) {
                                 c.leverHypotheque();
+                                JoueurUI.printCashVous(j);
                             }
                         }
                     }
@@ -537,7 +547,7 @@ public class Monopoly {
                                 for (ProprieteAConstruire p : pros) {
                                     if (!p.isHypotheque()){
                                         list.put(p.getNum(), p);
-                                        ProprieteUI.printPropriete(p);
+                                        ProprieteUI.printProprieteProprietaire(p);
                                     }
                                 }
                             }
@@ -571,6 +581,7 @@ public class Monopoly {
                         ProprieteUI.printHypo(c);
                             if (ProprieteUI.continuerHypo()) {
                                 c.hypotheqer();
+                                JoueurUI.printCashVous(j);
                             }
                         }
                     }

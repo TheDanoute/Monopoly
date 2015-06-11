@@ -1,5 +1,5 @@
 CC,M,Allez en prison. Avancez tout droit en prison. Ne passez pas par la case "Départ". Ne recevez pas 200€,11
-CC,MA,Placez vous sur la case "Départ",1
+CC,M,Placez vous sur la case "Départ",1
 CC,A,Erreur de la Banque en votre faveur. Recevez 200€,200
 CC,A,Payez à l'Hôpital 100€,-100
 CC,A,Vous héritez 100€,100

@@ -88,7 +88,7 @@ public class JoueurUI {
              if (!j.getProprietesAConstruire().isEmpty()) {
                   System.out.println("Vos proriété(s) à construire :");
                   for (ProprieteAConstruire p : j.getProprietesAConstruire()){
-                    ProprieteUI.printPropriete(p);
+                    ProprieteUI.printProprieteProprietaire(p);
                     }
              }
             if (!j.getGares().isEmpty()) {

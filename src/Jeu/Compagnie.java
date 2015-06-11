@@ -40,6 +40,13 @@ public class Compagnie extends CarreauPropriete {
                         this.setProprietaire(j);
                     } else {
                         JoueurUI.errorArgent(j);
+                        if (ProprieteUI.jEssaye()) {
+                            if (j.jEssaye(super.getPrix())) {
+                                j.removeCash(this.getPrix());
+                                JoueurUI.printCashVous(j);
+                                this.setProprietaire(j);
+                            }
+                        }
                     }
                 }
             } else if (this.getProprietaire()==j) {

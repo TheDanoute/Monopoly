@@ -35,6 +35,7 @@ public class CarreauPrison extends Carreau {
                 j.sortPrison();
                 fini = true;
                 CarreauUI.prisonPayer(j);
+                super.getMonopoly().jouerUnCoup(j,0);
             } else if (rep.equals("carte")) {
                 if (nbCarte==0) {
                     CarreauUI.errorCartePrison();

@@ -149,9 +149,19 @@ public class Joueur {
                 // Si le cash du joueur est négatif après le retrait il doit vendre pour récuperer son négatif ou il fait faillite
                 if (this.getCash()<0){
                 JoueurUI.cBientotLaFin(this);
-                boolean vendre = true ;
+                    if (this.jEssaye(0)) {
+                        JoueurUI.okJeGere();
+                    } else {
+                        JoueurUI.cLaFin(this);
+                        this.faillite();
+                    }
+                }
+	}
+        
+        public boolean jEssaye(int objectif) {
+            boolean vendre = true ;
                 boolean hypotheque = true ;
-                    while (this.getCash()<0 && (vendre || hypotheque))    {
+                    while (this.getCash()<objectif && (vendre || hypotheque))    {
                         String rep = JoueurUI.chooseLaFin();
                         switch(rep) {
                             case "detruire":
@@ -185,14 +195,8 @@ public class Joueur {
                         }
                         JoueurUI.printCashVous(this);
                     }
-                    if (this.getCash()<0) {
-                        JoueurUI.cLaFin(this);
-                        this.faillite();
-                    } else {
-                        JoueurUI.okJeGere();
-                    }
+                   return !(this.getCash()<objectif);
                 }
-	}
         
         public boolean sortDuJeu() {
             if (JoueurUI.sortDuJeu(this)) {

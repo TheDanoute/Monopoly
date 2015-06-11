@@ -59,7 +59,11 @@ public class ProprieteUI {
     }
     
     public static void printPropriete(ProprieteAConstruire p) {
-        System.out.println(p.getNom() + " ; Construction existante : "+ getImmobilier(p) + " ; n°" + p.getNum());
+        System.out.println(p.getNom() + " ; Groupe : " + p.getCouleur().toString() + " ; Construction existante : "+ getImmobilier(p) + " ; n°" + p.getNum());
+    }
+    
+    public static void printProprieteProprietaire(ProprieteAConstruire p) {
+        System.out.println(p.getNom() + " ; Groupe : " + p.getCouleur().toString() + "(" + p.getProprietaire().getProprietesAConstruire(p.getCouleur()).size() + "/" + p.getNbPropriete() + ") ; Construction existante : "+ getImmobilier(p) + " ; n°" + p.getNum());
     }
     
     public static String getImmobilier(ProprieteAConstruire p) {
@@ -136,7 +140,7 @@ public class ProprieteUI {
         }
         
         public static int chooseHypo() {
-            return TexteUI.inte("Sur quelle propriété voulez-vous lever a ? (numéro)");
+            return TexteUI.inte("Sur quelle propriété voulez-vous lever l'hypotheque ? (numéro)");
         }
         
         public static boolean encoreConstruire() {
@@ -199,7 +203,7 @@ public class ProprieteUI {
         }
         
         public static void printHypo(CarreauPropriete c) {
-            System.out.println("L'hypotheque vous rapporte" + c.getPrix()/2 + "€");
+            System.out.println("L'hypotheque vous rapporte " + c.getPrix()/2 + "€");
         }
         
         public static boolean printAchat(CarreauPropriete c) {
@@ -256,6 +260,10 @@ public class ProprieteUI {
         public static void payerCompagnie(int value) {
             System.out.println("Le proprietaire possédant une seule compagnie, vous allez payer 4 fois la somme de votre lancer de dés");
             System.out.println("Vous avez abtenu " + value/10 + " aux dés, donc vous payer : " + value +"€");
+        }
+        
+        public static boolean jEssaye() {
+            return TexteUI.bool("Voulez-vous essayé de vendre ou d'hypothequer pour avoir assez d'argent ? (oui/non)");
         }
         
         

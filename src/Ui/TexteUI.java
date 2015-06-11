@@ -174,8 +174,11 @@ public class TexteUI {
         }
     }
 
-    public static String nouveauJoueur() {
-        return TexteUI.question("Nom du joueur ? ");
+    public static String nouveauJoueur(int nbJoueur) {
+        if (nbJoueur>5) {
+            System.out.println("Attention ! Dernier joueur à rajouter :");
+        }
+        return TexteUI.question("Nom du joueur n°" + nbJoueur + " ?");
     }
     
     public static boolean ajouterJoueur() {
@@ -221,7 +224,15 @@ public class TexteUI {
     }
 
     public static void dooble() {
-        System.out.println("Vous avez fait un double, vous rejouez");
+        TexteUI.question("Vous avez fait un double, vous rejouez (appuyer sur entrée pour continuer)");
+    }
+
+    public static void finTour() {
+        TexteUI.question("Fin du tour ! (appuyez sur entrée pour continuer)");
+    }
+
+    public static void errorNouveauJoueur() {
+        System.out.println("Erreur : vous devez au moins avoir deux joueurs, veillez rentrer le nom du deuxième joueur : ");
     }
 
     

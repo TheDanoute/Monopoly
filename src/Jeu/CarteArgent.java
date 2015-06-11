@@ -5,6 +5,7 @@
  */
 package Jeu;
 
+import Ui.JoueurUI;
 import Ui.TexteUI;
 
 /**
@@ -32,6 +33,7 @@ public class CarteArgent extends Carte{
     public void action(Joueur j){
         TexteUI.message(this.getDescription());
         j.addCash(montant);
+        JoueurUI.printCashVous(j);
     }
     
 }
