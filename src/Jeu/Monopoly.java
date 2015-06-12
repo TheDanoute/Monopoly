@@ -206,6 +206,7 @@ public class Monopoly {
                     i=0;
                 }
             }
+            TexteUI.taGagne(joueurs.get(0));
         }
   
 	/*public void achatPropriete(Joueur aJ, CarreauPropriete cP) {
@@ -264,9 +265,11 @@ public class Monopoly {
                         break;
                     }
                 }
-                rep = TexteUI.choixTour();
+                if (!sort) {
+                    rep = TexteUI.choixTour();
+                }
             }
-            if (rep.equals("avancer")) {
+            if (rep.equals("avancer") && !sort) {
             TexteUI.avancer();
             boolean twice = true;
             int comp=0;

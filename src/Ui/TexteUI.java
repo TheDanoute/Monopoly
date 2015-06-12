@@ -235,6 +235,10 @@ public class TexteUI {
         System.out.println("Erreur : vous devez au moins avoir deux joueurs, veillez rentrer le nom du deuxième joueur : ");
     }
 
+    public static void taGagne(Joueur get) {
+        System.out.println("Le joueur : " +get.getNomJoueur() +" à gagné ! Félicitation à lui !");
+    }
+
     
     
 }

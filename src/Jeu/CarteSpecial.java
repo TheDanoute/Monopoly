@@ -79,7 +79,7 @@ public class CarteSpecial extends Carte{
                     ph = 100;
                 } else {
                     pm = 40;
-                    ph = 115;
+                    ph = 115; 
                 }
                 int nbh = 0,nbm = 0;
                 for (ProprieteAConstruire p : j.getProprietesAConstruire()){
