@@ -42,7 +42,7 @@ public class CarteMouvement extends Carte{
     @Override
     public void action(Joueur j){
         TexteUI.message(this.getDescription());
-        if (verifDep && j.getPositionCourante().getNum()>carreau){
+        if ((verifDep && j.getPositionCourante().getNum() > carreau) && carreau>1){
             j.addCash(200);
             CarteUI.laChance();
             JoueurUI.printCashVous(j);
