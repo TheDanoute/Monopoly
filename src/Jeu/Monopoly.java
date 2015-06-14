@@ -641,7 +641,7 @@ public class Monopoly {
              int j = 0;
              for (CarreauPropriete cp : this.getCarreauxPropriete()){
                  if (cp.getProprietaire()==null){
-                     toutVendu=false;
+                    toutVendu=false;
                  }
              }
             if (toutVendu){
@@ -675,7 +675,7 @@ public class Monopoly {
                            while (!stop){                                                // Tant que l'on souhaite ajouter une propriété à l'échange on reste dans la boucle
                                listP2 = JoueurUI.afficheProprietesEchangeables(j2, echangeJ2, listP2);                             
                                if (!listP2.isEmpty()){
-                                   int num = TexteUI.choixPropEch();     // Grâce à l'indice, on récupère la propriété souhaitée
+                                   int num = TexteUI.choixPropEch(listP2);     // Grâce à l'indice, on récupère la propriété souhaitée
                                    echangeJ2.addP(listP2.get(num));                                                            // On l'ajoute à la classe échange
                                    listP2.remove(num);                                                                         // Puis on l'a supprime des propriétés disponibles à l'échange    
                                    String rep2 = TexteUI.autrePropEch();

@@ -82,7 +82,7 @@ public class JoueurUI {
                     for (ProprieteAConstruire p : j.getProprietesAConstruire(c)) {
                         if (!e.getListP().contains(p)){
                             System.out.println("Propriété n°"+i+" : "+p.getNom());
-                            System.out.println("Groupe : "+p.getGroupe());
+                            System.out.println("Groupe : "+p.getCouleur().toString());
                             listP.put(i,p);
                             i++; 
                         } 

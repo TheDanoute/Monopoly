@@ -7,6 +7,7 @@
 package Ui;
 import Jeu.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -33,15 +34,46 @@ public class TexteUI {
     }
     
     public static Joueur joueurChoisisEchange(ArrayList<Joueur> listJ){
-        return listJ.get(Integer.valueOf(TexteUI.question("Avec quel joueur voulez-vous échanger ? \u001B[32m(numéro)\u001B[0m"))-1);   
+        String rep = TexteUI.question("Avec quel joueur voulez-vous échanger ? \u001B[32m(numéro)\u001B[0m");
+        boolean ok = false;
+        while (!ok){
+            try {
+                return listJ.get(Integer.valueOf(rep)-1);
+            }
+            catch (Exception e) {
+                System.out.println("\u001B[31mErreur, vous devez saisir un entier correspondant à un joueur : \u001B[0m") ;
+                rep = TexteUI.question("Avec quel joueur voulez-vous échanger ? \u001B[32m(numéro)\u001B[0m");
+
+            }
+        }
+        return null;
     }
     
     public static String typeEchange (){
-        return TexteUI.question("Que voulez-vous de ce joueur ? \u001B[32m(propriete / carte)\u001B[0m");
+        String rep = TexteUI.question("Que voulez-vous de ce joueur ? \u001B[32m(propriete / carte)\u001B[0m");
+        while (!rep.equals("propriete") && !rep.equals("carte")) {
+            System.out.println("\u001B[31mErreur, vous devez saisir \u001B[32mpropriete \u001B[31mou \u001B[32mcarte \u001B[31m! Recommencez : \u001B[0m") ;
+            rep = TexteUI.question("Que voulez-vous de ce joueur ? \u001B[32m(propriete / carte)\u001B[0m");
+        }
+        return rep;
     }
     
-    public static int choixPropEch (){
-        return Integer.valueOf(TexteUI.question("Quelle propriete voulez-vous ? \u001B[32m(nombre)\u001B[0m"));
+    public static int choixPropEch (HashMap<Integer,CarreauPropriete> cp){
+        String rep =TexteUI.question("Quelle propriete voulez-vous ? \u001B[32m(nombre)\u001B[0m");
+        boolean ok = false;
+        while (!ok){
+            try {
+                int i = Integer.valueOf(rep);  
+                if (cp.containsKey(i)){   // test si la réponse est bien un indice de la liste (ne marche pas)
+                    return i;
+                }
+            }
+            catch (Exception e) {
+                System.out.println("\u001B[31mErreur, vous devez saisir un entier correspondant à une propriété : \u001B[0m") ;
+                rep =TexteUI.question("Quelle propriete voulez-vous ? \u001B[32m(nombre)\u001B[0m");
+            }
+        }
+        return 0;
     }
     
     public static String autrePropEch (){
@@ -49,7 +81,12 @@ public class TexteUI {
     }
     
     public static String rajouteArgent(){
-        return TexteUI.question("Voulez-vous rajouter de l'argent ? \u001B[32m(oui/non)\u001B[0m");
+        String rep = TexteUI.question("Voulez-vous rajouter de l'argent ? \u001B[32m(oui/non)\u001B[0m");
+        while (!rep.equals("non") && !rep.equals("oui")) {
+            System.out.println("\u001B[31mErreur, vous devez saisir \u001B[32moui \u001B[31mou \u001B[32mnon \u001B[31m! Recommencez : \u001B[0m") ;
+            rep = TexteUI.question("Voulez-vous rajouter de l'argent ? \u001B[32m(oui/non)\u001B[0m");
+        }
+        return rep;
     }
     
     public static int combienArgent(){
@@ -69,7 +106,12 @@ public class TexteUI {
     }
     
     public static String autrePropEch2 (){
-        return TexteUI.question("Voulez-vous proposer une autre propriété ? \u001B[32m(oui/non)\u001B[0m");
+        String rep = TexteUI.question("Voulez-vous proposer une autre propriété ? \u001B[32m(oui/non)\u001B[0m");
+        while (!rep.equals("non") && !rep.equals("oui")) {
+            System.out.println("\u001B[31mErreur, vous devez saisir \u001B[32moui \u001B[31mou \u001B[32mnon \u001B[31m! Recommencez : \u001B[0m") ;
+            rep = TexteUI.question("Voulez-vous proposer une autre propriété ? \u001B[32m(oui/non)\u001B[0m");
+        }
+        return rep;
     }
     
     public static void pasEchRienProp(){
@@ -87,7 +129,12 @@ public class TexteUI {
             System.out.println(cp.getNom());
         }
         System.out.println(String.valueOf(echangeJ1.getSomme())+"€");
-        return TexteUI.question("Acceptez-vous l'échange ? \u001B[32m(oui/non)\u001B[0m");
+        String rep = TexteUI.question("Acceptez-vous l'échange ? \u001B[32m(oui/non)\u001B[0m");
+        while (!rep.equals("non") && !rep.equals("oui")) {
+            System.out.println("\u001B[31mErreur, vous devez saisir \u001B[32moui \u001B[31mou \u001B[32mnon \u001B[31m! Recommencez : \u001B[0m") ;
+            rep = TexteUI.question("Acceptez-vous l'échange ? \u001B[32m(oui/non)\u001B[0m");
+        }
+        return rep;
     }
     
     public static void pasCartePrison (Joueur j){
