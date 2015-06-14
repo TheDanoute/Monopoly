@@ -17,7 +17,7 @@ CC,P,Vous êtes libéré de prison. Cette carte peut être conservée jusqu'à c
 CH,M,Allez en prison. Avancez tout droit en prison. Ne passez pas par la case "Départ". Ne recevez pas 200€,11
 CH,MA,Rendez-vous à l'Avenue Henri-Martin. Si vous passez par la case "Départ" revecez 200€,25
 CH,A,Payez pour frais de scolarité 150€,-150
-CH,M,Rendez vous à la Rue de la Paix,40
+CH,MA,Rendez vous à la Rue de la Paix,40
 CH,S,2,Faites des réparation dans toutes vos maisons. Versez pour chaque maison 25€. Versez pour chaque hôtel 100€
 CH,S,3,Vous êtes imposé pour les réparations de voirie à raison de : 40€ par maison et 115€ par hôtel
 CH,A,La Banque vous verse un dividende de 50€,50
