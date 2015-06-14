@@ -13,13 +13,12 @@ public class Compagnie extends CarreauPropriete {
 
         @Override
 	public int getLoyer() {
-            Random gene = new Random();
+                int i = super.getMonopoly().lancerDe();
+                i += super.getMonopoly().lancerDe();
                 if (this.getNbPropriete()>1) {
-                    int i = (gene.nextInt(6)+1)*10;
                     ProprieteUI.payerCompagnies(i);
                     return i;
                 } else {
-                    int i = (gene.nextInt(6)+1)*4;
                      ProprieteUI.payerCompagnie(i);
                     return i;
                 }
@@ -52,8 +51,7 @@ public class Compagnie extends CarreauPropriete {
             } else if (this.getProprietaire()==j) {
                 ProprieteUI.printProprePAC(this);
             } else {
-                ProprieteUI.toucherLoyer(this);
-                if (ProprieteUI.toucherLoyer(this)) {
+                if (ProprieteUI.toucherLoyerCompagnie(this)) {
                     int l = this.getLoyer();
                     j.removeCash(l);
                     this.getProprietaire().addCash(l);

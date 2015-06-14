@@ -226,6 +226,16 @@ public class ProprieteUI {
              }
         }
         
+        public static boolean toucherLoyerCompagnie(CarreauPropriete c) {
+             System.out.println("Vous êtes tomber sur une " + c.getClass().getSimpleName() + " \u001B[31mqui à déjà un propriétaire.\u001B[0m");
+             if (c.isHypotheque()) {
+                 System.out.println("Cette " + c.getClass().getSimpleName() + " \u001B[31mest hypothéquée, vous ne payez rien\u001B[0m");
+                 return false;
+             } else {
+                return true;
+             }
+        }
+        
         public static void nouvelleConstruction(ProprieteAConstruire p) {
             System.out.println("Ce terrain dispose maintenant de : " + getImmobilier(p));
             System.out.println("Les joueurs qui passeront sur ce terrain payeront : \u001B[33m" + p.getLoyer() + "\u001B[0m€");

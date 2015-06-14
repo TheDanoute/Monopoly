@@ -15,7 +15,7 @@ public class Gare extends CarreauPropriete {
         
         @Override
 	public int getLoyer() {
-		return loyer*2^(this.getNbPropriete()-1);
+		return loyer*(int)Math.pow(2,(double)this.getNbPropriete()-1);
 	}
         private void setLoyer(int l){
             loyer=l;
@@ -48,7 +48,6 @@ public class Gare extends CarreauPropriete {
             } else if (this.getProprietaire()==j) {
                 ProprieteUI.printProprePAC(this);
             } else {
-                ProprieteUI.toucherLoyer(this);
                 if (ProprieteUI.toucherLoyer(this)) {
                     int l = this.getLoyer();
                     j.removeCash(l);

@@ -207,7 +207,7 @@ public class TexteUI {
 
     public static String choixTour() {
         String rep = TexteUI.question("Que voulez-vous faire ? \u001B[32m(avancer/construire/echanger/detruire/hypotheque/sortir)\u001B[0m");
-        while (!rep.equals("avancer")&&!rep.equals("construire")&&!rep.equals("echanger")&&!rep.equals("detruire")&&!rep.equals("hypotheque")&&!rep.equals("sortir")&&!rep.equals("setPosition")&&!rep.equals("setDes")) {
+        while (!rep.equals("avancer")&&!rep.equals("construire")&&!rep.equals("echanger")&&!rep.equals("detruire")&&!rep.equals("hypotheque")&&!rep.equals("sortir")&&!rep.equals("setPosition")&&!rep.equals("setDes")&&!rep.equals("toutVendre")) {
             System.out.println("\u001B[31mErreur : vous devez répondre par : \u001B[32mavancer/construire/echanger/detruire/hypotheque/sortir\u001B[31m ! Recommencez :\u001B[0m");
             rep = TexteUI.question("Que voulez-vous faire ? \u001B[32m(avancer/construire/echanger/detruire/hypotheque/sortir)\u001B[0m");
         }
@@ -240,7 +240,11 @@ public class TexteUI {
     }
 
     public static void taGagne(Joueur get) {
-        System.out.println("\u001B[41mLe joueur : " +get.getNomJoueur() +" à gagné ! Félicitation à lui !\u001B[0m");
+        System.out.println("\u001B[41mLe joueur : " +get.getNomJoueur() +" à gagné ! Félicitation à lui !\u001B[41m");
+    }
+
+    public static void cheater() {
+        System.out.println("\u001B[41mUn tricheur est apparu dans la partie... Il possède toutes les propriétés invendues et a beaucoup d'argent...\u001B[0m");
     }
 
     

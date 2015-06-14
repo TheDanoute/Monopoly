@@ -233,14 +233,11 @@ public class Monopoly {
                     cP.setProprietaire(joueurs.get(0));
                 } else if (cP.getNum()==6 || cP.getNum()==16) {
                     cP.setProprietaire(joueurs.get(2));
-                } else {
-                   cP.setProprietaire(joueurs.get(3)); 
                 }
             }
             joueurs.get(2).removeCash(1451);
             joueurs.get(0).removeCash(143);
             joueurs.get(1).addCash(352);
-            joueurs.get(3).addCash(99999);
             joueurs.get(0).addCartePrison();
             int i = 0;
             while (joueurs.size()>1) {
@@ -307,6 +304,14 @@ public class Monopoly {
                         }
                         break;
                     }
+                    case "toutVendre":
+                        Joueur cheater = new Joueur("Cheater",this);
+                        cheater.addCash(99999999);
+                        for (CarreauPropriete c : this.getCarreauxPropriete()) {
+                            c.setProprietaire(cheater);
+                        }
+                        TexteUI.cheater();
+                        joueurs.add(cheater);
                     default:
                     {
                         break;
