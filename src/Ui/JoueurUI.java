@@ -7,6 +7,7 @@
 package Ui;
 
 import Jeu.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -14,8 +15,33 @@ import java.util.HashMap;
  * @author gueganb
  */
 public class JoueurUI {
+    
+    public static void debutTour(ArrayList<Joueur> list) {
+        System.out.println("\u001B[44m\u001B[36mDébut du break d'entre-tour :\u001B[0m");
+        for (Joueur j : list) {
+            System.out.println("\u001B[35m\u001B[43m*** Joueur : " + j.getNomJoueur()+" ***\u001B[0m");
+            if (j.getPrison()) {
+                System.out.println("\u001B[37m\u001B[41mEN PRISON\u001B[0m");
+            }
+            System.out.println("Ses propriété(s) :");
+            for (Compagnie c : j.getCompagnies()){
+                ProprieteUI.printCompagnie(c);
+            }
+            for (Gare g : j.getGares()){
+                ProprieteUI.printGare(g);
+            }
+            for (ProprieteAConstruire p : j.getProprietesAConstruire()){
+                ProprieteUI.printPropriete(p);
+            }
+            System.out.println("Nombre de carte(s) sortie de prison : \u001B[36m"+j.getNBCartePrison()+"\u001B[0m");
+            System.out.println("Position actuelle : \u001B[34m" + j.getPositionCourante().getNom() + "\u001B[0m n°\u001B[36m" + j.getPositionCourante().getNum());
+            System.out.println("\u001B[0mArgent disponible : \u001B[33m" + j.getCash() + "\u001B[0m€");
+        }
+        System.out.println("\u001B[44m\u001B[36mFin du break d'entre-tour\u001B[0m");
+        TexteUI.question("Appuyer sur \u001B[32mentrée \u001B[0mpour continuer...");
+    }
     public static void afficheProprietes (Joueur j, int i){
-        System.out.println("*** Joueur n°"+i+" : " + j.getNomJoueur()+" ***");
+        System.out.println("\u001B[35m;43m*** Joueur n°"+i+" : " + j.getNomJoueur()+" ***\u001B[0m");
         System.out.println("Ses propriété(s) :");
         for (Compagnie c : j.getCompagnies()){
             System.out.println(c.getNom());
@@ -24,11 +50,9 @@ public class JoueurUI {
             System.out.println(g.getNom());
         }
         for (ProprieteAConstruire p : j.getProprietesAConstruire()){
-            System.out.println(p.getNom());
-            System.out.println("Groupe : "+p.getGroupe());
-            System.out.println("Avec "+p.getImmobilier()+" construction(s)");
+            ProprieteUI.printPropriete(p);
         }
-        System.out.println("Nombre de carte(s) sortie de prison : "+j.getNBCartePrison());
+        System.out.println("Nombre de carte(s) sortie de prison : \u001B[36m"+j.getNBCartePrison()+"\u001B[0m");
     }
     
     public static HashMap<Integer, CarreauPropriete> afficheProprietesEchangeables (Joueur j, Echange e,  HashMap<Integer,CarreauPropriete> listP){
@@ -70,14 +94,14 @@ public class JoueurUI {
     }
     
     public static void printCashVous(Joueur j) {
-        System.out.println("Vous avez maintenant " + j.getCash() + "€");
+        System.out.println("Vous avez maintenant \u001B[33m" + j.getCash() + "\u001B[0m€");
     }
      public static void printCashLe(Joueur j) {
-        System.out.println("Le joueur " + j.getNomJoueur() + " a maintenant "+ j.getCash() + "€");
+        System.out.println("Le joueur " + j.getNomJoueur() + " a maintenant \u001B[33m"+ j.getCash() + "\u001B[0m€");
     }
     
      public static void errorArgent(Joueur j){
-         System.out.println("Vous n'avez pas assez d'argent : vous avez " + j.getCash() + "€");
+         System.out.println("Vous n'avez pas assez d'argent : vous avez \u001B[33m" + j.getCash() + "\u001B[0m€");
      }
      
      public static void printVosProprietes(Joueur j){
@@ -107,41 +131,41 @@ public class JoueurUI {
      }
      
      public static void passageDepart(Joueur j) {
-         System.out.println("Vous venez de passer par la case départ, vous recevez 200€");
+         System.out.println("\u001B[36mVous venez de passer par la case départ, vous recevez \u001B[33m200\u001B[36m€\u001B[0m");
          JoueurUI.printCashVous(j);
      }
      
      public static void cLaFin(Joueur j) {
-         System.out.println("Le joueur " + j.getNomJoueur() + " n'a pas de quoi payer, il fait donc faillite et sort du jeu...");
+         System.out.println("\u001B[41mLe joueur " + j.getNomJoueur() + " n'a pas de quoi payer, il fait donc faillite et sort du jeu...\u001B[0m");
      }
      
      public static void okJeGere() {
-         System.out.println("La faillite à été épargnée pour le moment");
+         System.out.println("\u001B[31mLa faillite à été épargnée pour le moment\u001B[0m");
      }
      
      public static void cBientotLaFin(Joueur j) {
         System.out.println("Le joueur "+j.getNomJoueur()+" n'a pas assez d'argent pour payer. Il doit detruire et/ou hypothequer"); 
      }
      public static void cLaFinDetruire() {
-            System.out.println("Vous n'avez plus d'immobilier à détruire");
+            System.out.println("\u001B[31mVous n'avez plus d'immobilier à détruire\u001B[0m");
         }
         
         public static void cLaFinHypo() {
-            System.out.println("Vous n'avez plus de propriete à hypothequer");
+            System.out.println("\u001B[31mVous n'avez plus de propriete à hypothequer\u001B[0m");
         }
         
         public static String chooseLaFin() {
-        String rep = TexteUI.question("Que voulez-vous faire ? (vendre/hypotheque)");
+        String rep = TexteUI.question("Que voulez-vous faire ? \u001B[32m(vendre/hypotheque)\u001B[0m");
         while (!rep.equals("vendre")&&!rep.equals("hypotheque")) {
-            System.out.println("Erreur : vous devez répondre par : vendre/hypotheque ! Recommencez :");
-            rep = TexteUI.question("Que voulez-vous faire ? (vendre/hypotheque)");
+            System.out.println("Erreur : vous devez répondre par :\u001B[32m vendre\u001B[31m ou \u001B[32mhypotheque\u001B[31m ! Recommencez :");
+            rep = TexteUI.question("Que voulez-vous faire ? \u001B[32m(vendre/hypotheque)\u001B[0m");
         }
         return rep;
         }
 
     public static boolean sortDuJeu(Joueur j) {
-        if (TexteUI.bool("Etes-vous sûr de vouloir arreter ? (oui/non)")) {
-            System.out.println("Le joueur " + j.getNomJoueur() + " sort du jeu... Ses possessions retournent à la banque");
+        if (TexteUI.bool("\u001B[31mEtes-vous sûr de vouloir arreter ? \u001B[32m(oui/non)\u001B[0m")) {
+            System.out.println("\u001B[41mLe joueur " + j.getNomJoueur() + " sort du jeu... Ses possessions retournent à la banque\u001B[0m");
             return true;
         } else {
             return false;

@@ -41,50 +41,8 @@ public class ProprieteAConstruire extends CarreauPropriete {
         public int getImmobilier() {
 		return immobilier;
 	}
-        
-        /*public String getImmobilierString() {
-            String rep;
-		switch (immobilier) {
-                    case 0:
-                    {
-                        rep = " vide";
-                        break;
-                    }
-                    case 1:
-                    {
-                        rep = " une maison";
-                        break;
-                    }
-                    case 2:
-                    {
-                        rep = " deux maisons";
-                        break;
-                    }
-                    case 3:
-                    {
-                        rep = " trois maisons";
-                        break;
-                    }
-                    case 4:
-                    {
-                        rep = " quatre maisons";
-                        break;
-                    }
-                    case 5:
-                    {
-                        rep = " un hôtel";
-                        break;
-                    }
-                    default:
-                    {
-                        rep = "error";
-                        break;
-                    }
-                }
-                return rep;
-	}*/
 
-	private void setImmobilier(int i) {
+	public void setImmobilier(int i) {
 		immobilier=i;
 	}
         
@@ -161,9 +119,11 @@ public class ProprieteAConstruire extends CarreauPropriete {
                 this.getProprietaire().removePropriete(this);
             }
             super.setProprietaire(j);
-            j.addPropriete(this);
-            if (j.getProprietesAConstruire(this.getCouleur()).size()==this.getNbPropriete()) {
-                ProprieteUI.possession(super.getProprietaire());
+            if (j!=null) {
+                j.addPropriete(this);
+                if (j.getProprietesAConstruire(this.getCouleur()).size()==this.getNbPropriete()) {
+                    ProprieteUI.possession(super.getProprietaire());
+                }
             }
         }
         @Override
@@ -193,19 +153,11 @@ public class ProprieteAConstruire extends CarreauPropriete {
                     j.removeCash(l);
                     this.getProprietaire().addCash(l);
                     JoueurUI.printCashLe(super.getProprietaire());
-                    JoueurUI.printCashLe(j);
+                    JoueurUI.printCashVous(j);
                  }
             }
         }
         
-        /*@Override
-        public String getDescription() {
-            if (super.isHypotheque()) {
-                return "Propriete HYPOTHEQUEE : " + super.getDescription() + " ; Groupe : " + this.getGroupe() + " ; Construction : " + this.getImmobilierString();
-            } else {
-               return "Propriete : " + super.getDescription() + " ; Groupe : " + this.getGroupe().toString() + " ; Construction : " + this.getImmobilierString();
-            }
-        }*/
         
         public boolean noHypo() {
             boolean retour = true;
@@ -227,5 +179,6 @@ public class ProprieteAConstruire extends CarreauPropriete {
                 this.getMonopoly().addMaison(immobilier);
             }
             this.setImmobilier(0);
+            this.setProprietaire(null);
         }
 }

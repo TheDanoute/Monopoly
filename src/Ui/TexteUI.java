@@ -24,52 +24,56 @@ public class TexteUI {
         return sc.nextLine();
     }
     
+    public static boolean demo(){
+        return TexteUI.bool("Voulez-vous lancer le mode de démonstration ? \u001B[32m(oui/non)\u001B[0m");
+    }
+    
     public static void echange(){
-        System.out.println("********** Echange **********");
+        System.out.println("\u001B[35m********** Echange **********\u001B[0m");
     }
     
     public static Joueur joueurChoisisEchange(ArrayList<Joueur> listJ){
-        return listJ.get(Integer.valueOf(TexteUI.question("Avec quel joueur voulez-vous échanger ? (numéro)"))-1);   
+        return listJ.get(Integer.valueOf(TexteUI.question("Avec quel joueur voulez-vous échanger ? \u001B[32m(numéro)\u001B[0m"))-1);   
     }
     
     public static String typeEchange (){
-        return TexteUI.question("Que voulez-vous de ce joueur ? (propriete / carte)");
+        return TexteUI.question("Que voulez-vous de ce joueur ? \u001B[32m(propriete / carte)\u001B[0m");
     }
     
     public static int choixPropEch (){
-        return Integer.valueOf(TexteUI.question("Quelle propriete voulez-vous ? (nombre)"));
+        return Integer.valueOf(TexteUI.question("Quelle propriete voulez-vous ? \u001B[32m(nombre)\u001B[0m"));
     }
     
     public static String autrePropEch (){
-        return TexteUI.question("Voulez-vous une autre propriété de ce joueur ? (oui/non)");
+        return TexteUI.question("Voulez-vous une autre propriété de ce joueur ? \u001B[32m(oui/non)\u001B[0m");
     }
     
     public static String rajouteArgent(){
-        return TexteUI.question("Voulez-vous rajouter de l'argent ? (oui/non)");
+        return TexteUI.question("Voulez-vous rajouter de l'argent ? \u001B[32m(oui/non)\u001B[0m");
     }
     
     public static int combienArgent(){
-        return Integer.parseInt(TexteUI.question("Combien d'argent voulez-vous ? (nombre)"));
+        return TexteUI.inte("Combien d'argent voulez-vous ? \u001B[32m(nombre)\u001B[0m");
     }
     
     public static void pasPropEch (Joueur j){
-        System.out.println(j.getNomJoueur()+" n'a pas de propriété échangeable");
+        System.out.println("\u001B[31m" + j.getNomJoueur()+" n'a pas de propriété échangeable\u001B[0m");
     }
     
     public static void vosProps(){
-        System.out.println("*** Vos propriétés ***");
+        System.out.println("\u001B[35m*** Vos propriétés ***\u001B[0m");
     }
     
     public static int choixPropEch2(){
-        return Integer.valueOf(TexteUI.question("Quelle propriete proposez-vous ? (numéro)"));
+        return TexteUI.inte("Quelle propriete proposez-vous ? \u001B[32m(numéro)\u001B[0m");
     }
     
     public static String autrePropEch2 (){
-        return TexteUI.question("Voulez-vous proposer une autre propriété ? (oui/non)");
+        return TexteUI.question("Voulez-vous proposer une autre propriété ? \u001B[32m(oui/non)\u001B[0m");
     }
     
     public static void pasEchRienProp(){
-        System.out.println("Pas d'échange possible, vous n'avez rien proposé.");
+        System.out.println("\u001B[31mPas d'échange possible, vous n'avez rien proposé.\u001B[0m");
     }
     
     public static String propositionEchange(Echange echangeJ1, Echange echangeJ2, Joueur j1, Joueur j2){      
@@ -83,7 +87,7 @@ public class TexteUI {
             System.out.println(cp.getNom());
         }
         System.out.println(String.valueOf(echangeJ1.getSomme())+"€");
-        return TexteUI.question("Acceptez-vous l'échange ? (oui/non)");
+        return TexteUI.question("Acceptez-vous l'échange ? \u001B[32m(oui/non)\u001B[0m");
     }
     
     public static void pasCartePrison (Joueur j){
@@ -95,7 +99,7 @@ public class TexteUI {
     }
     
     public static String propositionEchange (Joueur j2, Joueur j1, int somme){
-        return TexteUI.question(j2.getNomJoueur()+", "+j1.getNomJoueur()+" vous propose "+somme+"€ contre une carte sortie de prison, êtes-vous d'accord? (oui/non)");
+        return TexteUI.question(j2.getNomJoueur()+", "+j1.getNomJoueur()+" vous propose "+somme+"€ contre une carte sortie de prison, êtes-vous d'accord? \u001B[32m(oui/non)\u001B[0m");
     }
     
     public static void echAnnul(Joueur j){
@@ -103,17 +107,17 @@ public class TexteUI {
     }
     
     public static void sesProps(){
-        System.out.println("*** Ses propriétés ***");
+        System.out.println("\u001B[35m*** Ses propriétés ***\u001B[0m");
     }
     
     public static void pasEncoreEch(){
-        System.out.println("Vous ne pouvez pas faire d'échange, toutes les propriétés n'ont pas encore été vendues");
+        System.out.println("\u001B[31mVous ne pouvez pas faire d'échange, toutes les propriétés n'ont pas encore été vendues\u001B[0m");
     }
     
     public static boolean bool(String g) {
         String rep = question(g);
         while (!rep.equals("non") && !rep.equals("oui")) {
-            System.out.println("Erreur, vous devez saisir oui ou non ! Recommencez : ") ;
+            System.out.println("\u001B[31mErreur, vous devez saisir \u001B[32moui \u001B[31mou \u001B[32mnon \u001B[31m! Recommencez : \u001B[0m") ;
             rep = question(g);
         }
         return rep.equals("oui");
@@ -124,31 +128,31 @@ public class TexteUI {
             try { 
                 return Integer.valueOf(question(g));
             } catch(java.lang.NumberFormatException e) {
-                System.out.println("Vous devez rentrer un numéro, recommencez :");
+                System.out.println("\u001B[31mVous devez rentrer un \u001B[32mnuméro\u001B[31m, recommencez :\u001B[0m");
             }
         } while(true);
     }
     
     public static void dés(int d1,int d2) {
        int sD = d1+d2;
-       System.out.println("D1 = " + d1 + " ; D2 = " + d2 + " ; Somme des dés = " + sD); 
+       System.out.println("D1 = " + d1 + " ; D2 = " + d2 + " ; Somme des dés = \u001B[36m" + sD + "\u001B[0m"); 
     }
     
     public static void printAncienCarreau(Carreau c) {
-        System.out.println("Ancien Carreau : " + c.getNom());
+        System.out.println("Ancien Carreau : \u001B[34m" + c.getNom()+ "\u001B[0m");
     }
     
     public static void printNouveauCarreau(Carreau c) {
-        System.out.println("Nouveau Carreau : " + c.getNom());
+        System.out.println("Nouveau Carreau : \u001B[34m" + c.getNom()+ "\u001B[0m");
     }
 
     public static void printInfo(Carreau c) {
         String info = "";
         try {
             ProprieteAConstruire pAC = (ProprieteAConstruire)c;
-            info = "Propriété : " + c.getNom() + " ; groupe : " + pAC.getCouleur().toString() +" ; case : " + c.getNum();
+            info = "Propriété : " + c.getNom() + " ; groupe : " + pAC.getCouleur().toString() +" ; case : \u001B[36m" + c.getNum()+ "\u001B[0m";
         } catch(java.lang.ClassCastException e) {    
-            info = c.getClass().getSimpleName() + " : " + c.getNom() + " ; case : " + c.getNum();
+            info = c.getClass().getSimpleName() + " : " + c.getNom() + " ; case : \u001B[36m" + c.getNum()+ "\u001B[0m";
         } finally {
             System.out.println(info);
         }
@@ -176,13 +180,13 @@ public class TexteUI {
 
     public static String nouveauJoueur(int nbJoueur) {
         if (nbJoueur>5) {
-            System.out.println("Attention ! Dernier joueur à rajouter :");
+            System.out.println("\u001B[31mAttention ! Dernier joueur à rajouter :\u001B[0m");
         }
         return TexteUI.question("Nom du joueur n°" + nbJoueur + " ?");
     }
     
     public static boolean ajouterJoueur() {
-        return bool("Voules-vous ajouter un nouveau joueur? (oui/non)");
+        return bool("Voules-vous ajouter un nouveau joueur? \u001B[32m(oui/non)\u001B[0m");
     }
     
     public static void afficherJoueurs(ArrayList<Joueur> list) {
@@ -194,18 +198,18 @@ public class TexteUI {
     
     public static void ajoutJoueur(Joueur j) {
         System.out.println(j.getNomJoueur() + " a été ajouté.");
-        System.out.println("Son premier lancé de dés : " + j.getDesDepart());
+        System.out.println("Son premier lancé de dés : \u001B[36m" + j.getDesDepart() + "\u001B[0m");
     }
     
     public static void trieJoueur(Joueur j,int value) {
-        System.out.println("Etant arriver ex aequo, " + j.getNomJoueur() + " relance le dé et obtient : " + value);
+        System.out.println("Etant arriver ex aequo, " + j.getNomJoueur() + " relance le dé et obtient : \u001B[36m" + value+"\u001B[0m");
     }
 
     public static String choixTour() {
-        String rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger/detruire/hypotheque/sortir)");
-        while (!rep.equals("avancer")&&!rep.equals("construire")&&!rep.equals("echanger")&&!rep.equals("detruire")&&!rep.equals("hypotheque")&&!rep.equals("sortir")) {
-            System.out.println("Erreur : vous devez répondre par : avancer/construire/echanger/detruire/hypotheque/sortir ! Recommencez :");
-            rep = TexteUI.question("Que voulez-vous faire ? (avancer/construire/echanger/detruire/hypotheque/sortir)");
+        String rep = TexteUI.question("Que voulez-vous faire ? \u001B[32m(avancer/construire/echanger/detruire/hypotheque/sortir)\u001B[0m");
+        while (!rep.equals("avancer")&&!rep.equals("construire")&&!rep.equals("echanger")&&!rep.equals("detruire")&&!rep.equals("hypotheque")&&!rep.equals("sortir")&&!rep.equals("setPosition")&&!rep.equals("setDes")) {
+            System.out.println("\u001B[31mErreur : vous devez répondre par : \u001B[32mavancer/construire/echanger/detruire/hypotheque/sortir\u001B[31m ! Recommencez :\u001B[0m");
+            rep = TexteUI.question("Que voulez-vous faire ? \u001B[32m(avancer/construire/echanger/detruire/hypotheque/sortir)\u001B[0m");
         }
         return rep;
     }
@@ -215,28 +219,28 @@ public class TexteUI {
     }
     
     public static void troisDouble(Joueur j) {
-        System.out.println("Le joueur "+j.getNomJoueur()+" a fait trois double de suite, il est envoyé en prison!");
+        System.out.println("\u001B[31mLe joueur "+j.getNomJoueur()+" a fait trois double de suite, il est envoyé en prison!\u001B[0m");
     }
     
     public static void nouveauTour(Joueur j){
-        System.out.println("***************************************");
-        System.out.println("Au tour de "+ j.getNomJoueur());
+        System.out.println("\u001B[35m***************************************");
+        System.out.println("Au tour de "+ j.getNomJoueur() + "\u001B[0m");
     }
 
     public static void dooble() {
-        TexteUI.question("Vous avez fait un double, vous rejouez (appuyer sur entrée pour continuer)");
+        TexteUI.question("\u001B[34mVous avez fait un double, vous rejouez (appuyer sur entrée pour continuer)\u001B[0m");
     }
 
     public static void finTour() {
-        TexteUI.question("Fin du tour ! (appuyez sur entrée pour continuer)");
+        TexteUI.question("Fin du tour ! \u001B[32m(appuyez sur entrée pour continuer)\u001B[0m");
     }
 
     public static void errorNouveauJoueur() {
-        System.out.println("Erreur : vous devez au moins avoir deux joueurs, veillez rentrer le nom du deuxième joueur : ");
+        System.out.println("\u001B[31mErreur : vous devez au moins avoir deux joueurs, veillez rentrer le nom du deuxième joueur : \u001B[0m");
     }
 
     public static void taGagne(Joueur get) {
-        System.out.println("Le joueur : " +get.getNomJoueur() +" à gagné ! Félicitation à lui !");
+        System.out.println("\u001B[41mLe joueur : " +get.getNomJoueur() +" à gagné ! Félicitation à lui !\u001B[0m");
     }
 
     

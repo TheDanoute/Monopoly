@@ -54,7 +54,7 @@ public class Gare extends CarreauPropriete {
                     j.removeCash(l);
                     this.getProprietaire().addCash(l);
                     JoueurUI.printCashLe(super.getProprietaire());
-                    JoueurUI.printCashLe(j);
+                    JoueurUI.printCashVous(j);
                  }
             }
         }
@@ -64,17 +64,10 @@ public class Gare extends CarreauPropriete {
                 this.getProprietaire().removeGare(this);
             }
             super.setProprietaire(j);
-            j.addGare(this);
-        }
-        
-        /*@Override
-        public String getDescription() {
-            if (super.isHypotheque()) {
-                return "Gare HYPOTHEQUEE : " + super.getDescription();
-            } else {
-                return "Gare : " + super.getDescription();
+            if (j!=null) {
+                j.addGare(this);
             }
-        }*/
+        }
         
         @Override
         public void retourBanque(){

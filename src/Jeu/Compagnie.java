@@ -58,7 +58,7 @@ public class Compagnie extends CarreauPropriete {
                     j.removeCash(l);
                     this.getProprietaire().addCash(l);
                     JoueurUI.printCashLe(super.getProprietaire());
-                    JoueurUI.printCashLe(j);
+                    JoueurUI.printCashVous(j);
                  }
             }
         }
@@ -68,16 +68,10 @@ public class Compagnie extends CarreauPropriete {
                 this.getProprietaire().removeCompagnie(this);
             }
             super.setProprietaire(j);
-            j.addCompagnie(this);
-        }
-        /*@Override
-        public String getDescription() {
-            if (super.isHypotheque()) {
-                return "Compagnie HYPOTHEQUEE : " + super.getDescription();
-            } else {
-                return "Compagnie : " + super.getDescription();
+            if (j!=null) {
+                 j.addCompagnie(this);
             }
-        }*/
+        }
         
         @Override
         public void retourBanque(){

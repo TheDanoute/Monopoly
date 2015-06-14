@@ -22,8 +22,12 @@ public class Monopoly {
         private ArrayList<Joueur> joueursTemp = new ArrayList<>();
 	private Interface interface_2;
         
-	public Monopoly(String dataFilename){
-            this.jouerUnePartie(dataFilename);
+	public Monopoly(String dataFilename,boolean demo){
+            if (!demo) {
+                this.jouerUnePartie(dataFilename);
+            } else {
+                this.jouerLaDemo(dataFilename);
+            }
 	}
 
 	private void buildGamePlateau(String dataFilename)
@@ -197,6 +201,7 @@ public class Monopoly {
             TexteUI.afficherJoueurs(joueurs);
             int i = 0;
             while (joueurs.size()>1) {
+                JoueurUI.debutTour(joueurs);
                 Joueur j = joueurs.get(i);
                     TexteUI.nouveauTour(j);
                     this.jouerUnCoup(j,0);
@@ -208,24 +213,57 @@ public class Monopoly {
             }
             TexteUI.taGagne(joueurs.get(0));
         }
-  
-	/*public void achatPropriete(Joueur aJ, CarreauPropriete cP) {
-		if (aJ.getCash()<cP.getPrix()){
-                    TexteUI.message(aJ.getNomJoueur()+" n'a pas assez d'argent pour acheter la propriété");
-                }else{
-                    TexteUI.message("Le joueur "+aJ.getNomJoueur()+" a achété la propriété '"+cP.getNom()+"'");
-                    cP.setProprietaire(aJ);
-                    aJ.removeCash(cP.getPrix());
-                    TexteUI.message(aJ.getNomJoueur()+"a désormais "+aJ.getCash()+" €");
-                }
-	}*/
         
+        public void jouerLaDemo(String dataFilename) {
+            cartes = new PaquetsCartes("cartes_"+dataFilename);
+            this.buildGamePlateau(dataFilename);
+            this.initialiserPartie();
+            TexteUI.afficherJoueurs(joueurs);
+            ProprieteAConstruire pAC;
+            for (CarreauPropriete cP : this.getCarreauxPropriete()){
+                if (cP.getNum()<=4) {
+                    cP.setProprietaire(joueurs.get(2));
+                    pAC = (ProprieteAConstruire) cP;
+                    pAC.setImmobilier(2);
+                } else if (cP.getNum()>37) {
+                    cP.setProprietaire(joueurs.get(1));
+                    pAC = (ProprieteAConstruire) cP;
+                    pAC.setImmobilier(5);
+                } else if (cP.getNum()>=7 && cP.getNum()<=10){
+                    cP.setProprietaire(joueurs.get(0));
+                } else if (cP.getNum()==6 || cP.getNum()==16) {
+                    cP.setProprietaire(joueurs.get(2));
+                } else {
+                   cP.setProprietaire(joueurs.get(3)); 
+                }
+            }
+            joueurs.get(2).removeCash(1451);
+            joueurs.get(0).removeCash(143);
+            joueurs.get(1).addCash(352);
+            joueurs.get(3).addCash(99999);
+            joueurs.get(0).addCartePrison();
+            int i = 0;
+            while (joueurs.size()>1) {
+                Joueur j = joueurs.get(i);
+                    JoueurUI.debutTour(joueurs);
+                    TexteUI.nouveauTour(j);
+                    this.jouerUnCoup(j,0);
+                    TexteUI.finTour();
+                    i++;
+                if (i>=joueurs.size()) {
+                    i=0;
+                }
+            }
+            TexteUI.taGagne(joueurs.get(0));
+            
+        }
+  
         public void jouerUnCoup(Joueur aJ,int s) {
             JoueurUI.printCashVous(aJ);
             JoueurUI.printVosProprietes(aJ);
             String rep = TexteUI.choixTour();
             boolean sort = false;
-            while (!rep.equals("avancer")&&!sort) {
+            while (!rep.equals("avancer")&&!sort&&!rep.equals("setDes")) {
                 switch(rep) {
                     case "construire":
                     {
@@ -260,6 +298,15 @@ public class Monopoly {
                         sort = aJ.sortDuJeu();
                         break;
                     }
+                    case "setPosition" :
+                    {
+                        int choix = TexteUI.inte("");
+                        this.setPosition(aJ,choix);
+                        if (choix==31){
+                            sort=true;
+                        }
+                        break;
+                    }
                     default:
                     {
                         break;
@@ -269,7 +316,7 @@ public class Monopoly {
                     rep = TexteUI.choixTour();
                 }
             }
-            if (rep.equals("avancer") && !sort) {
+            if ((rep.equals("avancer")|| rep.equals("setDes")) && !sort) {
             TexteUI.avancer();
             boolean twice = true;
             int comp=0;
@@ -278,6 +325,9 @@ public class Monopoly {
                     this.action(aJ);
                     twice = false;
                 } else {
+                    if (rep.equals("setDes")) {
+                        s = TexteUI.inte("");
+                    }
                     twice = lancerDesAvancer(aJ,s);
                     if (twice) {
                       comp++;  
@@ -290,7 +340,7 @@ public class Monopoly {
                     }else{
                         this.action(aJ);
                     }
-                    if (comp>0){
+                    if (comp>0&&twice){
                        TexteUI.dooble();
                     }
                     s = 0;
@@ -299,6 +349,11 @@ public class Monopoly {
             }
             
 	}
+        
+        public void setPosition(Joueur j,int i){
+            j.setPositionCourante(i);
+            j.getPositionCourante().action(j);
+        }
               
 	public boolean lancerDesAvancer(Joueur aJ,int s) {
             //s = 0 si le joueur sort de prison en faisant un double
@@ -311,7 +366,7 @@ public class Monopoly {
             TexteUI.dés(d1, d2);
             } else {
                 //d1 et d2 sont égaux pour return true
-                d1 = 0;
+                d1 = s % 2;
                 d2 = 0;
                 sD = s;
             }
@@ -374,7 +429,7 @@ public class Monopoly {
                         for (ProprieteAConstruire p : listP) {
                             if (p.isHypotheque()) {
                                 ProprieteUI.erreurHypo();
-                                stop = false;
+                                stop = true;
                             }
                         }
                         while (!stop) {
@@ -396,6 +451,7 @@ public class Monopoly {
                                 if (!onAChanger) {
                                     max++; //Tous les terrains ont la même valeur immobilière mais pas encore d'hotel
                                 }
+                                int prix = listP.get(0).getPrixMaison();
                                 ProprieteUI.construireSur();
                                 for (ProprieteAConstruire p : listP) {
                                         if (p.getImmobilier()<max) {
@@ -408,7 +464,7 @@ public class Monopoly {
                                 } else if (max<5 && this.getNbMaisons()<1) {
                                     stop = ProprieteUI.errorBanque(false);
                                 } else { //Choix du terrain
-                                    int num = ProprieteUI.chooseNum();
+                                    int num = ProprieteUI.chooseNum(prix);
                                     try {
                                         listPPotentiel.get(num).construire();
                                     } catch(NullPointerException e) {
@@ -458,6 +514,7 @@ public class Monopoly {
                    }
                    HashMap<Integer,ProprieteAConstruire> listPPotentiel = new HashMap<>();
                    ProprieteUI.printDetruire();
+                   int prix = pros.get(0).getPrixMaison();
                    for (ProprieteAConstruire p : pros) {
                        if (p.getImmobilier()>min) {
                            listPPotentiel.put(p.getNum(), p);
@@ -468,8 +525,7 @@ public class Monopoly {
                        stop = ProprieteUI.errorVide();
                    } else {
                        try {
-                            listPPotentiel.get(ProprieteUI.chooseNum()).detruire();
-                            JoueurUI.printCashVous(j);
+                            listPPotentiel.get(ProprieteUI.chooseNum(prix/2)).detruire();
                        } catch(NullPointerException e){
                            ProprieteUI.errorDestruction();
                        }

@@ -97,7 +97,7 @@ public class Joueur {
         }
         
         public void utilCartePrison(){
-            Carte c = cartePrison.get(0);
+            CartePrison c = cartePrison.get(0);
             c.action(this);
             cartePrison.remove(c);
             monopoly.retourCarte(c);
@@ -110,11 +110,7 @@ public class Joueur {
             }
         }
         public boolean getPrison(){
-            if (enPrison>0) {
-                return true;
-            } else {
-                return false;
-            }
+            return enPrison>0;
         }
         
         public int getNBCartePrison() {
@@ -164,7 +160,7 @@ public class Joueur {
                     while (this.getCash()<objectif && (vendre || hypotheque))    {
                         String rep = JoueurUI.chooseLaFin();
                         switch(rep) {
-                            case "detruire":
+                            case "vendre":
                             {
                                 if (vendre) {
                                     try {
@@ -193,7 +189,6 @@ public class Joueur {
                                  break;
                             }
                         }
-                        JoueurUI.printCashVous(this);
                     }
                    return !(this.getCash()<objectif);
                 }
@@ -208,14 +203,14 @@ public class Joueur {
         }
         
         private void faillite() {
-                        for (ProprieteAConstruire p : proprietesAConstruire) {
-                            p.retourBanque();
+                        while (!proprietesAConstruire.isEmpty()){
+                            proprietesAConstruire.get(0).retourBanque();
                         }
-                        for (Compagnie c : compagnies) {
-                           c.retourBanque();
+                        while (!compagnies.isEmpty()) {
+                           compagnies.get(0).retourBanque();
                         }
-                        for (Gare g : gares) {
-                            g.retourBanque();
+                        while (!gares.isEmpty()) {
+                            gares.get(0).retourBanque();
                         }
                         this.getMonopoly().getJoueurs().remove(this);
         }
