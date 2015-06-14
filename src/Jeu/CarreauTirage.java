@@ -22,17 +22,17 @@ public class CarreauTirage extends CarreauAction {
     @Override
     public void action(Joueur j){
         Carte c;
-        if (type==CarteType.chance){
+        if (type==CarteType.chance){ //Case chance
             CarreauUI.piocherCarte(type);
             c = this.getMonopoly().getCartes().piochezCarteChance();
-        } else {
+        } else { //Case Caisse Communautaire
             CarreauUI.piocherCarte(type);
             c = this.getMonopoly().getCartes().piochezCarteCommunautaire();
         }
-        c.action(j);
-        if (c.getClass().getSimpleName().equals("CartePrison")) {
+        c.action(j); //Si carte prison : li seulement la description
+        if (c.getClass().getSimpleName().equals("CartePrison")) { //Si carte sortie de prison la carte ne doit pas retourner dans la pile de carte
             j.addCartePrison(c);
-        } else {
+        } else { //Mise de la carte dans les arrayList "poubelle"
             this.getMonopoly().getCartes().retourCarte(c);
         }
     }

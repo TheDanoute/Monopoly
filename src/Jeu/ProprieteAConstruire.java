@@ -24,7 +24,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
         @Override
         public int getLoyer(){
             if (immobilier==0 && super.getProprietaire().getProprietesAConstruire(this.getCouleur()).size()==this.getNbPropriete() && this.noHypo()) {
-                return loyers.get(immobilier)*2;
+                return loyers.get(immobilier)*2;//Si la propriété est vide et que le joueur possède tous les terrains
             } else {
                 return loyers.get(immobilier);
             }
@@ -64,7 +64,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
         }
         
         @Override
-	public int getNbPropriete() {
+	public int getNbPropriete() {//Renvoies le nombre de propriété total du groupe
             return groupe.getNbPropriete();
 	}
         
@@ -81,16 +81,16 @@ public class ProprieteAConstruire extends CarreauPropriete {
         }
 
         public void construire() {
-            if (this.getProprietaire().getCash()<this.getPrixMaison()) {
+            if (this.getProprietaire().getCash()<this.getPrixMaison()) {//Vérification argent joueur
                 JoueurUI.errorArgent(super.getProprietaire());
             } else {
                 this.getProprietaire().removeCash(this.getPrixMaison());
                 this.addImmobilier();
                 if (this.getImmobilier()<5) {
-                    super.getMonopoly().removeMaison();
+                    super.getMonopoly().removeMaison();//Prise de maison à la banque
                 } else {
-                    super.getMonopoly().addMaison(4);
-                    super.getMonopoly().removeHotel();
+                    super.getMonopoly().addMaison(4);//Retour maison banque
+                    super.getMonopoly().removeHotel();//Prise d'un hotel a la banque
                 }
                 ProprieteUI.nouvelleConstruction(this);
             }
@@ -100,13 +100,13 @@ public class ProprieteAConstruire extends CarreauPropriete {
             int argent;
             if(this.getImmobilier()>4) {
                 this.setImmobilier(0);
-                super.getMonopoly().addHotel();
+                super.getMonopoly().addHotel();//Retour hotel banque
                 argent = (int)(prixMaison*2.5);
                 super.getProprietaire().addCash(argent);
                 ProprieteUI.destructionHotel(this,argent);
             } else {
                 this.removeImmobilier();
-                super.getMonopoly().addMaison();
+                super.getMonopoly().addMaison();//Retour maison banque
                 argent = prixMaison/2;
                 super.getProprietaire().addCash(argent);
                 ProprieteUI.destructionMaison(this,argent);
@@ -115,28 +115,28 @@ public class ProprieteAConstruire extends CarreauPropriete {
         
         @Override
         public void setProprietaire(Joueur j) {
-            if (this.getProprietaire()!=null) {
+            if (this.getProprietaire()!=null) {//Si la propriete a déjà un propriétaire
                 this.getProprietaire().removePropriete(this);
             }
             super.setProprietaire(j);
-            if (j!=null) {
+            if (j!=null) {//Si ce n'est pas le cas d'un retour de la propriété a la banque
                 j.addPropriete(this);
-                if (j.getProprietesAConstruire(this.getCouleur()).size()==this.getNbPropriete()) {
+                if (j.getProprietesAConstruire(this.getCouleur()).size()==this.getNbPropriete()) {//Si le joueur possède les trois terrains
                     ProprieteUI.possession(super.getProprietaire());
                 }
             }
         }
         @Override
         public void action(Joueur j){
-            if (this.getProprietaire()==null) {
+            if (this.getProprietaire()==null) {//Achat possible
                 if (ProprieteUI.printAchat(this)) {
-                    if (j.getCash()>=this.getPrix()) {
+                    if (j.getCash()>=this.getPrix()) {//Si le joueur a assez d'argent
                         j.removeCash(this.getPrix());
                         JoueurUI.printCashVous(j);
                         this.setProprietaire(j);
-                    } else {
+                    } else {//Si le joueur n'a pas assez d'argent
                         JoueurUI.errorArgent(j);
-                        if (ProprieteUI.jEssaye()) {
+                        if (ProprieteUI.jEssaye()) {//Proposition de vente ou hypotheque pour gagner de l'argent
                             if (j.jEssaye(super.getPrix())) {
                                 j.removeCash(this.getPrix());
                                 JoueurUI.printCashVous(j);
@@ -145,10 +145,10 @@ public class ProprieteAConstruire extends CarreauPropriete {
                         }
                     }
                 }
-            } else if (this.getProprietaire()==j) {
+            } else if (this.getProprietaire()==j) {//Propre propriete
                 ProprieteUI.printProprePAC(this);
-            } else {
-                if (ProprieteUI.toucherLoyer(this)) {
+            } else {//Déjà un propriétaire
+                if (ProprieteUI.toucherLoyer(this)) {//Vérification si la propriété n'est pas hypothéquée
                     int l = this.getLoyer();
                     j.removeCash(l);
                     this.getProprietaire().addCash(l);
@@ -159,7 +159,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
         }
         
         
-        public boolean noHypo() {
+        public boolean noHypo() {//Vérification du groupe s'il n'y a pas de propriete hypothequer pour construction
             boolean retour = true;
             ArrayList<ProprieteAConstruire> listP = groupe.getProprietes();
             int i = 0;

@@ -8,7 +8,7 @@ public class Interface {
     
     public static void main(String[] args) {
         // TODO code application logic here
-       monopoly = new Monopoly("data.txt",TexteUI.demo());
+       monopoly = new Monopoly("data.txt",TexteUI.demo());//Demande de démo
        
     }
     

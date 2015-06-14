@@ -25,10 +25,10 @@ public class CarreauPrison extends Carreau {
             int nbCarte = j.getNBCartePrison();
             CarreauUI.accueilPrison(nbCarte);
             boolean fini = false;
-            while (!fini) {
+            while (!fini) { //Boucle pour forcer l'utilisateur a faire une action
             String rep = CarreauUI.choixActionPrison();
-            if (j.getNBTourPrison()>3 && rep.equals("des")) {
-                rep = CarreauUI.toMuchWastedTime();
+            if (j.getNBTourPrison()>3 && rep.equals("des")) { //Si le joueurs a été plus de 3 tours en prison
+                rep = CarreauUI.toMuchWastedTime(); //Oblige le joueur a payer ou utiliser une carte
             }
             if (rep.equals("payer")) {
                 j.removeCash(50);
@@ -37,13 +37,13 @@ public class CarreauPrison extends Carreau {
                 CarreauUI.prisonPayer(j);
                 super.getMonopoly().jouerUnCoup(j,0);
             } else if (rep.equals("carte")) {
-                if (nbCarte==0) {
+                if (nbCarte==0) { //Vérification carte disponible
                     CarreauUI.errorCartePrison();
                 } else {
                     j.utilCartePrison();
                     fini = true;
                 }
-            } else {
+            } else { //Choix lancer les dés
                 int d1,d2;
                 d1 = this.getMonopoly().lancerDe();
                 d2 = this.getMonopoly().lancerDe();
@@ -53,12 +53,12 @@ public class CarreauPrison extends Carreau {
                     this.getMonopoly().jouerUnCoup(j, d1+d2);
                     fini = true ;
                 } else {
-                    j.ajouterTourPrison();
+                    j.ajouterTourPrison(); //Incrémente son nombre de tour en prison
                     fini = true ;
                 }
             }
             }
-        } else {
+        } else { //Simple Visite
             CarreauUI.visitePrison();
         }
             

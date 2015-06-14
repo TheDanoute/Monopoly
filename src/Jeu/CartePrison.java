@@ -18,10 +18,10 @@ public class CartePrison extends Carte{
     }
     
     @Override
-    public void action(Joueur j){
-        if (j.getPrison()) {
+    public void action(Joueur j){//Deux cas d'utilisation
+        if (j.getPrison()) {//Le joueur est en prison donc il utilise la carte
             j.sortPrison();
-        } else {
+        } else {//Le joueur vient de piocher la carte
             TexteUI.message(this.getDescription());
             j.addCartePrison(this);
         }

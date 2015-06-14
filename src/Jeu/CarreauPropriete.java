@@ -38,7 +38,7 @@ public abstract class CarreauPropriete extends Carreau {
     }
     
         public int getPrixHypotheque(){
-            return (int)((prix/2)*1.1); 
+            return (int)((prix/2)*1.1);
         }    
     
         public void leverHypotheque() {
@@ -54,10 +54,6 @@ public abstract class CarreauPropriete extends Carreau {
 	public abstract int getNbPropriete();
         
         public abstract int getLoyer();
-        
-        /*public String getDescription() {
-            return super.getNom() + " n°" + super.getNum();
-        }*/
         
         public void retourBanque() {
             this.setHypotheque(false);

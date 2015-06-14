@@ -3,15 +3,15 @@ package Jeu;
 import java.util.ArrayList;
 
 public class Groupe {
-	private int prixAchat;
+	private int prixAchat;//Prix des maisons/hotels
 	private CouleurPropriete couleur;
 	private ArrayList<ProprieteAConstruire> proprietes;
-        private int nbPropriete;
+        private int nbPropriete; //Nombre de propriete du groupe 2 ou 3
 
 	public Groupe(){}
         
         public Groupe(int p,String c) {
-            this.setPrix(p);
+            this.setPrix(p);  
             this.setCouleur(CouleurPropriete.valueOf(c));
             proprietes = new ArrayList<>();
             this.setNbPropriete();

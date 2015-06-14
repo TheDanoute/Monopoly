@@ -13,9 +13,15 @@ import Ui.TexteUI;
  *
  * @author DanJeux
  */
+
+/*
+Description de la classe :
+5 cartes n'étaient pas classables avec les autres cas,
+c'est pourquoi une classe CarteSpecial gère les cartes au cas par cas
+*/
 public class CarteSpecial extends Carte{
     
-    private int specialNumber;
+    private int specialNumber; //Désigne de quelle carte s'agit-il (donner dans le fichier cartes_data.txt)
     
     public CarteSpecial(String t,String d,int s){
         super(t,d);
@@ -26,66 +32,45 @@ public class CarteSpecial extends Carte{
         specialNumber=s;
     }
     
-    /*private int getPrixHotelMaison(Joueur j){
-        int pm,ph;
-        if (specialNumber==2) {
-            pm = 25;
-            ph = 100;
-        } else {
-            pm = 40;
-            ph = 115;
-        }
-        int nbh = 0,nbm = 0;
-        for (ProprieteAConstruire p : j.getProprietesAConstruire()){
-            if (p.getImmobilier()>4){
-                 nbh++;
-            } else {
-                nbm+=p.getImmobilier();
-            }
-        }
-        TexteUI.message("Prix pour les maisons : " + pm + "*" + nbm + "=" + pm*nbm);
-        TexteUI.message("Prix pour les hotels : " + ph + "*" + nbh + "=" + ph*nbh);
-        TexteUI.message("Total : " + nbm*pm+nbh*ph + "€");
-        return nbm*pm+nbh*ph;
-    }*/
     @Override
     public void action(Joueur j){
         TexteUI.message(super.getDescription());
         switch(specialNumber) {
-            case 0:
+            case 0://Carte c'est votre anniversaire
                  for (Joueur jou : j.getMonopoly().getJoueurs()){
-                     if (jou != j){
+                     if (jou != j){ //Pour tous les joueurs
                         jou.removeCash(10);
                         j.addCash(10);
                      }
                  }
                  JoueurUI.printCashVous(j);
             break;
-            case 1:
-                String s = CarteUI.jAiDeLaChance();
+            case 1://Carte piocher une carte chance ou payer 10€
+                String s = CarteUI.jAiDeLaChance(); //Choix du joueurs
                 if (s.equals("payer")) {
                     j.removeCash(10);
-                } else {
+                } else { //Tire une carte chance et fait son action
                     Carte c = j.getMonopoly().getCartes().piochezCarteChance();
                     c.action(j);
                     j.getMonopoly().getCartes().retourCarte(c);
                 }
             break;
-            case 2:
+            /*Cas 2 et 3 : payer pour maisons et hotel */
+            case 2: //Utilise case 3
             case 3:
                 int pm,ph;
-                if (specialNumber==2) {
+                if (specialNumber==2) {//Prix pour la carte 2
                     pm = 25;
                     ph = 100;
-                } else {
+                } else {//Prix pour la carte 3
                     pm = 40;
                     ph = 115; 
                 }
                 int nbh = 0,nbm = 0;
-                for (ProprieteAConstruire p : j.getProprietesAConstruire()){
-                    if (p.getImmobilier()>4){
+                for (ProprieteAConstruire p : j.getProprietesAConstruire()){ //Boucle pour récupérer le nombre de maisons et d'hotel du joueur
+                    if (p.getImmobilier()>4){//C'est hotel
                          nbh++;
-                    } else {
+                    } else {//Sinon il a y soit des maisons, soit c'est vide alors p.getImmobilier()=0
                         nbm+=p.getImmobilier();
                     }
                 }
@@ -93,10 +78,10 @@ public class CarteSpecial extends Carte{
                 j.removeCash(nbm*pm+nbh*ph);
                 JoueurUI.printCashVous(j);
             break;
-            case 4:
-                j.setPositionCourante(j.getPositionCourante().getNum()-3);
+            case 4://Reculer de 3 cases
+                j.setPositionCourante(j.getPositionCourante().getNum()-3);//Déplace le joueur
                 CarteUI.deplacement(j.getPositionCourante());
-                j.getPositionCourante().action(j);
+                j.getPositionCourante().action(j);//Action de la case
             break;
         }
     }

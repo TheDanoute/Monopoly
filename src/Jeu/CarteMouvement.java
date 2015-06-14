@@ -15,7 +15,7 @@ import Ui.TexteUI;
  */
 public class CarteMouvement extends Carte{
     private int carreau;
-    private boolean verifDep;
+    private boolean verifDep; //Boolean de vérification si le joueur passe par la case départ (contraire seulement pour les cartes allez en prison)
     
     public CarteMouvement(String t,String d,int c,boolean vD){
         super(t,d);
@@ -42,15 +42,15 @@ public class CarteMouvement extends Carte{
     @Override
     public void action(Joueur j){
         TexteUI.message(this.getDescription());
-        if ((verifDep && j.getPositionCourante().getNum() > carreau) && carreau>1){
+        if ((verifDep && j.getPositionCourante().getNum() > carreau) && carreau>1){ //Vérification si le joueur passe par la case départ (et ne tombe pas dessus)
             j.addCash(200);
             CarteUI.laChance();
             JoueurUI.printCashVous(j);
         }
         j.setPositionCourante(carreau);
-        if (verifDep) {
+        if (verifDep) { //Si ce n'est pas la case prison, le joueur doit avoir l'action du carreau
             j.getMonopoly().getCarreau(carreau).action(j);
-        } else {
+        } else { //Si !verifDep la carte est forcement une carte allez en prison
             j.enPrison();
         }
     }

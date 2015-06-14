@@ -6,7 +6,7 @@ import Ui.TexteUI;
 
 public class CarreauArgent extends CarreauAction {
 	
-        private int prix;
+        private int prix; //Peut-être positif ou negatif
 
 	public CarreauArgent(int n,String nom,Monopoly m,int p){
             super(n,nom,m);
@@ -23,11 +23,7 @@ public class CarreauArgent extends CarreauAction {
         
         @Override
         public void action(Joueur j){
-            if (prix<0){
-                CarreauUI.removeArgent(-prix);
-            }else{
-                CarreauUI.addArgent(prix);
-            }
+            CarreauUI.addArgent(prix); //Si le montant est négatif, la methode addCash appelera la methode removeCash
             j.addCash(prix);
             JoueurUI.printCashVous(j);
         }

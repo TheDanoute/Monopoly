@@ -140,7 +140,7 @@ public class ProprieteUI {
         }
         
         public static int chooseHypo() {
-            return TexteUI.inte("Sur quelle propriété voulez-vous lever l'hypotheque ? \u001B[32m(numéro)\u001B[0m");
+            return TexteUI.inte("Sur quelle propriété voulez-vous agir ? \u001B[32m(numéro)\u001B[0m");
         }
         
         public static boolean encoreConstruire() {

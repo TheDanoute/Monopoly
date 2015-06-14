@@ -15,9 +15,9 @@ public class Joueur {
 	private Carreau positionCourante;
 	private ArrayList<ProprieteAConstruire> proprietesAConstruire;
         private int compDouble;
-        private int enPrison;
+        private int enPrison; //0=pas en prison ; 1 à 3 = en prison et nombre de tour passé
         private ArrayList<CartePrison> cartePrison ;
-        private int desDepart;
+        private int desDepart; //Dés de choix de l'ordre de départ
 
     public Joueur(String nomJoueur, Monopoly monopoly) {
         this.nomJoueur = nomJoueur;
@@ -29,7 +29,7 @@ public class Joueur {
         proprietesAConstruire = new ArrayList<>();
         desDepart = monopoly.lancerDe();
         cartePrison = new ArrayList<>();
-        this.setPositionCourante(1);
+        this.setPositionCourante(1);//Sur la case départ
     }
 
     public Carreau getPositionCourante() {
@@ -48,7 +48,7 @@ public class Joueur {
         return proprietesAConstruire;
     }
     
-    public ArrayList<ProprieteAConstruire> getProprietesAConstruire(CouleurPropriete c) {
+    public ArrayList<ProprieteAConstruire> getProprietesAConstruire(CouleurPropriete c) {//Revoies les propriétés du joueur d'une couleur
         ArrayList<ProprieteAConstruire> list = new ArrayList<>();
         for (ProprieteAConstruire p : proprietesAConstruire) {
             if (p.getCouleur()==c) {
@@ -62,7 +62,7 @@ public class Joueur {
         return monopoly;
     }
     
-    public void setPositionCourante(Carreau positionCourante) {
+    public void setPositionCourante(Carreau positionCourante) {//setter public pour la démo
         this.positionCourante = positionCourante;
     }
     
@@ -74,8 +74,8 @@ public class Joueur {
         enPrison++;
     }
     
-    public void setPositionCourante(int p) {
-       if (p>40) {
+    public void setPositionCourante(int p) {//Methode utiliser pour jouerUnCoup et avancer
+       if (p>40) {//Si le joueur passe pas la case départ il reçoit 200€
            p-=40; 
            if (p!=1) {
            this.addCash(200);
@@ -87,7 +87,7 @@ public class Joueur {
 
         
         
-        public void enPrison() {
+        public void enPrison() {//Mets le joueur en prison
             this.setPositionCourante(monopoly.getCarreau(11));
             this.setPrison(true);
         }
@@ -99,10 +99,10 @@ public class Joueur {
         public void utilCartePrison(){
             CartePrison c = cartePrison.get(0);
             c.action(this);
-            cartePrison.remove(c);
+            cartePrison.remove(c);//Remet la carte automatiquement dans le paquet
             monopoly.retourCarte(c);
         }
-        private void setPrison(boolean p){
+        private void setPrison(boolean p){//Transforme le boolean en integer
             if (p) {
                 enPrison=1;
             } else {
@@ -110,7 +110,7 @@ public class Joueur {
             }
         }
         public boolean getPrison(){
-            return enPrison>0;
+            return enPrison>0; //Transforme integer en boolean
         }
         
         public int getNBCartePrison() {
@@ -154,18 +154,18 @@ public class Joueur {
                 }
 	}
         
-        public boolean jEssaye(int objectif) {
-            boolean vendre = true ;
-                boolean hypotheque = true ;
+        public boolean jEssaye(int objectif) {//Fonnction pour faillite ou achat de propriété quand pas assez d'argent (objectif=0 quand faillite)
+            boolean vendre = true ; //S'il peut encore vendre
+                boolean hypotheque = true ; //S'il peut encore hypothequer
                     while (this.getCash()<objectif && (vendre || hypotheque))    {
-                        String rep = JoueurUI.chooseLaFin();
+                        String rep = JoueurUI.chooseLaFin(); //Choix entre hypothequer ou vendre
                         switch(rep) {
                             case "vendre":
                             {
                                 if (vendre) {
                                     try {
                                         this.getMonopoly().detruire(this);
-                                    } catch(Exception e){
+                                    } catch(Exception e){//Exception levée si plus rien a vendre
                                         TexteUI.message(e.getMessage());
                                         vendre = false;
                                     }
@@ -179,7 +179,7 @@ public class Joueur {
                                 if(hypotheque) {
                                     try {
                                         this.getMonopoly().hypotheque(this,false);
-                                    } catch(Exception e){
+                                    } catch(Exception e){//Exception levée si plus rien a hypothequé
                                         TexteUI.message(e.getMessage());
                                         hypotheque = false;
                                     }
@@ -194,15 +194,15 @@ public class Joueur {
                 }
         
         public boolean sortDuJeu() {
-            if (JoueurUI.sortDuJeu(this)) {
-                this.faillite();
+            if (JoueurUI.sortDuJeu(this)) {//Confirmation par le joueur
+                this.faillite();//Utilisation de la fonction faillite
                 return true;
             } else {
                 return false;
             }
         }
         
-        private void faillite() {
+        private void faillite() {//Retourne toutes les propriétés à la banque
                         while (!proprietesAConstruire.isEmpty()){
                             proprietesAConstruire.get(0).retourBanque();
                         }
@@ -261,7 +261,7 @@ public class Joueur {
         public void removeCompagnie(Compagnie c){
             compagnies.remove(c);
         }
-        public void addCartePrison (){
+        public void addCartePrison (){//Utilisation pour la démo et les échanges
             cartePrison.add(new CartePrison("CC","P"));
         }
         public void removeCartePrison(){

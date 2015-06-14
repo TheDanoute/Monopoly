@@ -14,7 +14,7 @@ import Ui.TexteUI;
  */
 public class CarteArgent extends Carte{
     
-    private int montant;
+    private int montant; //Peut-être positif ou negatif
     
     public CarteArgent(String t,String d,int m) {
         super(t,d);
@@ -32,7 +32,7 @@ public class CarteArgent extends Carte{
     @Override
     public void action(Joueur j){
         TexteUI.message(this.getDescription());
-        j.addCash(montant);
+        j.addCash(montant); //Si le montant est négatif, la methode addCash appelera la methode removeCash
         JoueurUI.printCashVous(j);
     }
     
